@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -158,6 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box.h" />
+    <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Main.hpp" />
     <ClInclude Include="map.h" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="stdafx.hpp" />
