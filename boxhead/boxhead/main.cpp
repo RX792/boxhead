@@ -2,7 +2,7 @@
 #include "Main.hpp"
 
 constexpr int client_w{ 800 }, client_h{ 600 };
-TankShow MySystem{};
+Framework MySystem{};
 
 std::random_device seed{};
 std::uniform_real_distribution<float> distr_color{ 0.0f, 1.0f };
@@ -56,22 +56,9 @@ int main(int argc, char** argv)
 }
 
 GLvoid Render(GLvoid)
-{}
-
-GLvoid drawScene()
 {
-	GLfloat rColor, gColor, bColor;
-
-	rColor = gColor = bColor = 0.0;
-
-	glClearColor(rColor, gColor, bColor, 1.0f); // 바탕색을 ‘blue’ 로 지정
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 설정된 색으로 전체를 칠하기
-	// 그리기 부분 구현: 그리기 관련 부분이 여기에 포함된다
-
 	MySystem.PrepareRendering();
-	MySystem.DrawScreens();
-
-	glutSwapBuffers(); // 화면에 출력하기
+	MySystem.Render();
 }
 
 GLvoid UpdateFrames(int value)

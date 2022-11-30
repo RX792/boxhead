@@ -6,6 +6,8 @@
 #include <Utils.hpp>
 #include <BlobUtils.hpp>
 
+#include "Entity.hpp"
+
 class Framework
 {
 public:
@@ -15,75 +17,6 @@ public:
 	{
 		myInstances.reserve(100);
 	}
-
-	void Awake()
-	{
-		myRenderer.Awake();
-
-		myRenderer.LoadVertexShader("..\\Shaders\\PlainV.glsl");
-		myRenderer.LoadFragmentShader("..\\Shaders\\PlainP.glsl");
-
-	}
-
-	void Start()
-	{
-
-	}
-
-	void Update(const float& delta_time)
-	{
-
-	}
-
-	void PrepareRendering()
-	{
-		for (auto& instance : myInstances)
-		{
-			//instance.PrepareRendering();
-		}
-	}
-
-	void Render()
-	{
-		for (auto& instance : myInstances)
-		{
-			//instance.Render();
-		}
-	}
-
-	void ResetCamera()
-	{
-		constexpr glm::vec3 world_up = { 0.0f, 1.0f, 0.0f };
-		constexpr glm::vec3 cam_coords = { 0.0f, 8.0f, 15.0f };
-		constexpr glm::vec3 cam_target = { 0.0f, 0.0f, 0.0f };
-
-		cameraLook = glm::normalize(cam_target - cam_coords);
-		cameraRight = glm::normalize(glm::cross(world_up, cameraLook));
-		cameraUp = glm::normalize(glm::cross(cameraLook, cameraRight));
-
-		myCameraMatrix = glm::lookAt(cam_coords, cam_target, cameraUp);
-	}
-
-	ogl::Pipeline myRenderer;
-	ogl::VertexStream myVertexBuffer;
-
-	glm::mat4 myCameraMatrix;
-	glm::vec3 cameraRight, cameraLook, cameraUp;
-	glm::mat4 perspectiveMatrix;
-	glm::mat4 perspectiveTopMatrix;
-	glm::mat4 orthodoxMatrix;
-
-	std::vector<int> myInstances{};
-};
-
-class TankShow
-{
-public:
-	TankShow()
-		: myRenderer(), myVertexBuffer(ogl::CreateVertex())
-		, myX(), myY(), myZ()
-		, myPitch(), myYaw(), myRoll()
-	{}
 
 	void Awake()
 	{
@@ -110,8 +43,12 @@ public:
 			{ +400.0f, 0.0f, 0.0f, axis_color },
 			{ -400.0f, 0.0f, 0.0f, axis_color },
 			{ 0.0f, +300.0f, 0.0f, axis_color },
-			{ 0.0f, -300.0f, 0.0f, axis_color }
+			{ 0.0f, -300.0f, 0.0f, axis_color },
+			{ 0.0f, 0.0f, -400.0f, axis_color },
+			{ 0.0f, 0.0f, -400.0f, axis_color }
 		};
+
+		// 0: ÁÂÇ¥Ãà
 		myVertexBuffer.PushRaw(axis_lines);
 
 		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
@@ -147,6 +84,8 @@ public:
 			ogl::blob::plane::Create(pt5, pt8, pt7, pt6, spatial_c6)
 		};
 		const auto raw_cube = ogl::blob::cube::Create(each_sides);
+
+		// 1
 		myVertexBuffer.Push(raw_cube);
 
 		constexpr ogl::Quad head_pt1 = { -0.45f, +0.2f, -0.3f };
@@ -168,6 +107,8 @@ public:
 			ogl::blob::plane::Create(head_pt5, head_pt8, head_pt7, head_pt6, spatial_c7)
 		};
 		const auto head_cube = ogl::blob::cube::Create(head_sides);
+
+		// 2
 		myVertexBuffer.Push(head_cube);
 
 		constexpr ogl::Quad arm_pt1 = { -0.1f, +0.7f, -0.1f };
@@ -189,6 +130,8 @@ public:
 			ogl::blob::plane::Create(arm_pt5, arm_pt8, arm_pt7, arm_pt6, spatial_c9)
 		};
 		const auto arms_cube = ogl::blob::cube::Create(arms_sides);
+
+		// 3
 		myVertexBuffer.Push(arms_cube);
 
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
@@ -201,7 +144,24 @@ public:
 			{ +10.0f, -2.0f, +10.0f, floor_c3 },
 			{ +10.0f, -2.0f, -10.0f, floor_c2 }
 		);
+
+		// 4
 		myVertexBuffer.Push(floor);
+
+		auto& aa = myInstances.emplace_back();
+		aa.MoveTo(1.0f, 0.0f, 1.0f);
+
+		auto& bb = myInstances.emplace_back();
+		bb.MoveTo(0.0f, 00.0f, 0.0f);
+
+		auto& cc = myInstances.emplace_back();
+		cc.MoveTo(3.0f, 0.0f, -1.0f);
+
+		auto& dd = myInstances.emplace_back();
+		dd.MoveTo(4.0f, 0.0f, -2.0f);
+
+		auto& ee = myInstances.emplace_back();
+		ee.MoveTo(5.0f, 0.0f, -3.0f);
 
 		myRenderer.Start();
 	}
@@ -211,57 +171,70 @@ public:
 
 	}
 
-	void Move(const float& x, const float& y, const float& z)
+	void PrepareRendering()
 	{
-		const glm::vec4 direction{ x, y, z, 1.0f };
-		const auto my_mat = ogl::Rotate(ogl::identity, myPitch, myYaw, myRoll);
-
-		Translate(my_mat * direction);
+		myRenderer.PrepareRendering();
 	}
 
-	void JumpTo(const float& x, const float& y, const float& z)
+	void Render()
 	{
-		myX = x;
-		myY = y;
-		myZ = z;
-	}
+		auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
+		auto uniform_mat_camera = myRenderer.GetUniform("a_CameraMatrix");
+		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
 
-	void Translate(const float& ax, const float& ay, const float& az)
-	{
-		myX += ax;
-		myY += ay;
-		myZ += az;
-	}
+		uniform_mat_world.AssignMatrix4x4(ogl::identity);
+		uniform_mat_camera.AssignMatrix4x4(myCameraMatrix);
+		uniform_mat_proj.AssignMatrix4x4(perspectiveMatrix);
 
-	void Translate(const glm::vec3& vector)
-	{
-		myX += vector.x;
-		myY += vector.y;
-		myZ += vector.z;
-	}
+		// x, y, z, r, g, b, a
+		constexpr GLsizei shade_stride = sizeof(float) * 7;
 
-	void Tilt(const float& pitch, const float& yaw, const float& roll)
-	{
-		myRoll += roll;
-		myPitch += pitch;
-		myYaw += yaw;
-	}
+		// x, y, z, r, g, b, a, nx, ny, nz
+		constexpr GLsizei normal_stride = sizeof(float) * 10;
 
-	void Rotate(const float& pitch, const float& yaw, const float& roll)
-	{
-		myRoll = roll;
-		myPitch = pitch;
-		myYaw = yaw;
-	}
+		auto attr_pos = myRenderer.BeginAttribute("a_Position", shade_stride);
+		auto attr_col = myRenderer.BeginAttribute("a_Colour", shade_stride);
 
-	void HeadRotate(const float& yaw)
-	{
-		myHeadYaw = yaw;
-	}
+		// 0: ÁÂÇ¥Ãà ±×¸®±â
+		auto& buffer_axis = myVertexBuffer.At(0);
+		buffer_axis.PrepareRendering();
+		{
+			myRenderer.ReadBuffer(attr_pos, 3);
+			myRenderer.ReadBuffer(attr_col, 4);
+			ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 4);
+			myRenderer.ResetSeekBuffer();
+		}
 
-	void ArmsRotate(const float& roll)
-	{
-		myArmsPitch = roll;
+		// 4: ¹Ù´Ú ±×¸®±â
+		auto& buffer_floor = myVertexBuffer.At(4);
+		buffer_floor.PrepareRendering();
+		myRenderer.ReadBuffer(attr_pos, 3);
+		myRenderer.ReadBuffer(attr_col, 4);
+		ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4);
+		myRenderer.ResetSeekBuffer();
+
+		// 1: Å¥ºê
+		auto& buffer_cube = myVertexBuffer.At(1);
+		buffer_cube.PrepareRendering();
+
+		myRenderer.ReadBuffer(attr_pos, 3);
+		myRenderer.ReadBuffer(attr_col, 4);
+
+		for (auto& instance : myInstances)
+		{
+			instance.PrepareRendering(uniform_mat_world);
+
+			//instance.Render();
+
+			for (GLint i = 0; i < 6; i++)
+			{
+				ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
+			}
+		}
+		myRenderer.ResetSeekBuffer();
+
+		attr_pos.DisableVertexArray();
+		attr_col.DisableVertexArray();
 	}
 
 	void CameraMove(const float& x, const float& y, const float& z)
@@ -274,193 +247,31 @@ public:
 		myCameraMatrix = ogl::Rotate(myCameraMatrix, pitch, yaw, roll);
 	}
 
-	void ResetCamera()
-	{
-		constexpr glm::vec3 world_up = { 0.0f, 1.0f, 0.0f };
-		constexpr glm::vec3 cam_coords = { 0.0f, 8.0f, 15.0f };
-		constexpr glm::vec3 cam_target = { 0.0f, 0.0f, 0.0f };
-
-		cameraLook = glm::normalize(cam_target - cam_coords);
-		cameraRight = glm::normalize(glm::cross(world_up, cameraLook));
-		cameraUp = glm::normalize(glm::cross(cameraLook, cameraRight));
-
-		myCameraMatrix = glm::lookAt(cam_coords, cam_target, cameraUp);
-	}
-
-	void PrepareRendering()
-	{
-		myRenderer.PrepareRendering();
-	}
-
-	void DrawScreens()
-	{
-		const auto halfw = ogl::gl_width / 2;
-		const auto halfh = ogl::gl_height / 2;
-		const auto cy = std::max(ogl::gl_width, ogl::gl_height);
-
-		ogl::DrawSetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-
-		glPushMatrix();
-		glViewport(0, halfh * 2 / 3, halfw, halfh);
-		Draw();
-		glPopMatrix();
-
-		glPushMatrix();
-		//gluLookAt(0, cy, 0, 0, 0, 0, 0, 1, 0);
-		glViewport(halfw, 0, halfw, halfh);
-		Draw();
-		glPopMatrix();
-
-		glPushMatrix();
-		//gluLookAt(cy, 0, 0, 0, 0, 0, 0, 1, 0);
-		glViewport(halfw, halfh, halfw, halfh);
-		Draw();
-		glPopMatrix();
-
-		glLoadIdentity();
-
-		ogl::DrawSetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-		glLineWidth(3);
-		ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::LINES);
-		glVertex3f(halfw, 0, 0);
-		glVertex3f(halfw, ogl::gl_height, 0);
-		ogl::PrimitivesEnd();
-		ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::LINES);
-		glVertex3f(0, halfh, 0);
-		glVertex3f(ogl::gl_width, halfh, 0);
-		ogl::PrimitivesEnd();
-
-		ogl::DrawSetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
-		glLineWidth(1);
-	}
-
-	void Draw()
-	{
-		auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
-		auto uniform_mat_camera = myRenderer.GetUniform("a_CameraMatrix");
-		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
-
-		// x, y, z, r, g, b, a
-		constexpr GLsizei stride = sizeof(float) * 7;
-
-		uniform_mat_world.AssignMatrix4x4(ogl::identity);
-		uniform_mat_camera.AssignMatrix4x4(myCameraMatrix);
-		uniform_mat_proj.AssignMatrix4x4(perspectiveMatrix);
-		//perspectiveMatrix
-
-		auto attr_pos = myRenderer.BeginAttribute("a_Position", stride);
-		auto attr_col = myRenderer.BeginAttribute("a_Colour", stride);
-
-		auto& buffer_axis = myVertexBuffer.At(0);
-		buffer_axis.PrepareRendering();
-		{
-			myRenderer.ReadBuffer(attr_pos, 3);
-			myRenderer.ReadBuffer(attr_col, 4);
-			ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 4);
-			myRenderer.ResetSeekBuffer();
-		}
-
-		auto& buffer_floor = myVertexBuffer.At(4);
-		buffer_floor.PrepareRendering();
-		myRenderer.ReadBuffer(attr_pos, 3);
-		myRenderer.ReadBuffer(attr_col, 4);
-		ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4);
-		myRenderer.ResetSeekBuffer();
-
-		const auto translation_x = ogl::right * myX;//cameraRight * myX;
-		const auto translation_y = ogl::up * myY;
-		const auto translation_z = ogl::look * myZ;
-
-		// T R S
-		auto my_mat = ogl::Translate(ogl::identity, translation_x);
-		my_mat = ogl::Translate(my_mat, translation_y);
-		my_mat = ogl::Translate(my_mat, translation_z);
-		my_mat = ogl::Rotate(my_mat, myPitch, myYaw, myRoll);
-
-		uniform_mat_world.AssignMatrix4x4(my_mat);
-
-		auto& buffer_cube = myVertexBuffer.At(1);
-		buffer_cube.PrepareRendering();
-		{
-			myRenderer.ReadBuffer(attr_pos, 3);
-			myRenderer.ReadBuffer(attr_col, 4);
-			for (GLint i = 0; i < 6; i++)
-			{
-				ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
-			}
-			myRenderer.ResetSeekBuffer();
-		}
-
-		my_mat = ogl::Translate(my_mat, { 0.0f, 0.5f, 0.0f });
-		my_mat = ogl::Rotate(my_mat, 0.0f, myHeadYaw, 0.0f);
-		uniform_mat_world.AssignMatrix4x4(my_mat);
-
-		auto& buffer_head = myVertexBuffer.At(2);
-		buffer_head.PrepareRendering();
-		{
-			myRenderer.ReadBuffer(attr_pos, 3);
-			myRenderer.ReadBuffer(attr_col, 4);
-			for (GLint i = 0; i < 6; i++)
-			{
-				ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
-			}
-			myRenderer.ResetSeekBuffer();
-		}
-
-		const auto my_head_mat = my_mat;
-
-		auto& buffer_arm = myVertexBuffer.At(3);
-		buffer_arm.PrepareRendering();
-		// ¿ÞÂÊ ±Í
-		{
-			my_mat = ogl::Rotate(my_mat, myArmsPitch, 0.0f, 0.0f);
-			my_mat = ogl::Translate(my_mat, { -0.22f, 0.35f, 0.0f });
-			uniform_mat_world.AssignMatrix4x4(my_mat);
-
-			myRenderer.ReadBuffer(attr_pos, 3);
-			myRenderer.ReadBuffer(attr_col, 4);
-			for (GLint i = 0; i < 6; i++)
-			{
-				ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
-			}
-			myRenderer.ResetSeekBuffer();
-			my_mat = my_head_mat;
-		}
-		// ¿À¸¥ÂÊ ±Í
-		{
-			my_mat = ogl::Rotate(my_mat, -myArmsPitch, 0.0f, 0.0f);
-			my_mat = ogl::Translate(my_mat, { +0.22f, 0.35f, 0.0f });
-			uniform_mat_world.AssignMatrix4x4(my_mat);
-
-			myRenderer.ReadBuffer(attr_pos, 3);
-			myRenderer.ReadBuffer(attr_col, 4);
-			for (GLint i = 0; i < 6; i++)
-			{
-				ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
-			}
-			myRenderer.ResetSeekBuffer();
-		}
-
-		attr_pos.DisableVertexArray();
-		attr_col.DisableVertexArray();
-	}
-
 	ogl::Pipeline myRenderer;
 	ogl::VertexStream myVertexBuffer;
 
-	//glm::mat4 myWorldMatrix;
 	glm::mat4 myCameraMatrix;
 	glm::vec3 cameraRight, cameraLook, cameraUp;
 	glm::mat4 perspectiveMatrix;
 	glm::mat4 perspectiveTopMatrix;
 	glm::mat4 orthodoxMatrix;
 
-	float myX, myY, myZ;
-	float myPitch, myYaw, myRoll;
-	float myHeadYaw;
-	float myArmsPitch;
-	float mySpeed;
-	glm::vec3 myDirection;
+	std::vector<Entity> myInstances{};
+
+private:
+	void ResetCamera()
+	{
+		ResetCamera({ 0.0f, 15.0f, 8.0f }, {});
+	}
+
+	void ResetCamera(const glm::vec3& camera_position, const glm::vec3& camera_lookat)
+	{
+		constexpr glm::vec3 world_up = { 0.0f, 1.0f, 0.0f };
+
+		cameraLook = glm::normalize(camera_lookat - camera_position);
+		cameraRight = glm::normalize(glm::cross(world_up, cameraLook));
+		cameraUp = glm::normalize(glm::cross(cameraLook, cameraRight));
+
+		myCameraMatrix = glm::lookAt(camera_position, camera_lookat, cameraUp);
+	}
 };

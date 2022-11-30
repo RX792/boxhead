@@ -1,5 +1,6 @@
 #pragma once
 #include <OpenGL.hpp>
+#include <Uniform.hpp>
 
 class Entity
 {
@@ -19,20 +20,16 @@ public:
 	virtual ~Entity()
 	{}
 
-	virtual void PrepareRendering()
+	virtual void PrepareRendering(ogl::Uniform& world_uniform)
 	{
 		EnumerateTransform();
 
-		//testBox.x = localMatrix[3][0];
-		//testBox.y = localMatrix[3][1];
-		//testBox.z = localMatrix[3][2];
+		world_uniform.AssignMatrix4x4(worldMatrix);
 	}
 
 	virtual void Render()
 	{
-		PrepareRendering();
-
-		//testBox.draw();
+		ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 24, 0);
 	}
 
 	void EnumerateTransform()
@@ -47,16 +44,16 @@ public:
 			myChild->UpdateTransform(worldMatrix);
 		}
 	}
-	
+
 	void UpdateTransform(const glm::mat4& parent_matrix)
 	{
 		worldMatrix = parent_matrix * localMatrix;
-		
+
 		if (mySibling)
 		{
 			mySibling->UpdateTransform(parent_matrix);
 		}
-		
+
 		if (myChild)
 		{
 			myChild->UpdateTransform(worldMatrix);
@@ -69,7 +66,7 @@ public:
 		localMatrix[3][0] = x;
 		localMatrix[3][1] = y;
 		localMatrix[3][2] = z;
-		
+
 		UpdateTransform(localMatrix);
 	}
 
