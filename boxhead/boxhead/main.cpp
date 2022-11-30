@@ -1,8 +1,9 @@
 ﻿#include "pch.hpp"
 #include "Main.hpp"
+#include "Entity.hpp"
 
 constexpr int client_w{ 800 }, client_h{ 600 };
-Framework MySystem{};
+TankShow MySystem{};
 
 std::random_device seed{};
 std::uniform_real_distribution<float> distr_color{ 0.0f, 1.0f };
@@ -64,7 +65,6 @@ GLvoid Render(GLvoid)
 
 GLvoid drawScene()
 {
-
 	GLfloat rColor, gColor, bColor;
 
 	rColor = gColor = bColor = 0.0;
@@ -73,7 +73,8 @@ GLvoid drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 설정된 색으로 전체를 칠하기
 	// 그리기 부분 구현: 그리기 관련 부분이 여기에 포함된다
 
-
+	MySystem.PrepareRendering();
+	MySystem.DrawScreens();
 
 	glutSwapBuffers(); // 화면에 출력하기
 }

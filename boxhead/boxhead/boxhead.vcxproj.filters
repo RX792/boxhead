@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="IconerLibrary">
+      <UniqueIdentifier>{ac5bbd0a-b86e-45c9-a039-8858be8fd879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IconerLibrary\Source">
+      <UniqueIdentifier>{58a135db-78bd-49a2-bac8-427bf50e7964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IconerLibrary\Header">
+      <UniqueIdentifier>{123ba1fa-60ee-4ed2-a891-6fb18148dad1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -23,6 +32,45 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Attribute.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\BasicBlobs.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Blobs.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\BlobUtils.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Pipeline.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\OpenGL.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Prototypes.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Shader.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Uniform.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Utils.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\VertexStream.cpp">
+      <Filter>IconerLibrary\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework.cpp">
+      <Filter>헤더 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +106,51 @@
     </ClInclude>
     <ClInclude Include="pch.hpp">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Attribute.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\BasicBlobs.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Blobs.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\BlobUtils.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\OpenGL.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Pipeline.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Prototypes.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Shader.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Uniform.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Utils.hpp">
+      <Filter>IconerLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\VertexStream.hpp">
+      <Filter>IconerLibrary\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

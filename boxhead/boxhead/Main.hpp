@@ -6,6 +6,7 @@
 #include <Utils.hpp>
 #include <BlobUtils.hpp>
 
+#include "Framework.hpp"
 #include "misc.h"
 #include "shader.h"
 #include "input.h"
@@ -20,29 +21,5 @@ GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y);
 GLvoid UpdateMouse(const int button, const int state, const int x, const int y);
 GLvoid UpdateMouseMotion(const int x, const int y);
 GLvoid UpdateFrames(const int delta_time);
-
-class Framework
-{
-public:
-	Framework()
-	{
-		
-	}
-	
-	void Awake()
-	{
-		
-	}
-
-	void Start()
-	{
-		
-	}
-
-	void Update(const float& delta_time)
-	{
-		
-	}
-};
 
 float RandomizeColour();
