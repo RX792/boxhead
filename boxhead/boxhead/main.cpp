@@ -6,6 +6,7 @@
 #include "zombie.h"
 #include "line.h"
 #include "map.h"
+#include "diamond.h"
 #define W 800
 #define H 600
 
@@ -23,6 +24,7 @@ float _x, _y, _z;
 Zombie* zombie;
 Line* xyz_line[3];
 Box* plain;
+Diamond* dia;
 Map_manager* map_manager;
 
 glm::vec3 cameraPos ; //--- 카메라 위치
@@ -56,12 +58,15 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설�
 	make_fragmentShaders();
 	shaderID = make_shaderProgram();
 	
-	cameraPos = glm::vec3(0.0f, 20.0f, 20.0f); //--- 카메라 위치
+	cameraPos = glm::vec3(0.0f, 40.0f, 40.0f); //--- 카메라 위치
 	cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보는 방향
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향
 
-
 	//init_buffer();
+	//dia = new Diamond(0, 0, 0);
+	//dia->set_size(1, 1, 1);
+
+
 	plain = new Box(0,0,0);
 	plain->set_size(40, -0.1, 40);
 	zombie = new Zombie();
@@ -114,7 +119,11 @@ GLvoid drawScene() {
 	for (int i = 0; i < 3; ++i)
 		xyz_line[i]->draw();
 
-	zombie->draw();
+	//zombie->draw();
+
+	//dia->draw();
+
+
 
 	glutSwapBuffers(); // 화면에 출력하기
 }

@@ -3,7 +3,7 @@
 #include "misc.h"
 #include "shader.h"
 
-class Box {
+class Diamond {
 
 public:
 	float x, y, z;
@@ -17,18 +17,18 @@ public:
 	GLuint VBO_pos[2];
 	GLuint EBO;
 
-	float vertex[3 * 8];
-	float colors[3 * 8] = { 0, };
-	unsigned int index[3 * 12];
+	float vertex[3 * 6];
+	float colors[3 * 6] = { 0, };
+	unsigned int index[3 * 9];
 
 	bool draw_with_line = false;
 
 
 
-	Box(float _x, float _y, float _z) {
+	Diamond(float _x, float _y, float _z) {
 
 		set_random_color();
-		
+
 		x = y = z = 0;
 		rx = ry = rz = 0;
 		sx = sy = sz = 1.0;
@@ -37,7 +37,7 @@ public:
 		my = _y;
 		mz = _z;
 
-		FILE* file = fopen("cube.txt", "r");
+		FILE* file = fopen("diamond.txt", "r");
 		ReadObj(file, vertex, index);
 
 
@@ -53,7 +53,7 @@ public:
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 
 
-		
+
 
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
@@ -65,7 +65,7 @@ public:
 
 	}
 	void set_random_color() {
-		for (int i = 0; i < 3 * 8; ++i) {
+		for (int i = 0; i < 3 * 6; ++i) {
 			colors[i] = uid(dre) / 1000.0f;
 		}
 
@@ -76,7 +76,7 @@ public:
 	}
 
 	void set_color(float r, float g, float b) {
-		for (int i = 0; i < 8; ++i) {
+		for (int i = 0; i < 6; ++i) {
 			colors[i * 3] = r;
 			colors[i * 3 + 1] = g;
 			colors[i * 3 + 2] = b;
@@ -116,12 +116,15 @@ public:
 		glBindVertexArray(VAO);
 
 		glm::mat4 model = glm::mat4(1.0);
+
 		glm::mat4 RTx = glm::mat4(1.0);
 		glm::mat4 RTy = glm::mat4(1.0);
 		glm::mat4 RTz = glm::mat4(1.0);
 		glm::mat4 Scale = glm::mat4(1.0);
 		glm::mat4 translate = glm::mat4(1.0);
 		glm::mat4 translate_post_init = glm::mat4(1.0);
+
+
 
 		RTx = glm::rotate(RTx, glm::radians(rx), glm::vec3(1.0, 0.0, 0.0));
 		RTy = glm::rotate(RTy, glm::radians(ry), glm::vec3(0.0, 1.0, 0.0));
@@ -131,18 +134,18 @@ public:
 		translate_post_init = glm::translate(translate_post_init, glm::vec3(x, y, z));
 
 
-		model = translate_post_init * translate * RTz * RTy * RTx  * Scale;
+		model = translate_post_init * translate * RTz * RTy * RTx * Scale;
 
 		unsigned int modelLocation = glGetUniformLocation(shaderID, "modelTransform");
 		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-		
+
 		glEnable(GL_DEPTH_TEST);
 
 		if (draw_with_line)
-			glDrawElements(GL_LINE_LOOP, 3 * 12, GL_UNSIGNED_INT, 0);
-			
+			glDrawElements(GL_LINE_LOOP, 3 * 9, GL_UNSIGNED_INT, 0);
+
 		else
-			glDrawElements(GL_TRIANGLES, 3 * 12, GL_UNSIGNED_INT, 0);
-		
+			glDrawElements(GL_TRIANGLES, 3 * 9, GL_UNSIGNED_INT, 0);
+
 	}
 };

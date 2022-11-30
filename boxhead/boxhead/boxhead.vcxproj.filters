@@ -71,9 +71,15 @@
     <ClInclude Include="map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="diamond.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="diamond.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>
