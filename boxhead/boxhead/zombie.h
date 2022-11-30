@@ -1,14 +1,5 @@
 #pragma once
-#include <iostream>
-#include <gl/glew.h> //--- 필요한 헤더파일 include
-#include <gl/freeglut.h>
-#include <gl/freeglut_ext.h>
-
-
-#include <gl/glm/glm.hpp>
-#include <gl/glm/ext.hpp>
-#include <gl/glm/gtc/matrix_transform.hpp>
-
+#include "pch.hpp"
 #include "misc.h"
 #include "shader.h"
 #include "box.h"

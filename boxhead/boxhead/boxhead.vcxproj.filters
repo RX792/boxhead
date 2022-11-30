@@ -18,6 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl">
@@ -26,6 +32,7 @@
     <None Include="vertex.glsl">
       <Filter>소스 파일</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="input.h">
@@ -46,7 +53,10 @@
     <ClInclude Include="line.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="map.h">
+    <ClInclude Include="stdafx.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

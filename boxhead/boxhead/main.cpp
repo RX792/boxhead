@@ -1,5 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
+﻿#include "pch.hpp"
 #include "misc.h"
 #include "shader.h"
 #include "input.h"
