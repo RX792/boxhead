@@ -5,7 +5,7 @@
 #include "box.h"
 #include "zombie.h"
 #include "line.h"
-
+#include "map.h"
 #define W 800
 #define H 600
 
@@ -23,7 +23,7 @@ float _x, _y, _z;
 Zombie* zombie;
 Line* xyz_line[3];
 Box* plain;
-
+Map_manager* map_manager;
 
 glm::vec3 cameraPos ; //--- 카메라 위치
 glm::vec3 cameraDirection; //--- 카메라 바라보는 방향
@@ -56,17 +56,16 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설�
 	make_fragmentShaders();
 	shaderID = make_shaderProgram();
 	
-	cameraPos = glm::vec3(0.0f, 3.0f, 3.0f); //--- 카메라 위치
+	cameraPos = glm::vec3(0.0f, 20.0f, 20.0f); //--- 카메라 위치
 	cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보는 방향
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향
 
 
 	//init_buffer();
 	plain = new Box(0,0,0);
-	plain->set_size(2, -0.1, 2);
-
+	plain->set_size(40, -0.1, 40);
 	zombie = new Zombie();
-
+	map_manager = new Map_manager();
 
 	for (int i = 0; i < 3; ++i)
 		xyz_line[i] = new Line;
@@ -110,6 +109,8 @@ GLvoid drawScene() {
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 	//
 	plain->draw();
+	map_manager->draw();
+
 	for (int i = 0; i < 3; ++i)
 		xyz_line[i]->draw();
 
