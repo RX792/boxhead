@@ -1,91 +1,70 @@
 ﻿#include "pch.hpp"
-#include "misc.h"
-#include "shader.h"
-#include "input.h"
-#include "box.h"
-#include "zombie.h"
-#include "line.h"
+#include "Main.hpp"
 
-#define W 800
-#define H 600
+constexpr int client_w{ 800 }, client_h{ 600 };
+Framework MySystem{};
 
+std::random_device seed{};
+std::uniform_real_distribution<float> distr_color{ 0.0f, 1.0f };
+std::default_random_engine random_engine{ seed() };
 
-GLvoid drawScene(GLvoid);
-GLvoid Reshape(int w, int h);
-void TimerFunc(int a);
-void gmf(int button, int state, int x, int y);
-GLvoid Keyboard(unsigned char key, int x, int y);
-void SpecialInput(int key, int x, int y);
+constexpr std::chrono::system_clock performance_clock{};
+std::chrono::system_clock::time_point elapsed_timer{};
+float elapsed_time{};
 
 
-float _x, _y, _z;
+int main(int argc, char** argv)
+{
+	ogl::Awake(argc, argv);
 
-Zombie* zombie;
-Line* xyz_line[3];
-Box* plain;
-
-
-glm::vec3 cameraPos ; //--- 카메라 위치
-glm::vec3 cameraDirection; //--- 카메라 바라보는 방향
-glm::vec3 cameraUp;
-
-void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정 
-{ //--- 윈도우 생성하기
-	glutInit(&argc, argv); // glut 초기화
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA); // 디스플레이 모드 설정
-	glutInitWindowPosition(100, 100); // 윈도우의 위치 지정
-	glutInitWindowSize(800, 600); // 윈도우의 크기 지정
-	glutCreateWindow("Example1"); // 윈도우 생성(윈도우 이름)
-
-
-
-
-	//--- GLEW 초기화하기
-	glewExperimental = GL_TRUE;
-
-	if (glewInit() != GLEW_OK) // glew 초기화
+	try
 	{
-		std::cerr << "Unable to initialize GLEW" << std::endl;
-		exit(EXIT_FAILURE);
+		ogl::Ready("Shooter", client_w, client_h, 100, 100);
 	}
-	else
-		std::cout << "GLEW Initialized\n";
+	catch (std::runtime_error& e)
+	{
+		std::cout << e.what() << '\n';
+		return EXIT_FAILURE;
+	}
 
+	ogl::SetRenderer(Render);
+	ogl::SetViewportUpdater(UpdateView);
+	ogl::SetKeyboardMethod(UpdateKeyboard);
+	ogl::SetSpecialKeyboardMethod(UpdateSpecialKeyboard);
+	ogl::SetMouseMethod(UpdateMouse);
+	ogl::SetMouseMoverMethod(UpdateMouseMotion);
+	ogl::SetTimer(UpdateFrames, 10);
+	ogl::TurnOnOption(GL_DEPTH_TEST);
+	ogl::TurnOnOption(GL_LINE_SMOOTH);
+	ogl::TurnOnOption(GL_CULL_FACE);
+
+	ogl::background_color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	elapsed_timer = performance_clock.now();
 
 	make_vertexShaders();
 	make_fragmentShaders();
 	shaderID = make_shaderProgram();
-	
-	cameraPos = glm::vec3(0.0f, 3.0f, 3.0f); //--- 카메라 위치
-	cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보는 방향
-	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향
 
+	try
+	{
+		MySystem.Awake();
 
-	//init_buffer();
-	plain = new Box(0,0,0);
-	plain->set_size(2, -0.1, 2);
+		MySystem.Start();
+	}
+	catch (std::runtime_error& e)
+	{
+		std::cout << e.what() << '\n';
+		return EXIT_FAILURE;
+	}
 
-	zombie = new Zombie();
-
-
-	for (int i = 0; i < 3; ++i)
-		xyz_line[i] = new Line;
-
-	xyz_line[1]->set_rotate_radian(0, 0, 90);
-	xyz_line[2]->set_rotate_radian(0, 90, 0);
-
-	glUseProgram(shaderID);
-	glutDisplayFunc(drawScene); // 출력 함수의 지정
-	glutMouseFunc(gmf);
-	glutKeyboardFunc(Keyboard);
-	glutSpecialFunc(SpecialInput);
-	glutReshapeFunc(Reshape); // 다시 그리기 함수 지정
-	glutTimerFunc(1000, TimerFunc, 1);
-	glutMainLoop(); // 이벤트 처리 시작 
+	ogl::Start();
 }
 
+GLvoid Render(GLvoid)
+{}
 
-GLvoid drawScene() {
+GLvoid drawScene()
+{
 
 	GLfloat rColor, gColor, bColor;
 
@@ -96,105 +75,173 @@ GLvoid drawScene() {
 	// 그리기 부분 구현: 그리기 관련 부분이 여기에 포함된다
 
 
-	
-	glm::mat4 view = glm::mat4(1.0f);
-
-	view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
-	unsigned int viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 뷰잉 변환 설정
-	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-
-	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -2.0)); //--- 공간을 약간 뒤로 미뤄줌
-	unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
-	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
-	//
-	plain->draw();
-	for (int i = 0; i < 3; ++i)
-		xyz_line[i]->draw();
-
-	zombie->draw();
 
 	glutSwapBuffers(); // 화면에 출력하기
 }
 
-GLvoid Reshape(int w, int h) {
+GLvoid UpdateFrames(int value)
+{
+	using namespace std::chrono;
+	const auto time_now = performance_clock.now();
+	const auto time_between = time_now - elapsed_timer;
+	const auto mill = duration_cast<milliseconds>(time_between);
+	elapsed_time = static_cast<float>(mill.count()) / 1000.0f;
+
+	MySystem.Update(elapsed_time);
+
+	ogl::Refresh();
+	ogl::SetTimer(10);
+
+	elapsed_timer = time_now;
+}
+
+GLvoid UpdateView(const int w, const int h)
+{
+	ogl::gl_width = w;
+	ogl::gl_height = h;
+
 	glViewport(0, 0, w, h);
 }
 
-void TimerFunc(int a) {
+GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y)
+{
+	//const auto movement = 10.0f * elapsed_time;
+	const auto camera_movement = 20.0f * elapsed_time;
 
-	glutPostRedisplay();
-	glutTimerFunc(50, TimerFunc, 1);
-}
-
-void gmf(int button, int state, int x, int y) {
-
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-
-	}
-
-	glutPostRedisplay();
-}
-
-void camera_rotate() {
-	//glm::vec4 temp = {cameraPos, 0.0};
-	//glm::mat4 rotate = glm::mat4(1.0);
-	//rotate = glm::rotate(rotate, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
-	//cameraPos -= temp;
-	//cameraPos = rotate * cameraPos;
-}
-
-GLvoid Keyboard(unsigned char key, int x, int y) {
-
-	switch (key) {
-	case 'z':
-		cameraPos += glm::vec3(0.0f, 0.0f, 0.1f);
-		cameraDirection += glm::vec3(0.0f, 0.0f, 0.1f);
-		break;
-	case 'Z':
-		cameraPos -= glm::vec3(0.0f, 0.0f, 0.1f);
-		cameraDirection -= glm::vec3(0.0f, 0.0f, 0.1f);
-		break;
-	case 'x':
-		cameraPos += glm::vec3(0.1f, 0.0f, 0.0f);
-		cameraDirection += glm::vec3(0.1f, 0.0f, 0.0f);
-		break;
-	case 'X':
-		cameraPos -= glm::vec3(0.1f, 0.0f, 0.0f);
-		cameraDirection -= glm::vec3(0.1f, 0.0f, 0.0f);
-		break;
-
-	case 'y':
-		camera_rotate();
-		break;
-	case 'Y':
-		cameraPos -= glm::vec3(0.1f, 0.0f, 0.0f);
-		cameraDirection -= glm::vec3(0.1f, 0.0f, 0.0f);
-		break;
-	}
-
-	glutPostRedisplay();
-}
-
-
-void SpecialInput(int key, int x, int y){
 	switch (key)
 	{
-	case GLUT_KEY_UP:
-
+		case 'x':
+		case 'X':
+		{
+		}
 		break;
 
-	case GLUT_KEY_DOWN:
-		
+		case 'y':
+		case 'Y':
+		{
+		}
 		break;
 
-	case GLUT_KEY_RIGHT:
-		
+		case 'a':
+		case 'A':
+		{
+		}
 		break;
 
-	case GLUT_KEY_LEFT:
-		
+		case 'd':
+		case 'D':
+		{
+		}
+		break;
+
+		case 'w':
+		case 'W':
+		{
+		}
+		break;
+
+		case 's':
+		case 'S':
+		{
+		}
+		break;
+
+		case 'q':
+		case 'Q':
+		{
+		}
+		break;
+
+		case 'e':
+		case 'E':
+		{
+		}
+		break;
+
+		case 'c':
+		case 'C':
+		{
+		}
+		break;
+
+		case 'r':
+		case 'R':
+		{
+		}
+		break;
+
+		case 'h':
+		case 'H':
+		{
+		}
 		break;
 	}
+
+	ogl::Refresh();
+}
+
+GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y)
+{
+	const auto movement = 20.0f * elapsed_time;
+	const auto rotation = 15.0f * elapsed_time;
+
+	switch (key)
+	{
+		case GLUT_KEY_LEFT:
+		{
+			
+		}
+		break;
+
+		case GLUT_KEY_RIGHT:
+		{
+			
+		}
+		break;
+
+		case GLUT_KEY_UP:
+		{
+			
+		}
+		break;
+
+		case GLUT_KEY_DOWN:
+		{
+			
+		}
+		break;
+
+		case GLUT_KEY_F12:
+		{
+			std::quick_exit(0);
+		}
+		break;
+	}
+
+	ogl::Refresh();
+}
+
+GLvoid UpdateMouse(const int button, const int state, const int sx, const int sy)
+{
+	if (ogl::IsMouseClicked(state))
+	{
+		if (ogl::IsLeftMouseButton(button))
+		{
+			ogl::background_color.r = RandomizeColour() * 0.5f;
+			ogl::background_color.g = RandomizeColour() * 0.5f;
+			ogl::background_color.b = RandomizeColour() * 0.5f;
+		}
+	}
+
+	ogl::Refresh();
+}
+
+GLvoid UpdateMouseMotion(const int mx, const int my)
+{
+	ogl::Refresh();
+}
+
+float RandomizeColour()
+{
+	return distr_color(random_engine);
 }
