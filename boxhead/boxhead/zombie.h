@@ -18,8 +18,14 @@ class Zombie {
 	float rad_to_add = 1;
 public:
 	Box* body[6];
+	Box* hitbox;
 
 	Zombie() {
+		hitbox = new Box(0, 0, 0);
+		hitbox->set_size(0.5, 0.5, 0.5);
+		hitbox->set_random_color();
+		hitbox->draw_with_line = true;
+
 		body[0] = new Box(0, 0.7, 0);
 		body[0]->set_size(0.2, 0.2, 0.2);
 		body[0]->set_color(0.0f, 1.0f, 1.0f);
@@ -47,20 +53,24 @@ public:
 		
 	}
 
-	void draw() {
+	void draw() 
+	{
 		update();
 
 		
 		
-		
-		for (auto& p : body) {
+		hitbox->draw();
+
+		for (auto& p : body) 
+		{
 			p->draw();
 		}
 		
 
 	}
 
-	void update() {
+	void update() 
+	{
 		
 
 		body[4]->add_rotate_radian(1, 0, 0);

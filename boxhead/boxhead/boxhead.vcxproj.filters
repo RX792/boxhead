@@ -26,7 +26,6 @@
     <None Include="vertex.glsl">
       <Filter>소스 파일</Filter>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="input.h">
@@ -45,6 +44,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="line.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

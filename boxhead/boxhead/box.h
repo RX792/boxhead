@@ -30,7 +30,7 @@ public:
 	float colors[3 * 8] = { 0, };
 	unsigned int index[3 * 12];
 
-	
+	bool draw_with_line = false;
 
 
 
@@ -149,7 +149,12 @@ public:
 		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
 		
 		glEnable(GL_DEPTH_TEST);
-		glDrawElements(GL_TRIANGLES, 3 * 12, GL_UNSIGNED_INT, 0);
+
+		if (draw_with_line)
+			glDrawElements(GL_LINE_LOOP, 3 * 12, GL_UNSIGNED_INT, 0);
+			
+		else
+			glDrawElements(GL_TRIANGLES, 3 * 12, GL_UNSIGNED_INT, 0);
 		
 	}
 };

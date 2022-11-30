@@ -82,11 +82,12 @@
     <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib;$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
     <PublicIncludeDirectories>$(SolutionDir)IconerLibrary;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GlfwPlatformToolset>
@@ -147,6 +148,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ShowProgress>LinkVerboseLib</ShowProgress>
+      <AdditionalOptions>glew32.lib freeglut.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference />
   </ItemDefinitionGroup>
