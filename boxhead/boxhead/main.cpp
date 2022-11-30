@@ -12,7 +12,6 @@ constexpr std::chrono::system_clock performance_clock{};
 std::chrono::system_clock::time_point elapsed_timer{};
 float elapsed_time{};
 
-
 int main(int argc, char** argv)
 {
 	ogl::Awake(argc, argv);
