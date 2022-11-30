@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="stdafx.hpp" />
     <ClInclude Include="zombie.h" />

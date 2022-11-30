@@ -1,7 +1,6 @@
 #pragma once
-#include <iostream>
-#include <random>
-#include <vector>
+#include "pch.hpp"
+
 using namespace std;
 
 int x_rotate_box = 0;
