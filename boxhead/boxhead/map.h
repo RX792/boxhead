@@ -17,14 +17,14 @@ public:
 		x = _x;
 		y = _y;
 		height = 1;
-		box = new Box(x,y,0);
+		box = new Box(x,0,y);
 		box->set_size(1, 1, height);
 		box->set_random_color();
 
 	}
 
 	void draw() {
-
+		box->draw();
 	}
 };
 
@@ -60,5 +60,9 @@ public:
 		}
 	}
 
+	void draw() {
+		for (auto& p : blocks)
+			p.draw();
+	}
 
 };
