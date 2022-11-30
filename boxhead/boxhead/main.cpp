@@ -1,6 +1,5 @@
 ﻿#include "pch.hpp"
 #include "Main.hpp"
-#include "Entity.hpp"
 
 constexpr int client_w{ 800 }, client_h{ 600 };
 TankShow MySystem{};
@@ -40,11 +39,7 @@ int main(int argc, char** argv)
 
 	ogl::background_color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	elapsed_timer = performance_clock.now();
-
-	make_vertexShaders();
-	make_fragmentShaders();
-	shaderID = make_shaderProgram();
-
+	
 	try
 	{
 		MySystem.Awake();

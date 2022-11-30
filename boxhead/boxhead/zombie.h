@@ -1,7 +1,5 @@
 #pragma once
 #include "pch.hpp"
-#include "misc.h"
-#include "shader.h"
 #include "box.h"
 
 class Zombie {

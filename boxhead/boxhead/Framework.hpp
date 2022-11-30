@@ -1,5 +1,10 @@
 #pragma once
-#include "Entity.hpp"
+#include <OpenGL.hpp>
+#include <Pipeline.hpp>
+#include <VertexStream.hpp>
+#include <Blobs.hpp>
+#include <Utils.hpp>
+#include <BlobUtils.hpp>
 
 class Framework
 {
@@ -34,7 +39,7 @@ public:
 	{
 		for (auto& instance : myInstances)
 		{
-			instance.PrepareRendering();
+			//instance.PrepareRendering();
 		}
 	}
 
@@ -42,7 +47,7 @@ public:
 	{
 		for (auto& instance : myInstances)
 		{
-			instance.Render();
+			//instance.Render();
 		}
 	}
 
@@ -68,7 +73,7 @@ public:
 	glm::mat4 perspectiveTopMatrix;
 	glm::mat4 orthodoxMatrix;
 
-	std::vector<Entity> myInstances{};
+	std::vector<int> myInstances{};
 };
 
 class TankShow

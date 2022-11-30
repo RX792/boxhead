@@ -1,8 +1,6 @@
 #pragma once
 #include <OpenGL.hpp>
 
-#include "box.h"
-
 class Entity
 {
 public:
@@ -11,25 +9,30 @@ public:
 		, myHealth(), maxHealth()
 		, localMatrix(ogl::identity), worldMatrix(ogl::identity)
 		, mySibling(nullptr), myChild(nullptr)
-		, testBox(0, 0, 0)
 	{}
 
-	virtual ~Entity() = default;
+	Entity(const Entity& other) = default;
+	Entity(Entity&& other) = default;
+	Entity& operator=(const Entity& other) = default;
+	Entity& operator=(Entity&& other) = default;
+
+	virtual ~Entity()
+	{}
 
 	virtual void PrepareRendering()
 	{
 		EnumerateTransform();
 
-		testBox.x = localMatrix[3][0];
-		testBox.y = localMatrix[3][1];
-		testBox.z = localMatrix[3][2];
+		//testBox.x = localMatrix[3][0];
+		//testBox.y = localMatrix[3][1];
+		//testBox.z = localMatrix[3][2];
 	}
 
 	virtual void Render()
 	{
 		PrepareRendering();
 
-		testBox.draw();
+		//testBox.draw();
 	}
 
 	void EnumerateTransform()
@@ -81,7 +84,7 @@ public:
 
 	void Translate(const glm::vec3& vector)
 	{
-		localMatrix[3] += vector;
+		//localMatrix[3] += vector;
 
 		UpdateTransform(localMatrix);
 	}
@@ -97,10 +100,10 @@ public:
 
 	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
-		const auto translation = localMatrix[3];
+		//const auto translation = localMatrix[3];
 
-		localMatrix = ogl::identity;
-		localMatrix[3] = translation;
+		//localMatrix = ogl::identity;
+		//localMatrix[3] = translation;
 
 		localMatrix = glm::rotate(localMatrix, yaw, ogl::up);
 		localMatrix = glm::rotate(localMatrix, pitch, ogl::right);
@@ -118,6 +121,4 @@ public:
 
 	Entity* mySibling;
 	Entity* myChild;
-	
-	Box testBox;
 };

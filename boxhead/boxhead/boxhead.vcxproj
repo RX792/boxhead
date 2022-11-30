@@ -73,10 +73,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <GlfwLinkage>static</GlfwLinkage>
+    <Linkage-freeglut>static</Linkage-freeglut>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <GlfwLinkage>static</GlfwLinkage>
+    <Linkage-freeglut>static</Linkage-freeglut>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -117,6 +121,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +140,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,7 +187,6 @@
     <ClInclude Include="..\IconerLibrary\Uniform.hpp" />
     <ClInclude Include="..\IconerLibrary\Utils.hpp" />
     <ClInclude Include="..\IconerLibrary\VertexStream.hpp" />
-    <ClInclude Include="box.h" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Framework.hpp" />
     <ClInclude Include="Main.hpp" />
@@ -192,7 +197,6 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="misc.h" />
-    <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt" />
