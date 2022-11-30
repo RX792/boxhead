@@ -52,8 +52,10 @@ public:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertex), vertex, GL_STREAM_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 
-
-		
+		glGenBuffers(1, &VBO_pos[1]);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO_pos[1]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STREAM_DRAW);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
@@ -69,23 +71,19 @@ public:
 			colors[i] = uid(dre) / 1000.0f;
 		}
 
-		glGenBuffers(1, &VBO_pos[1]);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO_pos[1]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STREAM_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		
+		
 	}
 
-	void set_color(float r, float g, float b) {
-		for (int i = 0; i < 8; ++i) {
+	void set_color(float r, float g, float b) 
+	{
+		for (int i = 0; i < 8; ++i) 
+		{
 			colors[i * 3] = r;
 			colors[i * 3 + 1] = g;
 			colors[i * 3 + 2] = b;
 		}
-
-		glGenBuffers(1, &VBO_pos[1]);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO_pos[1]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STREAM_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		
 	}
 
 	void set_size(float x, float y, float z) {
@@ -135,9 +133,9 @@ public:
 
 		unsigned int modelLocation = glGetUniformLocation(shaderID, "modelTransform");
 		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-		
-		glEnable(GL_DEPTH_TEST);
 
+
+		glEnable(GL_DEPTH_TEST);
 		if (draw_with_line)
 			glDrawElements(GL_LINE_LOOP, 3 * 12, GL_UNSIGNED_INT, 0);
 			

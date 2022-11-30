@@ -58,8 +58,8 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설�
 	make_fragmentShaders();
 	shaderID = make_shaderProgram();
 	
-	cameraPos = glm::vec3(0.0f, 40.0f, 40.0f); //--- 카메라 위치
-	cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보는 방향
+	cameraPos = glm::vec3(30.0f, 60.0f, 60.0f); //--- 카메라 위치
+	cameraDirection = glm::vec3(30.0f, 0.0f, 30.0f); //--- 카메라 바라보는 방향
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향
 
 	//init_buffer();
