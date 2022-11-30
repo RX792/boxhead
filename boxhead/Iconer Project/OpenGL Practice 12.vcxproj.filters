@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\MyLibrary">
+      <UniqueIdentifier>{bfbb9f6c-f220-487a-a26f-db2be8a8258a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\MyLibrary">
+      <UniqueIdentifier>{9d41191d-62f2-492a-8cb9-2855ac1cd09e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Attribute.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Blobs.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Collider.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\OpenGL.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Pipeline.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Prototypes.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\RectangleCollider.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Shader.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Uniform.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Utils.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\VertexStream.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\BasicBlobs.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\BlobUtils.hpp">
+      <Filter>헤더 파일\MyLibrary</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Attribute.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Blobs.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Collider.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\OpenGL.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Pipeline.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Prototypes.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\RectangleCollider.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Shader.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Uniform.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Utils.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\VertexStream.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\BasicBlobs.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\BlobUtils.cpp">
+      <Filter>소스 파일\MyLibrary</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

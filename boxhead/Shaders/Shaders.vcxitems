@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{61063d9f-82b0-4a9b-986f-e9413919ee4c}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)CoordinatesP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)CoordinatesV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)CubeP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)CubeV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)FullRectP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)FullRectV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture3P.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture3ParticleP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture3ParticleV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture3V.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture4SandboxP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture4SandboxV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture5Curve.fs" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture5Curve.vs" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture6TexP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture6TexV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture8TexsP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture8TexsV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture9GridP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)Lecture9GridV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)MyParticle.fs" />
+    <None Include="$(MSBuildThisFileDirectory)MyParticle.vs" />
+    <None Include="$(MSBuildThisFileDirectory)PointEmitterP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)PointEmitterV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)RainbowDraggerP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)RainbowDraggerV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)RotatedTriangleP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)RotatedTriangleV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)ShapeShifterP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)ShapeShifterV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)SolidRectP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)SolidRectV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)SphereP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)SphereV.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)TriangleP.glsl" />
+    <None Include="$(MSBuildThisFileDirectory)TriangleV.glsl" />
+  </ItemGroup>
+</Project>
