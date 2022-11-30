@@ -32,4 +32,4 @@
 #include <glm/fwd.hpp>
 #include <glm/ext.hpp>
 
-
+using Path = std::filesystem::path;
