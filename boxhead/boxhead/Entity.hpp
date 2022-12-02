@@ -1,6 +1,5 @@
 #pragma once
-#include <OpenGL.hpp>
-#include <Uniform.hpp>
+#include "GameObject.hpp"
 
 class Entity
 {

@@ -12,6 +12,7 @@
 #include "Scene.hpp"
 
 class Scene;
+class GameObject;
 class Entity;
 class Camera;
 
