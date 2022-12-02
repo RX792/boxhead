@@ -356,7 +356,7 @@ namespace ogl
 	
 	inline constexpr glm::vec3 right = { 1.0f, 0.0f, 0.0f };
 	inline constexpr glm::vec3 up = { 0.0f, 1.0f, 0.0f };
-	inline constexpr glm::vec3 look = { 0.0f, 0.0f, 1.0f };
+	inline constexpr glm::vec3 forward = { 0.0f, 0.0f, 1.0f };
 	inline constexpr glm::mat4 identity = glm::mat4{ 1.0f };
 
 	inline glm::mat4 Scale(const glm::mat4& matrix, const float& xs, const float& ys, const float& zs)
@@ -369,7 +369,7 @@ namespace ogl
 		auto result = glm::rotate(matrix, xr, ogl::right);
 		result = glm::rotate(result, yr, ogl::up);
 
-		return glm::rotate(result, zr, ogl::look);
+		return glm::rotate(result, zr, ogl::forward);
 	}
 
 	inline glm::mat4 Rotate(const glm::mat4& matrix, const float (&rotations)[3])

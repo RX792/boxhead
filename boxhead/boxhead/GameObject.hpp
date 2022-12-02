@@ -46,7 +46,7 @@ public:
 	/// 자식을 추가합니다.
 	/// </summary>
 	/// <param name="child"></param>
-	void AddChild(Entity* child)
+	void AddChild(GameObject* child)
 	{
 		if (!child) return;
 
@@ -66,7 +66,7 @@ public:
 	/// 형제를 추가합니다.
 	/// </summary>
 	/// <param name="other">게임 인스턴스</param>
-	void AddSibling(Entity* other)
+	void AddSibling(GameObject* other)
 	{
 		if (!other) return;
 
@@ -135,6 +135,8 @@ public:
 protected:
 	void EnumerateTransform()
 	{
+		worldTransform.Set(localTransform);
+
 		if (nextSibling)
 		{
 			nextSibling->EnumerateTransform();
@@ -146,9 +148,9 @@ protected:
 		}
 	}
 
-	void UpdateTransform(const glm::Transform& parent_transform)
+	void UpdateTransform(const Transform& parent_transform)
 	{
-		worldMatrix = parent_matrix * localMatrix;
+		worldTransform.Set(parent_transform * localTransform);
 
 		if (nextSibling)
 		{

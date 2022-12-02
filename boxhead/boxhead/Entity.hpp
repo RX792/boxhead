@@ -14,7 +14,6 @@ public:
 	Entity()
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
-		, localMatrix(ogl::identity), worldMatrix(ogl::identity)
 	{}
 
 	Entity(const glm::vec3& position)
@@ -55,7 +54,7 @@ public:
 			nextSibling->Render(world_uniform);
 		}
 
-		world_uniform.AssignMatrix4x4(worldMatrix);
+		world_uniform.AssignMatrix4x4(worldTransform.myMatrix);
 		Draw();
 	}
 
@@ -76,11 +75,9 @@ public:
 	/// <param name="z"></param>
 	void MoveTo(const float& x, const float& y, const float& z)
 	{
-		localMatrix[3][0] = x;
-		localMatrix[3][1] = y;
-		localMatrix[3][2] = z;
+		localTransform.MoveTo(x, y, z);
 
-		UpdateTransform(localMatrix);
+		EnumerateTransform();
 	}
 
 	/// <summary>
@@ -102,11 +99,9 @@ public:
 	/// <param name="az"></param>
 	void Translate(const float& ax, const float& ay, const float& az)
 	{
-		localMatrix[3][0] += ax;
-		localMatrix[3][1] += ay;
-		localMatrix[3][2] += az;
+		localTransform.Translate(ax, ay, az);
 
-		UpdateTransform(localMatrix);
+		EnumerateTransform();
 	}
 
 	/// <summary>
@@ -115,9 +110,9 @@ public:
 	/// <param name="vector"></param>
 	void Translate(const glm::vec3& vector)
 	{
-		localMatrix[3] += glm::vec4{ vector, 0.0f };
+		localTransform.Translate(vector);
 
-		UpdateTransform(localMatrix);
+		EnumerateTransform();
 	}
 
 	/// <summary>
@@ -128,11 +123,9 @@ public:
 	/// <param name="roll"></param>
 	void Tilt(const float& pitch, const float& yaw, const float& roll)
 	{
-		localMatrix = glm::rotate(localMatrix, yaw, ogl::up);
-		localMatrix = glm::rotate(localMatrix, pitch, ogl::right);
-		localMatrix = glm::rotate(localMatrix, roll, ogl::look);
+		localTransform.Tilt(pitch, yaw, roll);
 
-		UpdateTransform(localMatrix);
+		EnumerateTransform();
 	}
 
 	/// <summary>
@@ -143,17 +136,9 @@ public:
 	/// <param name="roll"></param>
 	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
-		const glm::vec4& origin = localMatrix[3];
-		const glm::vec3 translation = { origin[0], origin[1], origin[2] };
+		localTransform.Rotate(pitch, yaw, roll);
 
-		localMatrix = ogl::identity;
-
-		localMatrix = glm::rotate(localMatrix, yaw, ogl::up);
-		localMatrix = glm::rotate(localMatrix, pitch, ogl::right);
-		localMatrix = glm::rotate(localMatrix, roll, ogl::look);
-		localMatrix = glm::translate(localMatrix, translation);
-
-		UpdateTransform(localMatrix);
+		EnumerateTransform();
 	}
 
 	Entity(const Entity& other) = default;
@@ -164,9 +149,6 @@ public:
 	std::string myName;
 	float myHealth;
 	float maxHealth;
-
-	glm::mat4 localMatrix;
-	glm::mat4 worldMatrix;
 };
 
 template<typename Ty, typename ...ArgTy>

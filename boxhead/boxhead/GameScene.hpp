@@ -157,7 +157,7 @@ public:
 		aa->MoveTo(1.0f, 0.0f, 1.0f);
 
 		auto bb = Scene::CreateObject<Entity>();
-		bb->MoveTo(0.0f, 00.0f, 0.0f);
+		bb->MoveTo(0.0f, 0.0f, 10.0f);
 
 		auto cc = Scene::CreateObject<Entity>(3.0f, 0.0f, -1.0f);
 		cc->MoveTo(3.0f, 0.0f, -1.0f);
@@ -240,7 +240,7 @@ public:
 private:
 	void ResetCamera()
 	{
-		ResetCamera({ 0.0f, 15.0f, 8.0f }, {});
+		ResetCamera({ 0.0f, 15.0f, -8.0f }, {});
 	}
 
 	void ResetCamera(const glm::vec3& camera_position, const glm::vec3& camera_lookat)
