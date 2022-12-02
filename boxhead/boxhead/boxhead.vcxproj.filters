@@ -96,6 +96,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -129,9 +132,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Main.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\IconerLibrary\Attribute.hpp">
@@ -189,7 +189,13 @@
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.hpp">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
