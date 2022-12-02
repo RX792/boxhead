@@ -1,5 +1,6 @@
 #pragma once
 #include "Framework.hpp"
+#include "Constants.hpp"
 
 GLvoid Render(GLvoid);
 GLvoid UpdateView(const int w, const int h);
