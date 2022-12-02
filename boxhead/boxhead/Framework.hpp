@@ -42,6 +42,11 @@ public:
 
 	void Update(const float& delta_time)
 	{
+		if (reservatedScene && sceneProcessFinished)
+		{
+			ChangeScene(reservatedScene);
+		}
+
 		if (currentScene)
 		{
 			sceneProcessFinished = false;
@@ -52,17 +57,20 @@ public:
 
 	void PrepareRendering()
 	{
-		if (currentScene)
+		if (currentScene && currentScene->IsStarted())
 		{
+			sceneProcessFinished = false;
+
 			currentScene->PrepareRendering();
 		}
 	}
 
 	void Render()
 	{
-		if (currentScene)
+		if (currentScene && currentScene->IsStarted())
 		{
 			currentScene->Render();
+
 			sceneProcessFinished = true;
 		}
 	}
