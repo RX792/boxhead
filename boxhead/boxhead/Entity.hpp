@@ -97,10 +97,10 @@ public:
 
 	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
-		//const auto translation = localMatrix[3];
+		const glm::vec4 origin = localMatrix[3];
+		const glm::vec3 translation = { origin[0], origin[1], origin[2] };
 
-		//localMatrix = ogl::identity;
-		//localMatrix[3] = translation;
+		localMatrix = ogl::identity;
 
 		localMatrix = glm::rotate(localMatrix, yaw, ogl::up);
 		localMatrix = glm::rotate(localMatrix, pitch, ogl::right);
