@@ -11,3 +11,5 @@ GLvoid UpdateMouseMotion(const int x, const int y);
 GLvoid UpdateFrames(const int delta_time);
 
 float RandomizeColour();
+
+Framework* Framework::Instance = nullptr;

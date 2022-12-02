@@ -5,11 +5,11 @@
 class Entity
 {
 public:
-	constexpr Entity()
+	Entity()
 		: Entity(glm::vec3{})
 	{}
 
-	constexpr Entity(const glm::vec3& position)
+	Entity(const glm::vec3& position)
 		: myName()
 		, myHealth(), maxHealth()
 		, localMatrix(ogl::identity), worldMatrix(ogl::identity)
@@ -21,6 +21,9 @@ public:
 	virtual ~Entity()
 	{}
 
+	virtual void Update(const float& delta_time)
+	{}
+	
 	virtual void PrepareRendering(ogl::Uniform& world_uniform)
 	{
 		EnumerateTransform();
