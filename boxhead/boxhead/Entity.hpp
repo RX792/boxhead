@@ -7,7 +7,7 @@ class Entity
 public:
 	template<typename Ty, typename ...ArgTy>
 		requires EntityType<Ty, ArgTy...>
-	static Ty* Create(ArgTy&& ...args)
+	static Ty* Instantiate(ArgTy&& ...args)
 	{
 		return new Ty{ std::forward<ArgTy>(args)... };
 	}
@@ -49,14 +49,28 @@ public:
 	virtual void Update(const float& delta_time)
 	{}
 
-	virtual void PrepareRendering(ogl::Uniform& world_uniform)
+	virtual void PrepareRendering()
 	{
 		EnumerateTransform();
-
-		world_uniform.AssignMatrix4x4(worldMatrix);
 	}
 
-	virtual void Render()
+	virtual void Render(ogl::Uniform& world_uniform)
+	{
+		if (myChild)
+		{
+			myChild->Render(world_uniform);
+		}
+
+		if (nextSibling)
+		{
+			nextSibling->Render(world_uniform);
+		}
+
+		world_uniform.AssignMatrix4x4(worldMatrix);
+		Draw();
+	}
+
+	virtual void Draw()
 	{
 		//ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 24, 0);
 		for (GLint i = 0; i < 6; i++)

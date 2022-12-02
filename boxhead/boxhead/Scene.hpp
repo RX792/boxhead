@@ -58,7 +58,7 @@ public:
 		requires EntityType<Ty, ArgTy...>
 	Ty* CreateObject(ArgTy&& ...args)
 	{
-		Ty* obj = Entity::Create<Ty>(std::forward<ArgTy>(args)...);
+		Ty* obj = Entity::Instantiate<Ty>(std::forward<ArgTy>(args)...);
 		if (!obj)
 		{
 			throw std::bad_alloc{};

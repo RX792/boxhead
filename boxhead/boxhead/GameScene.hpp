@@ -227,8 +227,8 @@ public:
 
 		for (auto& instance : myInstances)
 		{
-			instance->PrepareRendering(uniform_mat_world);
-			instance->Render();
+			instance->PrepareRendering();
+			instance->Render(uniform_mat_world);
 		}
 
 		myRenderer.ResetSeekBuffer();
