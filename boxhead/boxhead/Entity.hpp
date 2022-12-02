@@ -30,7 +30,11 @@ public:
 
 	virtual void Render()
 	{
-		ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 24, 0);
+		//ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 24, 0);
+		for (GLint i = 0; i < 6; i++)
+		{
+			ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
+		}
 	}
 
 	void AddChild(Entity* child)
