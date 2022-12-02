@@ -14,11 +14,11 @@ float elapsed_time{};
 
 int main(int argc, char** argv)
 {
-	ogl::Awake(argc, argv);
-
 	try
 	{
-		ogl::Ready("Shooter", client_w, client_h, 100, 100);
+		ogl::Awake(argc, argv);
+
+		ogl::Ready("Shooter", constants::CLIENT_W, constants::CLIENT_H, 100, 100);
 	}
 	catch (std::runtime_error& e)
 	{
