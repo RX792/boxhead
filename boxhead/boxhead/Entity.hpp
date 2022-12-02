@@ -60,6 +60,12 @@ public:
 		}
 	}
 
+	/// <summary>
+	/// 좌표를 지정합니다.
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <param name="z"></param>
 	void MoveTo(const float& x, const float& y, const float& z)
 	{
 		//localMatrix = glm::translate(localMatrix, x, y, z);
@@ -70,6 +76,12 @@ public:
 		UpdateTransform(localMatrix);
 	}
 
+	/// <summary>
+	/// 좌표를 더합니다.
+	/// </summary>
+	/// <param name="ax"></param>
+	/// <param name="ay"></param>
+	/// <param name="az"></param>
 	void Translate(const float& ax, const float& ay, const float& az)
 	{
 		localMatrix[3][0] += ax;
@@ -79,6 +91,10 @@ public:
 		UpdateTransform(localMatrix);
 	}
 
+	/// <summary>
+	/// 좌표를 더합니다.
+	/// </summary>
+	/// <param name="vector"></param>
 	void Translate(const glm::vec3& vector)
 	{
 		//localMatrix[3] += vector;
@@ -86,6 +102,12 @@ public:
 		UpdateTransform(localMatrix);
 	}
 
+	/// <summary>
+	/// 회전 각도를 더합니다.
+	/// </summary>
+	/// <param name="pitch"></param>
+	/// <param name="yaw"></param>
+	/// <param name="roll"></param>
 	void Tilt(const float& pitch, const float& yaw, const float& roll)
 	{
 		localMatrix = glm::rotate(localMatrix, yaw, ogl::up);
@@ -95,6 +117,12 @@ public:
 		UpdateTransform(localMatrix);
 	}
 
+	/// <summary>
+	/// 회전 각도를 지정합니다.
+	/// </summary>
+	/// <param name="pitch"></param>
+	/// <param name="yaw"></param>
+	/// <param name="roll"></param>
 	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
 		const glm::vec4 origin = localMatrix[3];
@@ -105,6 +133,7 @@ public:
 		localMatrix = glm::rotate(localMatrix, yaw, ogl::up);
 		localMatrix = glm::rotate(localMatrix, pitch, ogl::right);
 		localMatrix = glm::rotate(localMatrix, roll, ogl::look);
+		localMatrix = glm::translate(localMatrix, translation);
 
 		UpdateTransform(localMatrix);
 	}
