@@ -14,6 +14,9 @@ public:
 	GameScene()
 		: Scene()
 		, myRenderer(), myVertexBuffer(ogl::CreateVertex())
+		, cameraMatrix()
+		, cameraRight(), cameraUp(), cameraLook()
+		, perspectiveMatrix(), orthodoxMatrix()
 	{}
 
 	void Awake() override
@@ -21,9 +24,9 @@ public:
 		Scene::Awake();
 
 		myRenderer.Awake();
-
 		myRenderer.LoadVertexShader("..\\Shaders\\PlainV.glsl");
 		myRenderer.LoadFragmentShader("..\\Shaders\\PlainP.glsl");
+		myRenderer.Ready();
 
 		ResetCamera();
 
@@ -150,19 +153,19 @@ public:
 	{
 		Scene::Start();
 
-		auto& aa = myInstances.emplace_back();
+		auto aa = Scene::CreateObject<Entity>();
 		aa->MoveTo(1.0f, 0.0f, 1.0f);
 
-		auto& bb = myInstances.emplace_back();
+		auto bb = Scene::CreateObject<Entity>();
 		bb->MoveTo(0.0f, 00.0f, 0.0f);
 
-		auto& cc = myInstances.emplace_back();
+		auto cc = Scene::CreateObject<Entity>();
 		cc->MoveTo(3.0f, 0.0f, -1.0f);
 
-		auto& dd = myInstances.emplace_back();
+		auto dd = Scene::CreateObject<Entity>();
 		dd->MoveTo(4.0f, 0.0f, -2.0f);
 
-		auto& ee = myInstances.emplace_back();
+		auto ee = Scene::CreateObject<Entity>();
 		ee->MoveTo(5.0f, 0.0f, -3.0f);
 
 		myRenderer.Start();
@@ -175,21 +178,17 @@ public:
 
 	void PrepareRendering() override
 	{
-		Scene::PrepareRendering();
-
 		myRenderer.PrepareRendering();
 	}
 
 	void Render() override
 	{
-		Scene::Render();
-
 		auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
 		auto uniform_mat_camera = myRenderer.GetUniform("a_CameraMatrix");
 		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
 
 		uniform_mat_world.AssignMatrix4x4(ogl::identity);
-		uniform_mat_camera.AssignMatrix4x4(myCameraMatrix);
+		uniform_mat_camera.AssignMatrix4x4(cameraMatrix);
 		uniform_mat_proj.AssignMatrix4x4(perspectiveMatrix);
 
 		// x, y, z, r, g, b, a
@@ -252,24 +251,24 @@ private:
 		cameraRight = glm::normalize(glm::cross(world_up, cameraLook));
 		cameraUp = glm::normalize(glm::cross(cameraLook, cameraRight));
 
-		myCameraMatrix = glm::lookAt(camera_position, camera_lookat, cameraUp);
+		cameraMatrix = glm::lookAt(camera_position, camera_lookat, cameraUp);
 	}
 	
 	void CameraMove(const float& x, const float& y, const float& z)
 	{
-		myCameraMatrix = ogl::Translate(myCameraMatrix, { x, y, z });
+		cameraMatrix = ogl::Translate(cameraMatrix, { x, y, z });
 	}
 
 	void CameraRotate(const float& pitch, const float& yaw, const float& roll)
 	{
-		myCameraMatrix = ogl::Rotate(myCameraMatrix, pitch, yaw, roll);
+		cameraMatrix = ogl::Rotate(cameraMatrix, pitch, yaw, roll);
 	}
 
 private:
 	ogl::Pipeline myRenderer;
 	ogl::VertexStream myVertexBuffer;
 
-	glm::mat4 myCameraMatrix;
+	glm::mat4 cameraMatrix;
 	glm::vec3 cameraRight, cameraLook, cameraUp;
 	glm::mat4 perspectiveMatrix;
 	glm::mat4 perspectiveTopMatrix;

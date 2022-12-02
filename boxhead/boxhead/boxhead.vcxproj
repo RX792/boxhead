@@ -196,7 +196,7 @@
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Framework.hpp" />
-    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="Main.hpp" />
     <ClInclude Include="map.h" />
     <ClInclude Include="pch.hpp" />

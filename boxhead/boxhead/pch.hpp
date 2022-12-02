@@ -10,4 +10,8 @@
 #include "Constants.hpp"
 #include "Scene.hpp"
 
+class Scene;
+class Entity;
+class Camera;
+
 #endif

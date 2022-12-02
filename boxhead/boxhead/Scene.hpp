@@ -54,6 +54,24 @@ public:
 		}
 	}
 
+	template<typename Ty, typename ...ArgTy>
+		requires EntityType<Ty, ArgTy...>
+	Ty* CreateObject(ArgTy&& ...args)
+	{
+		Ty* obj = Entity::Create<Ty>(std::forward<ArgTy>(args)...);
+		if (!obj)
+		{
+			throw std::bad_alloc{};
+
+			return nullptr;
+		}
+
+		obj->Start();
+		myInstances.push_back(obj);
+
+		return obj;
+	}
+
 	bool IsAwaken() const
 	{
 		return isAwaken;
@@ -70,3 +88,6 @@ private:
 	bool isAwaken;
 	bool isStarted;
 };
+
+template<typename Ty, typename ...ArgTy>
+concept SceneType = std::derived_from<Ty, Scene> && std::constructible_from<Ty, ArgTy...>;

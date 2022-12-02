@@ -1,10 +1,5 @@
 #pragma once
 #include <OpenGL.hpp>
-#include <Pipeline.hpp>
-#include <VertexStream.hpp>
-#include <Blobs.hpp>
-#include <Utils.hpp>
-#include <BlobUtils.hpp>
 
 #include "Scene.hpp"
 #include "Entity.hpp"
@@ -12,6 +7,8 @@
 
 class Framework
 {
+private:
+
 public:
 	Framework()
 		: myScenes()
@@ -37,8 +34,9 @@ public:
 	{
 		if (currentScene)
 		{
-			currentScene->Start();
 			sceneProcessFinished = false;
+
+			currentScene->Start();
 		}
 	}
 
@@ -46,6 +44,8 @@ public:
 	{
 		if (currentScene)
 		{
+			sceneProcessFinished = false;
+
 			currentScene->Update(delta_time);
 		}
 	}
@@ -65,6 +65,24 @@ public:
 			currentScene->Render();
 			sceneProcessFinished = true;
 		}
+	}
+
+	Scene* AddScene(Scene* const scene)
+	{
+		myScenes.push_back(scene);
+
+		return scene;
+	}
+
+	template<typename Ty, typename ...ArgTy>
+		requires SceneType<Ty, ArgTy...>
+	Ty* AddScene(ArgTy&&... arg)
+	{
+		Ty* scene = new Ty{ std::forward<ArgTy>(arg)... };
+
+		myScenes.push_back(scene);
+
+		return scene;
 	}
 
 	void ChangeScene(Scene* scene)
@@ -91,7 +109,7 @@ public:
 	}
 
 	static Framework* Instance;
-	
+
 private:
 	std::vector<Scene*> myScenes;
 	Scene* currentScene;

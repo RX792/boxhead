@@ -5,9 +5,12 @@
 class Entity
 {
 public:
-	Entity()
-		: Entity(glm::vec3{})
-	{}
+	template<typename Ty, typename ...ArgTy>
+		requires EntityType<Ty, ArgTy...>
+	static Ty* Create(ArgTy&& ...args)
+	{
+		return new Ty{ std::forward<ArgTy>(args)... };
+	}
 
 	Entity(const glm::vec3& position)
 		: myName()
@@ -18,7 +21,14 @@ public:
 		MoveTo(position);
 	}
 
+	Entity()
+		: Entity(glm::vec3{})
+	{}
+
 	virtual ~Entity()
+	{}
+
+	virtual void Start()
 	{}
 
 	virtual void Update(const float& delta_time)
@@ -196,3 +206,6 @@ protected:
 		}
 	}
 };
+
+template<typename Ty, typename ...ArgTy>
+concept EntityType = std::derived_from<Ty, Entity> && std::constructible_from<Ty, ArgTy...>;

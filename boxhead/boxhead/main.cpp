@@ -1,5 +1,6 @@
 ﻿#include "pch.hpp"
 #include "Main.hpp"
+#include "GameScene.hpp"
 
 Framework MySystem{};
 
@@ -39,8 +40,12 @@ int main(int argc, char** argv)
 	ogl::background_color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	elapsed_timer = performance_clock.now();
 
+	// 게임 초기화 부분
+	// 나머지 게임 진행은 모두 Scene 클래스에서 수행함
 	try
 	{
+		auto game_scene = MySystem.AddScene<GameScene>();
+
 		MySystem.Awake();
 
 		MySystem.Start();

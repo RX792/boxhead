@@ -1,5 +1,7 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
+#include <type_traits>
+#include <concepts>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -8,7 +10,6 @@
 #include <chrono>
 #include <ratio>
 #include <random>
-#include <concepts>
 #include <numbers>
 #include <memory>
 #include <string>
