@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 	{
 		ogl::Awake(argc, argv);
 
-		ogl::Ready("Shooter", constants::CLIENT_W, constants::CLIENT_H, 100, 100);
+		ogl::Ready("Shooter", constants::CLIENT_W, constants::CLIENT_H, 30, 30);
 	}
 	catch (std::runtime_error& e)
 	{
@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 	elapsed_timer = performance_clock.now();
 
 	// 게임 초기화 부분
-	// 나머지 게임 진행은 모두 Scene 클래스에서 수행함
+	// 나머지 게임 진행은 모두 Scene 클래스에서 수행
 	try
 	{
 		auto game_scene = MySystem.AddScene<GameScene>();
@@ -89,9 +89,6 @@ GLvoid UpdateView(const int w, const int h)
 
 	if (ratio != constants::CLIENT_RATIO)
 	{
-		const auto scale_w = fw / ogl::gl_width;
-		const auto scale_h = fh / ogl::gl_height;
-
 		// 뷰 포트 좌표
 		int res_x, res_y;
 
@@ -107,7 +104,7 @@ GLvoid UpdateView(const int w, const int h)
 			res_h = int(res_w * constants::CLIENT_RATIO);
 
 			res_x = 0;
-			res_y = int((fh - res_h) / 2.0f);
+			res_y = (h - res_h) / 2;
 		}
 		else // 너비가 높이보다 크다
 		{
@@ -117,7 +114,7 @@ GLvoid UpdateView(const int w, const int h)
 			res_w = int(fh / constants::CLIENT_RATIO);
 			res_h = h;
 
-			res_x = int((fw - res_w) / 2.0f);
+			res_x = (w - res_w) / 2;
 			res_y = 0;
 		}
 
