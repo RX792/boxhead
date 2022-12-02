@@ -7,8 +7,6 @@
 
 class Framework
 {
-private:
-
 public:
 	Framework()
 		: myScenes()

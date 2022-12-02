@@ -155,19 +155,19 @@ public:
 	{
 		Scene::Start();
 
-		auto aa = Scene::CreateObject<Entity>();
+		auto aa = Scene::CreateEntity<Entity>();
 		aa->MoveTo(1.0f, 0.0f, 1.0f);
 
-		auto bb = Scene::CreateObject<Entity>();
+		auto bb = Scene::CreateEntity<Entity>();
 		bb->MoveTo(0.0f, 0.0f, 10.0f);
 
-		auto cc = Scene::CreateObject<Entity>(3.0f, 0.0f, -1.0f);
+		auto cc = Scene::CreateEntity<Entity>(3.0f, 0.0f, -1.0f);
 		cc->MoveTo(3.0f, 0.0f, -1.0f);
 
-		auto dd = Scene::CreateObject<Entity>();
+		auto dd = Scene::CreateEntity<Entity>();
 		dd->MoveTo(4.0f, 0.0f, -2.0f);
 
-		auto ee = Scene::CreateObject<Entity>();
+		auto ee = Scene::CreateEntity<Entity>();
 		ee->MoveTo(5.0f, 0.0f, -3.0f);
 
 		myRenderer.Start();

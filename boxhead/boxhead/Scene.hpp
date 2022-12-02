@@ -25,7 +25,7 @@ public:
 			isAwaken = true;
 		}
 	}
-	
+
 	virtual void Start()
 	{
 		if (!isStarted)
@@ -41,7 +41,7 @@ public:
 			instance->Update(delta_time);
 		}
 	}
-	
+
 	virtual void PrepareRendering() = 0;
 
 	virtual void Render() = 0;
@@ -49,29 +49,11 @@ public:
 	virtual void Cleanup()
 	{
 		isStarted = false;
-		
+
 		if (0 < myInstances.size())
 		{
 			myInstances.clear();
 		}
-	}
-
-	template<typename Ty, typename ...ArgTy>
-		requires EntityType<Ty, ArgTy...>
-	Ty* CreateObject(ArgTy&& ...args)
-	{
-		Ty* obj = Entity::Instantiate<Ty>(std::forward<ArgTy>(args)...);
-		if (!obj)
-		{
-			throw std::bad_alloc{};
-
-			return nullptr;
-		}
-
-		obj->Start();
-		myInstances.push_back(obj);
-
-		return obj;
 	}
 
 	Scene& SetName(std::string_view name)
@@ -99,6 +81,57 @@ public:
 	bool IsStarted() const
 	{
 		return isStarted;
+	}
+
+	template<typename Ty, typename ...ArgTy>
+		requires EntityType<Ty, ArgTy...>
+	Ty* CreateEntity(ArgTy&& ...args)
+	{
+		Ty* obj = Entity::Instantiate<Ty>(std::forward<ArgTy>(args)...);
+		if (!obj)
+		{
+			throw std::bad_alloc{};
+
+			return nullptr;
+		}
+
+		obj->Start();
+		myInstances.push_back(obj);
+
+		return obj;
+	}
+
+	void AddEntity(Entity* instance)
+	{
+		myInstances.push_back(instance);
+	}
+
+	std::vector<Entity*>::iterator FindEntity(Entity* instance)
+	{
+		return std::ranges::find(myInstances, instance);
+	}
+
+	std::vector<Entity*>::iterator FindEntity(std::string_view name)
+	{
+		return std::ranges::find_if(myInstances, [&](const Entity* instance) -> bool {
+			return (instance->myName == name);
+		});
+	}
+
+	std::vector<Entity*>::iterator RemoveEntity(Entity* instance)
+	{
+		auto it = FindEntity(instance);
+		if (it != myInstances.end())
+		{
+			myInstances.erase(it);
+		}
+
+		return it;
+	}
+
+	std::vector<Entity*>::iterator RemoveEntity(std::vector<Entity*>::iterator& it)
+	{
+		return myInstances.erase(it);
 	}
 
 	size_t GetInstanceCount() const
