@@ -13,14 +13,20 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="IconerLibrary">
-      <UniqueIdentifier>{ac5bbd0a-b86e-45c9-a039-8858be8fd879}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\Lib">
       <UniqueIdentifier>{bbbfb052-f3af-44c2-a770-81ca0ca32cc2}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Lib">
       <UniqueIdentifier>{f2ee6cb2-7781-4443-be08-1e4fc9fd8fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Core">
+      <UniqueIdentifier>{0eccec0f-6afc-494b-8af2-f9557e7073ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Contents">
+      <UniqueIdentifier>{ff4d99fc-1269-45bb-ae6d-df6f76144fd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{9756c7fa-15ed-4e00-9f06-c32afca4718d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,23 +72,23 @@
     <ClCompile Include="..\IconerLibrary\VertexStream.cpp">
       <Filter>소스 파일\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="Framework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Constants.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework.cpp">
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +107,6 @@
     <ClInclude Include="misc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="zombie.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="line.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -111,12 +114,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="pch.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Main.hpp">
@@ -158,17 +155,26 @@
     <ClInclude Include="..\IconerLibrary\VertexStream.hpp">
       <Filter>헤더 파일\Lib</Filter>
     </ClInclude>
-    <ClInclude Include="Constants.hpp">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Camera.hpp">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.hpp">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Constants.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework.hpp">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="Player.hpp">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.hpp">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Scene.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="zombie.h">
+      <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

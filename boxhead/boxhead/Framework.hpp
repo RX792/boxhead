@@ -6,20 +6,31 @@
 #include <Utils.hpp>
 #include <BlobUtils.hpp>
 
+#include "Scene.hpp"
 #include "Entity.hpp"
+#include "Camera.hpp"
 
 class Framework
 {
 public:
 	Framework()
 		: myRenderer(), myVertexBuffer(ogl::CreateVertex())
-		, myInstances()
+		, myScenes()
 	{
-		myInstances.reserve(100);
+		myScenes.reserve(100);
+
+		Instance = this;
 	}
 
 	void Awake()
 	{
+		if (0 < myScenes.size())
+		{
+			currentScene = myScenes.at(0);
+
+			currentScene->Awake();
+		}
+		
 		myRenderer.Awake();
 
 		myRenderer.LoadVertexShader("..\\Shaders\\PlainV.glsl");
@@ -148,27 +159,15 @@ public:
 		// 4
 		myVertexBuffer.Push(floor);
 
-		auto& aa = myInstances.emplace_back();
-		aa.MoveTo(1.0f, 0.0f, 1.0f);
-
-		auto& bb = myInstances.emplace_back();
-		bb.MoveTo(0.0f, 00.0f, 0.0f);
-
-		auto& cc = myInstances.emplace_back();
-		cc.MoveTo(3.0f, 0.0f, -1.0f);
-
-		auto& dd = myInstances.emplace_back();
-		dd.MoveTo(4.0f, 0.0f, -2.0f);
-
-		auto& ee = myInstances.emplace_back();
-		ee.MoveTo(5.0f, 0.0f, -3.0f);
-
 		myRenderer.Start();
 	}
 
 	void Update(const float& delta_time)
 	{
-
+		if (currentScene)
+		{
+			currentScene->Update(delta_time);
+		}
 	}
 
 	void PrepareRendering()
@@ -220,17 +219,12 @@ public:
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);
 
-		for (auto& instance : myInstances)
+		if (currentScene)
 		{
-			instance.PrepareRendering(uniform_mat_world);
-
-			//instance.Render();
-
-			for (GLint i = 0; i < 6; i++)
-			{
-				ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
-			}
+			currentScene->PrepareRendering();
+			currentScene->Render();
 		}
+
 		myRenderer.ResetSeekBuffer();
 
 		attr_pos.DisableVertexArray();
@@ -256,7 +250,10 @@ public:
 	glm::mat4 perspectiveTopMatrix;
 	glm::mat4 orthodoxMatrix;
 
-	std::vector<Entity> myInstances{};
+	std::vector<Scene*> myScenes;
+	Scene* currentScene;
+
+	static Framework* Instance;
 
 private:
 	void ResetCamera()
@@ -275,3 +272,5 @@ private:
 		myCameraMatrix = glm::lookAt(camera_position, camera_lookat, cameraUp);
 	}
 };
+
+Framework* Framework::Instance = nullptr;
