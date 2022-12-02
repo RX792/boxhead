@@ -28,6 +28,9 @@
     <Filter Include="소스 파일\Core">
       <UniqueIdentifier>{9756c7fa-15ed-4e00-9f06-c32afca4718d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Contents">
+      <UniqueIdentifier>{1fcd0d38-5d73-4306-a47b-b5cd404cff97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,9 +75,6 @@
     <ClCompile Include="..\IconerLibrary\VertexStream.cpp">
       <Filter>소스 파일\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
@@ -91,6 +91,15 @@
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,6 +109,12 @@
       <Filter>리소스 파일</Filter>
     </None>
     <None Include="vertex.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="..\Shaders\PlainP.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="..\Shaders\PlainV.glsl">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
@@ -120,9 +135,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Main.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\IconerLibrary\Attribute.hpp">
@@ -180,6 +192,15 @@
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.hpp">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

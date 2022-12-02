@@ -73,21 +73,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GlfwLinkage>static</GlfwLinkage>
     <Linkage-freeglut>static</Linkage-freeglut>
-    <IncludePath>$(SolutionDir)IconerLibrary;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)IconerLibrary;$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib;$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <GlfwLinkage>static</GlfwLinkage>
     <Linkage-freeglut>static</Linkage-freeglut>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(SolutionDir)lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-    <IncludePath>$(SolutionDir)IconerLibrary;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>$(SolutionDir)lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-    <IncludePath>$(SolutionDir)IconerLibrary;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -182,6 +183,7 @@
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
@@ -193,8 +195,11 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Shaders\PlainP.glsl" />
+    <None Include="..\Shaders\PlainV.glsl" />
     <None Include="fragment.glsl" />
     <None Include="packages.config" />
     <None Include="vertex.glsl" />
@@ -215,6 +220,7 @@
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Framework.hpp" />
+    <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="Main.hpp" />
     <ClInclude Include="map.h" />
@@ -222,6 +228,7 @@
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="stdafx.hpp" />
+    <ClInclude Include="Transform.hpp" />
     <ClInclude Include="zombie.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="line.h" />
