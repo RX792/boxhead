@@ -79,10 +79,28 @@ GLvoid UpdateFrames(int value)
 
 GLvoid UpdateView(const int w, const int h)
 {
-	ogl::gl_width = w;
-	ogl::gl_height = h;
+	const auto fw = static_cast<float>(w);
+	const auto fh = static_cast<float>(h);
+	const auto ratio = static_cast<float>(h) / static_cast<float>(w);
 
-	glViewport(0, 0, w, h);
+	float res_w, res_h;
+	if (h < w)
+	{
+		// 높이 기준
+		res_w = fh * constants::CLIENT_RATIO;
+		res_h = fh;
+	}
+	else
+	{
+		// 너비 기준
+		res_w = fw;
+		res_h = fw * constants::CLIENT_RATIO;
+	}
+
+	ogl::gl_width = res_w;
+	ogl::gl_height = res_h;
+
+	glViewport(0, 0, res_w, res_h);
 }
 
 GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y)
