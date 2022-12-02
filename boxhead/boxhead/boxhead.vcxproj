@@ -161,13 +161,18 @@
     <ClCompile Include="..\IconerLibrary\Uniform.cpp" />
     <ClCompile Include="..\IconerLibrary\Utils.cpp" />
     <ClCompile Include="..\IconerLibrary\VertexStream.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Constants.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,11 +192,16 @@
     <ClInclude Include="..\IconerLibrary\Uniform.hpp" />
     <ClInclude Include="..\IconerLibrary\Utils.hpp" />
     <ClInclude Include="..\IconerLibrary\VertexStream.hpp" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Constants.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Framework.hpp" />
+    <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="Main.hpp" />
     <ClInclude Include="map.h" />
     <ClInclude Include="pch.hpp" />
+    <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Scene.hpp" />
     <ClInclude Include="stdafx.hpp" />
     <ClInclude Include="zombie.h" />
     <ClInclude Include="input.h" />

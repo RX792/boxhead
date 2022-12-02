@@ -1,7 +1,7 @@
 ﻿#include "pch.hpp"
 #include "Main.hpp"
+#include "GameScene.hpp"
 
-constexpr int client_w{ 800 }, client_h{ 600 };
 Framework MySystem{};
 
 std::random_device seed{};
@@ -14,11 +14,11 @@ float elapsed_time{};
 
 int main(int argc, char** argv)
 {
-	ogl::Awake(argc, argv);
-
 	try
 	{
-		ogl::Ready("Shooter", client_w, client_h, 100, 100);
+		ogl::Awake(argc, argv);
+
+		ogl::Ready("Shooter", constants::CLIENT_W, constants::CLIENT_H, 100, 100);
 	}
 	catch (std::runtime_error& e)
 	{
@@ -39,9 +39,13 @@ int main(int argc, char** argv)
 
 	ogl::background_color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	elapsed_timer = performance_clock.now();
-	
+
+	// 게임 초기화 부분
+	// 나머지 게임 진행은 모두 Scene 클래스에서 수행함
 	try
 	{
+		auto game_scene = MySystem.AddScene<GameScene>();
+
 		MySystem.Awake();
 
 		MySystem.Start();
@@ -79,10 +83,53 @@ GLvoid UpdateFrames(int value)
 
 GLvoid UpdateView(const int w, const int h)
 {
-	ogl::gl_width = w;
-	ogl::gl_height = h;
+	const auto fw = static_cast<float>(w);
+	const auto fh = static_cast<float>(h);
+	const auto ratio = fh / fw;
 
-	glViewport(0, 0, w, h);
+	if (ratio != constants::CLIENT_RATIO)
+	{
+		const auto scale_w = fw / ogl::gl_width;
+		const auto scale_h = fh / ogl::gl_height;
+
+		// 뷰 포트 좌표
+		int res_x, res_y;
+
+		// 뷰 표트 크기
+		int res_w, res_h;
+
+		if (constants::CLIENT_RATIO < ratio) // 높이가 너비보다 크다
+		{
+			// 너비 기준
+			const auto wscale = ratio / constants::CLIENT_RATIO;
+
+			res_w = w;
+			res_h = int(res_w * constants::CLIENT_RATIO);
+
+			res_x = 0;
+			res_y = int((fh - res_h) / 2.0f);
+		}
+		else // 너비가 높이보다 크다
+		{
+			// 높이 기준
+			const auto hscale = constants::CLIENT_RATIO / ratio;
+
+			res_w = int(fh / constants::CLIENT_RATIO);
+			res_h = h;
+
+			res_x = int((fw - res_w) / 2.0f);
+			res_y = 0;
+		}
+
+		ogl::gl_width = res_w;
+		ogl::gl_height = res_h;
+
+		glViewport(res_x, res_y, res_w, res_h);
+	}
+	else
+	{
+		glViewport(0, 0, w, h);
+	}
 }
 
 GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y)
@@ -171,25 +218,25 @@ GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y)
 	{
 		case GLUT_KEY_LEFT:
 		{
-			
+
 		}
 		break;
 
 		case GLUT_KEY_RIGHT:
 		{
-			
+
 		}
 		break;
 
 		case GLUT_KEY_UP:
 		{
-			
+
 		}
 		break;
 
 		case GLUT_KEY_DOWN:
 		{
-			
+
 		}
 		break;
 

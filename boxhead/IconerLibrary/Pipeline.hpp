@@ -29,12 +29,12 @@ namespace ogl
 		Pipeline(const Pipeline& other) = delete;
 		Pipeline& operator=(const Pipeline& other) = delete;
 
-		inline void Awake()
+		void Awake()
 		{
 			myID = glCreateProgram();
 		}
 
-		inline void Start()
+		void Ready()
 		{
 			GLint Success = 0;
 
@@ -73,34 +73,39 @@ namespace ogl
 			auto fcaption = CutExtensions(fpath.filename().string());
 
 			auto common_mismatch = std::mismatch(vcaption.cbegin(), vcaption.cend(), fcaption.cbegin(), fcaption.cend());
-			auto common_caption = std::string{ vcaption.cbegin(), common_mismatch.first};
+			auto common_caption = std::string{ vcaption.cbegin(), common_mismatch.first };
 
 			std::cout << common_caption << " → 컴파일 완료.\n";
 		}
 
-		inline void PrepareRendering()
+		void Start()
+		{
+			writePtr = 0;
+		}
+
+		void PrepareRendering()
 		{
 			glUseProgram(myID);
 
 			writePtr = 0;
 		}
 
-		inline void ResetSeekBuffer()
+		void ResetSeekBuffer()
 		{
 			writePtr = 0;
 		}
 
-		inline void SeekBuffer(const size_t pos)
+		void SeekBuffer(const size_t pos)
 		{
 			writePtr = reinterpret_cast<GLvoid*>(pos);
 		}
 
-		inline void ForwardBuffer(const size_t size)
+		void ForwardBuffer(const size_t size)
 		{
 			writePtr = reinterpret_cast<GLvoid*>(reinterpret_cast<size_t>(writePtr) + size);
 		}
 
-		inline void ReadBuffer(Attribute& attr, const GLint length)
+		void ReadBuffer(Attribute& attr, const GLint length)
 		{
 			attr.Assign(attr.writeType, length, attr.writeStride, writePtr);
 
@@ -114,17 +119,17 @@ namespace ogl
 			}
 		}
 
-		inline Uniform GetUniform(std::string_view name) const
+		Uniform GetUniform(std::string_view name) const
 		{
 			return Uniform(glGetUniformLocation(myID, name.data()));
 		}
 
-		inline Attribute GetAttribute(std::string_view name, const GLsizei stride = 0, const GLenum type = GL_FLOAT) const
+		Attribute GetAttribute(std::string_view name, const GLsizei stride = 0, const GLenum type = GL_FLOAT) const
 		{
 			return Attribute(glGetAttribLocation(myID, name.data()), stride, type);
 		}
 
-		inline Attribute BeginAttribute(std::string_view name, const GLsizei stride = 0, const GLenum type = GL_FLOAT) const
+		Attribute BeginAttribute(std::string_view name, const GLsizei stride = 0, const GLenum type = GL_FLOAT) const
 		{
 			auto result = Attribute(glGetAttribLocation(myID, name.data()), stride, type);
 			result.EnableVertexArray();
@@ -132,7 +137,7 @@ namespace ogl
 			return result;
 		}
 
-		inline std::shared_ptr<Shader> LoadShader(const GLenum type, const Path& shader_file)
+		std::shared_ptr<Shader> LoadShader(const GLenum type, const Path& shader_file)
 		{
 			auto fn_shader = shader_file.filename();
 			auto sh = std::make_shared<Shader>(type, shader_file);
@@ -152,7 +157,7 @@ namespace ogl
 			return sh;
 		}
 
-		inline std::shared_ptr<Shader> LoadVertexShader(const Path& shader_file)
+		std::shared_ptr<Shader> LoadVertexShader(const Path& shader_file)
 		{
 			std::cout << "정점 쉐이더: " << shader_file.filename() << '\n';
 			shVertex = LoadShader(GL_VERTEX_SHADER, shader_file);
@@ -162,7 +167,7 @@ namespace ogl
 			return shVertex;
 		}
 
-		inline std::shared_ptr<Shader> LoadFragmentShader(const Path& shader_file)
+		std::shared_ptr<Shader> LoadFragmentShader(const Path& shader_file)
 		{
 			std::cout << "조각 쉐이더: " << shader_file.filename() << '\n';
 			shFragment = LoadShader(GL_FRAGMENT_SHADER, shader_file);
@@ -172,18 +177,18 @@ namespace ogl
 			return shFragment;
 		}
 
-		inline std::pair<std::shared_ptr<Shader>, std::shared_ptr<Shader>>
+		std::pair<std::shared_ptr<Shader>, std::shared_ptr<Shader>>
 			LoadShaders(const Path& vs, const Path& fs)
 		{
 			return { LoadVertexShader(vs), LoadFragmentShader(fs) };
 		}
 
-		inline void AttachShader(const GLuint shader)
+		void AttachShader(const GLuint shader)
 		{
 			glAttachShader(myID, shader);
 		}
 
-		inline void AttachShader(Shader& shader)
+		void AttachShader(Shader& shader)
 		{
 			shader.Attach(myID);
 		}
