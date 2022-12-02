@@ -12,28 +12,43 @@ public:
 		return new Ty{ std::forward<ArgTy>(args)... };
 	}
 
-	Entity(const glm::vec3& position)
+	Entity()
 		: myName()
 		, myHealth(), maxHealth()
 		, localMatrix(ogl::identity), worldMatrix(ogl::identity)
-		, mySibling(nullptr), myChild(nullptr)
+		, prevSibling(nullptr), nextSibling(nullptr)
+		, myParent(nullptr), myChild(nullptr)
+	{}
+
+	Entity(const glm::vec3& position)
+		: Entity()
 	{
 		MoveTo(position);
 	}
 
-	Entity()
-		: Entity(glm::vec3{})
-	{}
+	Entity(const float& x, const float& y, const float& z)
+		: Entity()
+	{
+		MoveTo(x, y, z);
+	}
 
 	virtual ~Entity()
-	{}
+	{
+		DestroyChildren();
+		GiveInheritance();
+
+		if (prevSibling)
+		{
+			prevSibling->nextSibling = nextSibling;
+		}
+	}
 
 	virtual void Start()
 	{}
 
 	virtual void Update(const float& delta_time)
 	{}
-	
+
 	virtual void PrepareRendering(ogl::Uniform& world_uniform)
 	{
 		EnumerateTransform();
@@ -50,9 +65,15 @@ public:
 		}
 	}
 
+	/// <summary>
+	/// 자식을 추가합니다.
+	/// </summary>
+	/// <param name="child"></param>
 	void AddChild(Entity* child)
 	{
-		if (myChild == nullptr)
+		if (!child) return;
+
+		if (!myChild)
 		{
 			myChild = child;
 		}
@@ -60,17 +81,69 @@ public:
 		{
 			myChild->AddSibling(child);
 		}
+
+		child->myParent = this;
 	}
 
+	/// <summary>
+	/// 형제를 추가합니다.
+	/// </summary>
+	/// <param name="other">게임 인스턴스</param>
 	void AddSibling(Entity* other)
 	{
-		if (mySibling == nullptr)
+		if (!other) return;
+
+		if (!nextSibling)
 		{
-			mySibling = other;
+			nextSibling = other;
+
+			other->prevSibling = this;
 		}
 		else
 		{
-			mySibling->AddSibling(other);
+			nextSibling->AddSibling(other);
+		}
+	}
+
+	/// <summary>
+	/// 다음 형제에게 부모의 관계를 넘겨줍니다.
+	/// </summary>
+	void GiveInheritance()
+	{
+		if (myParent)
+		{
+			if (myParent->myChild == this)
+			{
+				myParent->myChild = nextSibling;
+			}
+		}
+	}
+
+	/// <summary>
+	/// 모든 자식 개체를 파괴합니다.
+	/// </summary>
+	void DestroyChildren()
+	{
+		if (myChild)
+		{
+			myChild->DestroyChildren();
+
+			delete myChild;
+			myChild = nullptr;
+		}
+	}
+
+	/// <summary>
+	/// 모든 다음 형제 개체를 파괴합니다.
+	/// </summary>
+	void DestroySiblings()
+	{
+		if (nextSibling)
+		{
+			nextSibling->DestroySiblings();
+
+			delete nextSibling;
+			nextSibling = nullptr;
 		}
 	}
 
@@ -171,18 +244,12 @@ public:
 	float myHealth;
 	float maxHealth;
 
-	glm::mat4 localMatrix;
-	glm::mat4 worldMatrix;
-
-	Entity* mySibling;
-	Entity* myChild;
-
 protected:
 	void EnumerateTransform()
 	{
-		if (mySibling)
+		if (nextSibling)
 		{
-			mySibling->EnumerateTransform();
+			nextSibling->EnumerateTransform();
 		}
 
 		if (myChild)
@@ -195,9 +262,9 @@ protected:
 	{
 		worldMatrix = parent_matrix * localMatrix;
 
-		if (mySibling)
+		if (nextSibling)
 		{
-			mySibling->UpdateTransform(parent_matrix);
+			nextSibling->UpdateTransform(parent_matrix);
 		}
 
 		if (myChild)
@@ -205,6 +272,14 @@ protected:
 			myChild->UpdateTransform(worldMatrix);
 		}
 	}
+
+	glm::mat4 localMatrix;
+	glm::mat4 worldMatrix;
+
+	Entity* prevSibling;
+	Entity* nextSibling;
+	Entity* myParent;
+	Entity* myChild;
 };
 
 template<typename Ty, typename ...ArgTy>
