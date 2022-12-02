@@ -32,36 +32,32 @@ public:
 		ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 24, 0);
 	}
 
-	void EnumerateTransform()
+	void AddChild(Entity* child)
 	{
-		if (mySibling)
+		if (myChild == nullptr)
 		{
-			mySibling->EnumerateTransform();
+			myChild = child;
 		}
-
-		if (myChild)
+		else
 		{
-			myChild->UpdateTransform(worldMatrix);
+			myChild->AddSibling(child);
 		}
 	}
 
-	void UpdateTransform(const glm::mat4& parent_matrix)
+	void AddSibling(Entity* other)
 	{
-		worldMatrix = parent_matrix * localMatrix;
-
-		if (mySibling)
+		if (mySibling == nullptr)
 		{
-			mySibling->UpdateTransform(parent_matrix);
+			mySibling = other;
 		}
-
-		if (myChild)
+		else
 		{
-			myChild->UpdateTransform(worldMatrix);
+			mySibling->AddSibling(other);
 		}
 	}
 
 	/// <summary>
-	/// ì¢Œí‘œë¥¼ ì§€ì •í•©ë‹ˆë‹¤.
+	/// ÁÂÇ¥¸¦ ÁöÁ¤ÇÕ´Ï´Ù.
 	/// </summary>
 	/// <param name="x"></param>
 	/// <param name="y"></param>
@@ -76,7 +72,7 @@ public:
 	}
 
 	/// <summary>
-	/// ì¢Œí‘œë¥¼ ë”í•©ë‹ˆë‹¤.
+	/// ÁÂÇ¥¸¦ ´õÇÕ´Ï´Ù.
 	/// </summary>
 	/// <param name="ax"></param>
 	/// <param name="ay"></param>
@@ -91,18 +87,18 @@ public:
 	}
 
 	/// <summary>
-	/// ì¢Œí‘œë¥¼ ë”í•©ë‹ˆë‹¤.
+	/// ÁÂÇ¥¸¦ ´õÇÕ´Ï´Ù.
 	/// </summary>
 	/// <param name="vector"></param>
 	void Translate(const glm::vec3& vector)
 	{
-		//localMatrix[3] += vector;
+		localMatrix[3] += vector;
 
 		UpdateTransform(localMatrix);
 	}
 
 	/// <summary>
-	/// íšŒì „ ê°ë„ë¥¼ ë”í•©ë‹ˆë‹¤.
+	/// È¸Àü °¢µµ¸¦ ´õÇÕ´Ï´Ù.
 	/// </summary>
 	/// <param name="pitch"></param>
 	/// <param name="yaw"></param>
@@ -117,7 +113,7 @@ public:
 	}
 
 	/// <summary>
-	/// íšŒì „ ê°ë„ë¥¼ ì§€ì •í•©ë‹ˆë‹¤.
+	/// È¸Àü °¢µµ¸¦ ÁöÁ¤ÇÕ´Ï´Ù.
 	/// </summary>
 	/// <param name="pitch"></param>
 	/// <param name="yaw"></param>
