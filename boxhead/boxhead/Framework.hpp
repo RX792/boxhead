@@ -7,8 +7,6 @@
 
 class Framework
 {
-private:
-
 public:
 	Framework()
 		: myScenes()
@@ -83,14 +81,21 @@ public:
 	}
 
 	template<typename Ty, typename ...ArgTy>
-		requires SceneType<Ty, ArgTy...>
+		requires SceneType<Ty, size_t, ArgTy...>
 	Ty* AddScene(ArgTy&&... arg)
 	{
-		Ty* scene = new Ty{ std::forward<ArgTy>(arg)... };
+		const size_t count = myScenes.size();
+
+		Ty* scene = new Ty{ count, std::forward<ArgTy>(arg)... };
 
 		myScenes.push_back(scene);
 
 		return scene;
+	}
+
+	Scene* const GetScene(const size_t& index) const
+	{
+		return myScenes.at(index);
 	}
 
 	void ChangeScene(Scene* scene)
@@ -113,6 +118,16 @@ public:
 		else
 		{
 			reservatedScene = scene;
+		}
+	}
+
+	void ChangeScene(const size_t& index)
+	{
+		auto target = GetScene(index);
+
+		if (target)
+		{
+			ChangeScene(target);
 		}
 	}
 

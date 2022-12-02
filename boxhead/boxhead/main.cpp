@@ -44,7 +44,9 @@ int main(int argc, char** argv)
 	// 나머지 게임 진행은 모두 Scene 클래스에서 수행
 	try
 	{
-		auto game_scene = MySystem.AddScene<GameScene>();
+		auto game_scene0 = MySystem.AddScene<GameScene>();
+		auto game_scene1 = MySystem.AddScene<GameScene>();
+		auto game_scene2 = MySystem.AddScene<GameScene>();
 
 		MySystem.Awake();
 

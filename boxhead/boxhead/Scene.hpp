@@ -4,8 +4,10 @@
 class Scene
 {
 public:
-	constexpr Scene()
-		: myInstances()
+	constexpr Scene(const size_t& id)
+		: myID(id)
+		, myName()
+		, myInstances()
 		, isAwaken(false), isStarted(false)
 	{
 		myInstances.reserve(10);
@@ -23,7 +25,7 @@ public:
 			isAwaken = true;
 		}
 	}
-	
+
 	virtual void Start()
 	{
 		if (!isStarted)
@@ -39,7 +41,7 @@ public:
 			instance->Update(delta_time);
 		}
 	}
-	
+
 	virtual void PrepareRendering() = 0;
 
 	virtual void Render() = 0;
@@ -47,16 +49,43 @@ public:
 	virtual void Cleanup()
 	{
 		isStarted = false;
-		
+
 		if (0 < myInstances.size())
 		{
 			myInstances.clear();
 		}
 	}
 
+	Scene& SetName(std::string_view name)
+	{
+		myName = name;
+
+		return *this;
+	}
+
+	std::string_view GetName() const
+	{
+		return myName;
+	}
+
+	size_t GetID() const
+	{
+		return myID;
+	}
+
+	bool IsAwaken() const
+	{
+		return isAwaken;
+	}
+
+	bool IsStarted() const
+	{
+		return isStarted;
+	}
+
 	template<typename Ty, typename ...ArgTy>
 		requires EntityType<Ty, ArgTy...>
-	Ty* CreateObject(ArgTy&& ...args)
+	Ty* CreateEntity(ArgTy&& ...args)
 	{
 		Ty* obj = Entity::Instantiate<Ty>(std::forward<ArgTy>(args)...);
 		if (!obj)
@@ -72,19 +101,50 @@ public:
 		return obj;
 	}
 
-	bool IsAwaken() const
+	void AddEntity(Entity* instance)
 	{
-		return isAwaken;
+		myInstances.push_back(instance);
 	}
 
-	bool IsStarted() const
+	std::vector<Entity*>::iterator FindEntity(Entity* instance)
 	{
-		return isStarted;
+		return std::ranges::find(myInstances, instance);
+	}
+
+	std::vector<Entity*>::iterator FindEntity(std::string_view name)
+	{
+		return std::ranges::find_if(myInstances, [&](const Entity* instance) -> bool {
+			return (instance->myName == name);
+		});
+	}
+
+	std::vector<Entity*>::iterator RemoveEntity(Entity* instance)
+	{
+		auto it = FindEntity(instance);
+		if (it != myInstances.end())
+		{
+			myInstances.erase(it);
+		}
+
+		return it;
+	}
+
+	std::vector<Entity*>::iterator RemoveEntity(std::vector<Entity*>::iterator& it)
+	{
+		return myInstances.erase(it);
+	}
+
+	size_t GetInstanceCount() const
+	{
+		return myInstances.size();
 	}
 
 	std::vector<Entity*> myInstances;
 
 private:
+	std::string myName;
+	const size_t myID;
+
 	bool isAwaken;
 	bool isStarted;
 };
