@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.hpp"
 
-class Entity
+class Entity : public GameObject
 {
 public:
 	template<typename Ty, typename ...ArgTy>
@@ -12,11 +12,9 @@ public:
 	}
 
 	Entity()
-		: myName()
-		, myHealth(), maxHealth()
+		: GameObject()
+		, myName(), myHealth(), maxHealth()
 		, localMatrix(ogl::identity), worldMatrix(ogl::identity)
-		, prevSibling(nullptr), nextSibling(nullptr)
-		, myParent(nullptr), myChild(nullptr)
 	{}
 
 	Entity(const glm::vec3& position)
@@ -32,15 +30,7 @@ public:
 	}
 
 	virtual ~Entity()
-	{
-		DestroyChildren();
-		GiveInheritance();
-
-		if (prevSibling)
-		{
-			prevSibling->nextSibling = nextSibling;
-		}
-	}
+	{}
 
 	virtual void Start()
 	{}
@@ -75,88 +65,6 @@ public:
 		for (GLint i = 0; i < 6; i++)
 		{
 			ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
-		}
-	}
-
-	/// <summary>
-	/// 자식을 추가합니다.
-	/// </summary>
-	/// <param name="child"></param>
-	void AddChild(Entity* child)
-	{
-		if (!child) return;
-
-		if (!myChild)
-		{
-			myChild = child;
-		}
-		else
-		{
-			myChild->AddSibling(child);
-		}
-
-		child->myParent = this;
-	}
-
-	/// <summary>
-	/// 형제를 추가합니다.
-	/// </summary>
-	/// <param name="other">게임 인스턴스</param>
-	void AddSibling(Entity* other)
-	{
-		if (!other) return;
-
-		if (!nextSibling)
-		{
-			nextSibling = other;
-
-			other->prevSibling = this;
-		}
-		else
-		{
-			nextSibling->AddSibling(other);
-		}
-	}
-
-	/// <summary>
-	/// 다음 형제에게 부모의 관계를 넘겨줍니다.
-	/// </summary>
-	void GiveInheritance()
-	{
-		if (myParent)
-		{
-			if (myParent->myChild == this)
-			{
-				myParent->myChild = nextSibling;
-			}
-		}
-	}
-
-	/// <summary>
-	/// 모든 자식 개체를 파괴합니다.
-	/// </summary>
-	void DestroyChildren()
-	{
-		if (myChild)
-		{
-			myChild->DestroyChildren();
-
-			delete myChild;
-			myChild = nullptr;
-		}
-	}
-
-	/// <summary>
-	/// 모든 다음 형제 개체를 파괴합니다.
-	/// </summary>
-	void DestroySiblings()
-	{
-		if (nextSibling)
-		{
-			nextSibling->DestroySiblings();
-
-			delete nextSibling;
-			nextSibling = nullptr;
 		}
 	}
 
@@ -257,42 +165,8 @@ public:
 	float myHealth;
 	float maxHealth;
 
-protected:
-	void EnumerateTransform()
-	{
-		if (nextSibling)
-		{
-			nextSibling->EnumerateTransform();
-		}
-
-		if (myChild)
-		{
-			myChild->UpdateTransform(worldMatrix);
-		}
-	}
-
-	void UpdateTransform(const glm::mat4& parent_matrix)
-	{
-		worldMatrix = parent_matrix * localMatrix;
-
-		if (nextSibling)
-		{
-			nextSibling->UpdateTransform(parent_matrix);
-		}
-
-		if (myChild)
-		{
-			myChild->UpdateTransform(worldMatrix);
-		}
-	}
-
 	glm::mat4 localMatrix;
 	glm::mat4 worldMatrix;
-
-	Entity* prevSibling;
-	Entity* nextSibling;
-	Entity* myParent;
-	Entity* myChild;
 };
 
 template<typename Ty, typename ...ArgTy>
