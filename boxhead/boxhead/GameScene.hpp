@@ -159,7 +159,7 @@ public:
 		auto bb = Scene::CreateObject<Entity>();
 		bb->MoveTo(0.0f, 00.0f, 0.0f);
 
-		auto cc = Scene::CreateObject<Entity>();
+		auto cc = Scene::CreateObject<Entity>(3.0f, 0.0f, -1.0f);
 		cc->MoveTo(3.0f, 0.0f, -1.0f);
 
 		auto dd = Scene::CreateObject<Entity>();

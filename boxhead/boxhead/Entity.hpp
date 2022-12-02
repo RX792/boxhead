@@ -12,18 +12,25 @@ public:
 		return new Ty{ std::forward<ArgTy>(args)... };
 	}
 
-	Entity(const glm::vec3& position)
+	Entity()
 		: myName()
 		, myHealth(), maxHealth()
 		, localMatrix(ogl::identity), worldMatrix(ogl::identity)
-		, mySibling(nullptr), myChild(nullptr)
+		, prevSibling(nullptr), nextSibling(nullptr)
+		, myParent(nullptr), myChild(nullptr)
+	{}
+
+	Entity(const glm::vec3& position)
+		: Entity()
 	{
 		MoveTo(position);
 	}
 
-	Entity()
-		: Entity(glm::vec3{})
-	{}
+	Entity(const float& x, const float& y, const float& z)
+		: Entity()
+	{
+		MoveTo(x, y, z);
+	}
 
 	virtual ~Entity()
 	{}
