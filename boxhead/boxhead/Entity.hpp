@@ -68,7 +68,6 @@ public:
 	/// <param name="z"></param>
 	void MoveTo(const float& x, const float& y, const float& z)
 	{
-		//localMatrix = glm::translate(localMatrix, x, y, z);
 		localMatrix[3][0] = x;
 		localMatrix[3][1] = y;
 		localMatrix[3][2] = z;
@@ -147,4 +146,33 @@ public:
 
 	Entity* mySibling;
 	Entity* myChild;
+
+protected:
+	void EnumerateTransform()
+	{
+		if (mySibling)
+		{
+			mySibling->EnumerateTransform();
+		}
+
+		if (myChild)
+		{
+			myChild->UpdateTransform(worldMatrix);
+		}
+	}
+
+	void UpdateTransform(const glm::mat4& parent_matrix)
+	{
+		worldMatrix = parent_matrix * localMatrix;
+
+		if (mySibling)
+		{
+			mySibling->UpdateTransform(parent_matrix);
+		}
+
+		if (myChild)
+		{
+			myChild->UpdateTransform(worldMatrix);
+		}
+	}
 };
