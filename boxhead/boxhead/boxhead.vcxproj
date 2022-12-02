@@ -161,6 +161,7 @@
     <ClCompile Include="..\IconerLibrary\Uniform.cpp" />
     <ClCompile Include="..\IconerLibrary\Utils.cpp" />
     <ClCompile Include="..\IconerLibrary\VertexStream.cpp" />
+    <ClCompile Include="Constants.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="main.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="..\IconerLibrary\Uniform.hpp" />
     <ClInclude Include="..\IconerLibrary\Utils.hpp" />
     <ClInclude Include="..\IconerLibrary\VertexStream.hpp" />
+    <ClInclude Include="Constants.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Framework.hpp" />
     <ClInclude Include="Main.hpp" />
