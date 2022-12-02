@@ -5,17 +5,18 @@
 class Entity
 {
 public:
-	Entity()
+	constexpr Entity()
+		: Entity(glm::vec3{})
+	{}
+
+	constexpr Entity(const glm::vec3& position)
 		: myName()
 		, myHealth(), maxHealth()
 		, localMatrix(ogl::identity), worldMatrix(ogl::identity)
 		, mySibling(nullptr), myChild(nullptr)
-	{}
-
-	Entity(const Entity& other) = default;
-	Entity(Entity&& other) = default;
-	Entity& operator=(const Entity& other) = default;
-	Entity& operator=(Entity&& other) = default;
+	{
+		MoveTo(position);
+	}
 
 	virtual ~Entity()
 	{}
@@ -69,6 +70,17 @@ public:
 		localMatrix[3][2] = z;
 
 		UpdateTransform(localMatrix);
+	}
+
+	/// <summary>
+	/// 좌표를 지정합니다.
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <param name="z"></param>
+	void MoveTo(const glm::vec3& position)
+	{
+		MoveTo(position.x, position.y, position.z);
 	}
 
 	/// <summary>
@@ -132,6 +144,11 @@ public:
 
 		UpdateTransform(localMatrix);
 	}
+
+	Entity(const Entity& other) = default;
+	Entity(Entity&& other) = default;
+	Entity& operator=(const Entity& other) = default;
+	Entity& operator=(Entity&& other) = default;
 
 	std::string myName;
 	float myHealth;
