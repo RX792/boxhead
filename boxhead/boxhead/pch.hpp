@@ -5,6 +5,7 @@
 #define __PCH__
 
 #include <OpenGL.hpp>
+#include <Pipeline.hpp>
 #include <Uniform.hpp>
 
 #include "Constants.hpp"
