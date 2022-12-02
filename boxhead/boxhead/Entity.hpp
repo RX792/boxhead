@@ -92,7 +92,7 @@ public:
 	/// <param name="vector"></param>
 	void Translate(const glm::vec3& vector)
 	{
-		localMatrix[3] += vector;
+		localMatrix[3] += glm::vec4{ vector, 0.0f };
 
 		UpdateTransform(localMatrix);
 	}
@@ -120,7 +120,7 @@ public:
 	/// <param name="roll"></param>
 	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
-		const glm::vec4 origin = localMatrix[3];
+		const glm::vec4& origin = localMatrix[3];
 		const glm::vec3 translation = { origin[0], origin[1], origin[2] };
 
 		localMatrix = ogl::identity;
