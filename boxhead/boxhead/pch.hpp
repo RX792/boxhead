@@ -9,7 +9,7 @@
 #include <Uniform.hpp>
 
 #include "Constants.hpp"
-#include "Scene.hpp"
+#include "Transform.hpp"
 
 class Scene;
 class GameObject;

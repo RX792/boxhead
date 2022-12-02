@@ -4,8 +4,10 @@
 class Scene
 {
 public:
-	constexpr Scene()
-		: myInstances()
+	constexpr Scene(const size_t& id)
+		: myID(id)
+		, myName()
+		, myInstances()
 		, isAwaken(false), isStarted(false)
 	{
 		myInstances.reserve(10);
@@ -72,6 +74,23 @@ public:
 		return obj;
 	}
 
+	Scene& SetName(std::string_view name)
+	{
+		myName = name;
+
+		return *this;
+	}
+
+	std::string_view GetName() const
+	{
+		return myName;
+	}
+
+	size_t GetID() const
+	{
+		return myID;
+	}
+
 	bool IsAwaken() const
 	{
 		return isAwaken;
@@ -82,9 +101,17 @@ public:
 		return isStarted;
 	}
 
+	size_t GetInstanceCount() const
+	{
+		return myInstances.size();
+	}
+
 	std::vector<Entity*> myInstances;
 
 private:
+	std::string myName;
+	const size_t myID;
+
 	bool isAwaken;
 	bool isStarted;
 };

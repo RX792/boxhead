@@ -11,13 +11,15 @@
 class GameScene : public Scene
 {
 public:
-	GameScene()
-		: Scene()
+	GameScene(const size_t& id)
+		: Scene(id)
 		, myRenderer(), myVertexBuffer(ogl::CreateVertex())
 		, cameraMatrix()
 		, cameraRight(), cameraUp(), cameraLook()
 		, perspectiveMatrix(), orthodoxMatrix()
-	{}
+	{
+		SetName("GameScene");
+	}
 
 	void Awake() override
 	{
