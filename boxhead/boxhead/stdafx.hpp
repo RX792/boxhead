@@ -6,6 +6,7 @@
 #include <syncstream>
 #include <filesystem>
 #include <chrono>
+#include <ratio>
 #include <random>
 #include <concepts>
 #include <numbers>
