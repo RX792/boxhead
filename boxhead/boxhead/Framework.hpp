@@ -30,11 +30,9 @@ public:
 
 	void Start()
 	{
-		if (currentScene)
+		if (currentScene && !currentScene->IsEnded())
 		{
 			sceneProcessFinished = false;
-
-			currentScene->Start();
 		}
 	}
 
@@ -49,7 +47,64 @@ public:
 		{
 			sceneProcessFinished = false;
 
+			if (currentScene->IsEnded())
+			{
+				Scene* next_scene;
+				try
+				{
+					next_scene = myScenes.at(currentScene->GetID() + 1);
+
+					ChangeScene(next_scene);
+				}
+				catch (...)
+				{
+					currentScene = nullptr;
+				}
+
+				return;
+			}
+
 			currentScene->Update(delta_time);
+		}
+	}
+
+	void OnUpdateView(const int& w, const int h)
+	{
+		if (currentScene && !currentScene->IsEnded())
+		{
+			currentScene->OnUpdateView(w, h);
+		}
+	}
+
+	void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y)
+	{
+		if (currentScene && !currentScene->IsEnded())
+		{
+			currentScene->OnUpdateKeyboard(key, x, y);
+		}
+	}
+
+	void OnUpdateSpecialKey(const int& key, const int& x, const int& y)
+	{
+		if (currentScene && !currentScene->IsEnded())
+		{
+			currentScene->OnUpdateSpecialKey(key, x, y);
+		}
+	}
+
+	void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
+	{
+		if (currentScene && !currentScene->IsEnded())
+		{
+			currentScene->OnUpdateMouse(button, state, x, y);
+		}
+	}
+
+	void OnUpdateMouseMotion(const int& x, const int& y)
+	{
+		if (currentScene && !currentScene->IsEnded())
+		{
+			currentScene->OnUpdateMouseMotion(x, y);
 		}
 	}
 
@@ -100,11 +155,7 @@ public:
 
 	void ChangeScene(Scene* scene)
 	{
-		if (currentScene)
-		{
-			currentScene->Cleanup();
-		}
-		else
+		if (!currentScene)
 		{
 			sceneProcessFinished = true;
 		}
@@ -141,6 +192,11 @@ private:
 
 	void ChangeSceneNow(Scene* scene)
 	{
+		if (currentScene)
+		{
+			currentScene->Cleanup();
+		}
+
 		currentScene = scene;
 		sceneProcessFinished = false;
 

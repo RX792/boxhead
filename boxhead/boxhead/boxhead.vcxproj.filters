@@ -102,6 +102,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -200,8 +203,11 @@
     <ClInclude Include="map.h">
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
+    <ClInclude Include="MainScene.hpp">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
     <ClInclude Include="GameObject.hpp">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -39,7 +39,7 @@ public:
 
 	virtual void PrepareRendering()
 	{
-		EnumerateTransform();
+		GameObject::PrepareRendering();
 	}
 
 	virtual void Render(ogl::Uniform& world_uniform)
@@ -83,9 +83,7 @@ public:
 	/// <summary>
 	/// 좌표를 지정합니다.
 	/// </summary>
-	/// <param name="x"></param>
-	/// <param name="y"></param>
-	/// <param name="z"></param>
+	/// <param name="position"></param>
 	void MoveTo(const glm::vec3& position)
 	{
 		MoveTo(position.x, position.y, position.z);
@@ -118,9 +116,9 @@ public:
 	/// <summary>
 	/// 회전 각도를 더합니다.
 	/// </summary>
-	/// <param name="pitch"></param>
-	/// <param name="yaw"></param>
-	/// <param name="roll"></param>
+	/// <param name="pitch">X 각도</param>
+	/// <param name="yaw">Y 각도</param>
+	/// <param name="roll">Z 각도</param>
 	void Tilt(const float& pitch, const float& yaw, const float& roll)
 	{
 		localTransform.Tilt(pitch, yaw, roll);
@@ -131,9 +129,9 @@ public:
 	/// <summary>
 	/// 회전 각도를 지정합니다.
 	/// </summary>
-	/// <param name="pitch"></param>
-	/// <param name="yaw"></param>
-	/// <param name="roll"></param>
+	/// <param name="pitch">X 각도</param>
+	/// <param name="yaw">Y 각도</param>
+	/// <param name="roll">Z 각도</param>
 	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
 		localTransform.Rotate(pitch, yaw, roll);

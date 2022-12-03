@@ -16,4 +16,6 @@ class GameObject;
 class Entity;
 class Camera;
 
+float RandomizeColour();
+
 #endif
