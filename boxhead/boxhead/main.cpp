@@ -1,5 +1,6 @@
 ﻿#include "pch.hpp"
 #include "Main.hpp"
+#include "MainScene.hpp"
 #include "GameScene.hpp"
 
 Framework MySystem{};
@@ -44,7 +45,7 @@ int main(int argc, char** argv)
 	// 나머지 게임 진행은 모두 Scene 클래스에서 수행
 	try
 	{
-		auto game_scene0 = MySystem.AddScene<GameScene>();
+		auto game_scene0 = MySystem.AddScene<MainScene>();
 		auto game_scene1 = MySystem.AddScene<GameScene>();
 		auto game_scene2 = MySystem.AddScene<GameScene>();
 
@@ -210,58 +211,12 @@ GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y)
 {
 	MySystem.OnUpdateSpecialKey(key, x, y);
 
-	const auto movement = 20.0f * elapsed_time;
-	const auto rotation = 15.0f * elapsed_time;
-
-	switch (key)
-	{
-		case GLUT_KEY_LEFT:
-		{
-
-		}
-		break;
-
-		case GLUT_KEY_RIGHT:
-		{
-
-		}
-		break;
-
-		case GLUT_KEY_UP:
-		{
-
-		}
-		break;
-
-		case GLUT_KEY_DOWN:
-		{
-
-		}
-		break;
-
-		case GLUT_KEY_F4:
-		{
-			std::quick_exit(0);
-		}
-		break;
-	}
-
 	ogl::Refresh();
 }
 
 GLvoid UpdateMouse(const int button, const int state, const int sx, const int sy)
 {
 	MySystem.OnUpdateMouse(button, state, sx, sy);
-
-	if (ogl::IsMouseClicked(state))
-	{
-		if (ogl::IsLeftMouseButton(button))
-		{
-			ogl::background_color.r = RandomizeColour() * 0.5f;
-			ogl::background_color.g = RandomizeColour() * 0.5f;
-			ogl::background_color.b = RandomizeColour() * 0.5f;
-		}
-	}
 
 	ogl::Refresh();
 }

@@ -172,6 +172,7 @@ private:
 
 	bool isAwaken;
 	bool isStarted;
+	bool isEnded;
 };
 
 template<typename Ty, typename ...ArgTy>
