@@ -306,7 +306,7 @@ public:
 
 		const auto translation_x = ogl::right * myX;//cameraRight * myX;
 		const auto translation_y = ogl::up * myY;
-		const auto translation_z = ogl::look * myZ;
+		const auto translation_z = ogl::forward * myZ;
 
 		// T R S
 		auto my_mat = ogl::Translate(ogl::identity, translation_x);

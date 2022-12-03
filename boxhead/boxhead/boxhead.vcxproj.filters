@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Lib">
+      <UniqueIdentifier>{bbbfb052-f3af-44c2-a770-81ca0ca32cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Lib">
+      <UniqueIdentifier>{f2ee6cb2-7781-4443-be08-1e4fc9fd8fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Core">
+      <UniqueIdentifier>{0eccec0f-6afc-494b-8af2-f9557e7073ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Contents">
+      <UniqueIdentifier>{ff4d99fc-1269-45bb-ae6d-df6f76144fd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{9756c7fa-15ed-4e00-9f06-c32afca4718d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Contents">
+      <UniqueIdentifier>{1fcd0d38-5d73-4306-a47b-b5cd404cff97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,33 +42,90 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Attribute.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\BasicBlobs.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Blobs.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\BlobUtils.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\OpenGL.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Pipeline.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Prototypes.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Shader.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Uniform.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\Utils.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IconerLibrary\VertexStream.cpp">
+      <Filter>소스 파일\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>소스 파일\Contents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="fragment.glsl">
-      <Filter>소스 파일</Filter>
+      <Filter>리소스 파일</Filter>
     </None>
     <None Include="vertex.glsl">
-      <Filter>소스 파일</Filter>
+      <Filter>리소스 파일</Filter>
     </None>
-    <None Include="packages.config" />
+    <None Include="..\Shaders\PlainP.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="..\Shaders\PlainV.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="input.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="misc.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="box.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="zombie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="line.h">
@@ -62,24 +137,81 @@
     <ClInclude Include="pch.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Main.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="map.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\IconerLibrary\Attribute.hpp">
+      <Filter>헤더 파일\Lib</Filter>
     </ClInclude>
-    <ClInclude Include="diamond.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\IconerLibrary\BasicBlobs.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Blobs.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\BlobUtils.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\OpenGL.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Pipeline.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Prototypes.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Shader.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Uniform.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\Utils.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IconerLibrary\VertexStream.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="zombie.h">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.hpp">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.hpp">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.hpp">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
-    <Text Include="diamond.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>

@@ -3,12 +3,14 @@
 
 using namespace std;
 
-GLuint shaderID;
-GLuint vertexShader;
-GLuint fragmentShader;
+#ifndef __SHADERS__
+#define __SHADERS__
+
+static GLuint shaderID;
+static GLuint vertexShader;
+static GLuint fragmentShader;
 
 char* filetobuf(const char* file);
-
 
 void make_vertexShaders() {
 	GLchar* vertexSource;
@@ -26,8 +28,6 @@ void make_vertexShaders() {
 	if (!result) {
 		printf("vertex 컴파일 실패\n");
 	}
-
-
 }
 
 void make_fragmentShaders() {
@@ -151,3 +151,4 @@ void ReadObj(FILE* objFile, float _vertex[], unsigned int _index[])
 
 	int a = 1;
 }
+#endif

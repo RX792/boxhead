@@ -71,12 +71,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GlfwLinkage>static</GlfwLinkage>
+    <Linkage-freeglut>static</Linkage-freeglut>
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <GlfwLinkage>static</GlfwLinkage>
+    <Linkage-freeglut>static</Linkage-freeglut>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -84,6 +96,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -99,6 +116,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,6 +139,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +158,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,36 +168,76 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\IconerLibrary\Attribute.cpp" />
+    <ClCompile Include="..\IconerLibrary\BasicBlobs.cpp" />
+    <ClCompile Include="..\IconerLibrary\Blobs.cpp" />
+    <ClCompile Include="..\IconerLibrary\BlobUtils.cpp" />
+    <ClCompile Include="..\IconerLibrary\OpenGL.cpp" />
+    <ClCompile Include="..\IconerLibrary\Pipeline.cpp" />
+    <ClCompile Include="..\IconerLibrary\Prototypes.cpp" />
+    <ClCompile Include="..\IconerLibrary\Shader.cpp" />
+    <ClCompile Include="..\IconerLibrary\Uniform.cpp" />
+    <ClCompile Include="..\IconerLibrary\Utils.cpp" />
+    <ClCompile Include="..\IconerLibrary\VertexStream.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Constants.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Shaders\PlainP.glsl" />
+    <None Include="..\Shaders\PlainV.glsl" />
     <None Include="fragment.glsl" />
     <None Include="packages.config" />
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="box.h" />
-    <ClInclude Include="diamond.h" />
+    <ClInclude Include="..\IconerLibrary\Attribute.hpp" />
+    <ClInclude Include="..\IconerLibrary\BasicBlobs.hpp" />
+    <ClInclude Include="..\IconerLibrary\Blobs.hpp" />
+    <ClInclude Include="..\IconerLibrary\BlobUtils.hpp" />
+    <ClInclude Include="..\IconerLibrary\OpenGL.hpp" />
+    <ClInclude Include="..\IconerLibrary\Pipeline.hpp" />
+    <ClInclude Include="..\IconerLibrary\Prototypes.hpp" />
+    <ClInclude Include="..\IconerLibrary\Shader.hpp" />
+    <ClInclude Include="..\IconerLibrary\Uniform.hpp" />
+    <ClInclude Include="..\IconerLibrary\Utils.hpp" />
+    <ClInclude Include="..\IconerLibrary\VertexStream.hpp" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Constants.hpp" />
     <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Framework.hpp" />
+    <ClInclude Include="GameObject.hpp" />
+    <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="Main.hpp" />
+    <ClInclude Include="MainScene.hpp" />
     <ClInclude Include="map.h" />
     <ClInclude Include="pch.hpp" />
+    <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Scene.hpp" />
     <ClInclude Include="stdafx.hpp" />
+    <ClInclude Include="Transform.hpp" />
     <ClInclude Include="zombie.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="misc.h" />
-    <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt" />
-    <Text Include="diamond.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
