@@ -53,6 +53,46 @@ public:
 		}
 	}
 
+	void OnUpdateView(const int& w, const int h)
+	{
+		if (currentScene)
+		{
+			currentScene->OnUpdateView(w, h);
+		}
+	}
+
+	void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y)
+	{
+		if (currentScene)
+		{
+			currentScene->OnUpdateKeyboard(key, x, y);
+		}
+	}
+
+	void OnUpdateSpecialKey(const int& key, const int& x, const int& y)
+	{
+		if (currentScene)
+		{
+			currentScene->OnUpdateSpecialKey(key, x, y);
+		}
+	}
+
+	void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
+	{
+		if (currentScene)
+		{
+			currentScene->OnUpdateMouse(button, state, x, y);
+		}
+	}
+
+	void OnUpdateMouseMotion(const int& x, const int& y)
+	{
+		if (currentScene)
+		{
+			currentScene->OnUpdateMouseMotion(x, y);
+		}
+	}
+
 	void PrepareRendering()
 	{
 		if (currentScene && currentScene->IsStarted())
@@ -100,11 +140,7 @@ public:
 
 	void ChangeScene(Scene* scene)
 	{
-		if (currentScene)
-		{
-			currentScene->Cleanup();
-		}
-		else
+		if (!currentScene)
 		{
 			sceneProcessFinished = true;
 		}
@@ -141,6 +177,11 @@ private:
 
 	void ChangeSceneNow(Scene* scene)
 	{
+		if (currentScene)
+		{
+			currentScene->Cleanup();
+		}
+
 		currentScene = scene;
 		sceneProcessFinished = false;
 

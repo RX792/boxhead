@@ -42,6 +42,21 @@ public:
 		}
 	}
 
+	virtual void OnUpdateView(const int& w, const int& h)
+	{}
+
+	virtual void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y)
+	{}
+
+	virtual void OnUpdateSpecialKey(const int& key, const int& x, const int& y)
+	{}
+
+	virtual void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
+	{}
+
+	virtual void OnUpdateMouseMotion(const int& x, const int& y)
+	{}
+
 	virtual void PrepareRendering() = 0;
 
 	virtual void Render() = 0;
@@ -106,7 +121,7 @@ public:
 		myInstances.push_back(instance);
 	}
 
-	std::vector<Entity*>::iterator FindEntity(Entity* instance)
+	std::vector<Entity*>::iterator FindEntity(Entity* const instance)
 	{
 		return std::ranges::find(myInstances, instance);
 	}
@@ -118,7 +133,7 @@ public:
 		});
 	}
 
-	std::vector<Entity*>::iterator RemoveEntity(Entity* instance)
+	std::vector<Entity*>::iterator RemoveEntity(Entity* const instance)
 	{
 		auto it = FindEntity(instance);
 		if (it != myInstances.end())
@@ -132,6 +147,16 @@ public:
 	std::vector<Entity*>::iterator RemoveEntity(std::vector<Entity*>::iterator& it)
 	{
 		return myInstances.erase(it);
+	}
+
+	bool IsEntityExists(const Entity* instance) const
+	{
+		return myInstances.end() != std::ranges::find(myInstances, instance);
+	}
+
+	bool IsEntityExists(const std::vector<Entity*>::iterator& it) const
+	{
+		return myInstances.end() != it;
 	}
 
 	size_t GetInstanceCount() const

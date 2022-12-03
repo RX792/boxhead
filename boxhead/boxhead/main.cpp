@@ -61,12 +61,6 @@ int main(int argc, char** argv)
 	ogl::Start();
 }
 
-GLvoid Render(GLvoid)
-{
-	MySystem.PrepareRendering();
-	MySystem.Render();
-}
-
 GLvoid UpdateFrames(int value)
 {
 	using namespace std::chrono;
@@ -85,6 +79,8 @@ GLvoid UpdateFrames(int value)
 
 GLvoid UpdateView(const int w, const int h)
 {
+	MySystem.OnUpdateView(w, h);
+
 	const auto fw = static_cast<float>(w);
 	const auto fh = static_cast<float>(h);
 	const auto ratio = fh / fw;
@@ -133,6 +129,8 @@ GLvoid UpdateView(const int w, const int h)
 
 GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y)
 {
+	MySystem.OnUpdateKeyboard(key, x, y);
+
 	//const auto movement = 10.0f * elapsed_time;
 	const auto camera_movement = 20.0f * elapsed_time;
 
@@ -210,6 +208,8 @@ GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y)
 
 GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y)
 {
+	MySystem.OnUpdateSpecialKey(key, x, y);
+
 	const auto movement = 20.0f * elapsed_time;
 	const auto rotation = 15.0f * elapsed_time;
 
@@ -239,7 +239,7 @@ GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y)
 		}
 		break;
 
-		case GLUT_KEY_F12:
+		case GLUT_KEY_F4:
 		{
 			std::quick_exit(0);
 		}
@@ -251,6 +251,8 @@ GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y)
 
 GLvoid UpdateMouse(const int button, const int state, const int sx, const int sy)
 {
+	MySystem.OnUpdateMouse(button, state, sx, sy);
+
 	if (ogl::IsMouseClicked(state))
 	{
 		if (ogl::IsLeftMouseButton(button))
@@ -266,7 +268,15 @@ GLvoid UpdateMouse(const int button, const int state, const int sx, const int sy
 
 GLvoid UpdateMouseMotion(const int mx, const int my)
 {
+	MySystem.OnUpdateMouseMotion(mx, my);
+
 	ogl::Refresh();
+}
+
+GLvoid Render(GLvoid)
+{
+	MySystem.PrepareRendering();
+	MySystem.Render();
 }
 
 float RandomizeColour()
