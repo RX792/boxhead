@@ -197,6 +197,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="WindowsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\PlainP.glsl" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="stdafx.hpp" />
     <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="WindowManager.hpp" />
     <ClInclude Include="zombie.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="line.h" />

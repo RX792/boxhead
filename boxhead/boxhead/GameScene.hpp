@@ -5,7 +5,9 @@
 #include <Blobs.hpp>
 #include <Utils.hpp>
 #include <BlobUtils.hpp>
+#include <windows.h>
 
+#include "WindowManager.hpp"
 #include "Scene.hpp"
 
 class GameScene : public Scene
@@ -17,6 +19,7 @@ public:
 		, cameraMatrix()
 		, cameraRight(), cameraUp(), cameraLook()
 		, perspectiveMatrix(), orthodoxMatrix()
+		, cursorClicked(false), cursorPosition()
 	{
 		SetName("GameScene");
 	}
@@ -150,7 +153,7 @@ public:
 		// 4
 		myVertexBuffer.Push(floor);
 	}
-	
+
 	void Start() override
 	{
 		Scene::Start();
@@ -170,12 +173,50 @@ public:
 		auto ee = Scene::CreateEntity<Entity>();
 		ee->MoveTo(5.0f, 0.0f, -3.0f);
 
+		auto capture = GetCapture();
+
 		myRenderer.Start();
 	}
 
 	void Update(const float& delta_time) override
 	{
 		Scene::Update(delta_time);
+
+		ShowCursor(FALSE);
+	}
+
+	virtual void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
+	{
+		if (ogl::IsMouseClicked(state))
+		{
+			auto capture = GetCapture();
+
+			if (capture != WindowManager::windowHandle)
+			{
+				SetCapture(WindowManager::windowHandle);
+			}
+
+			cursorClicked = true;
+		}
+		else if (ogl::IsMouseReleased(state))
+		{
+			auto capture = GetCapture();
+
+			if (capture == WindowManager::windowHandle)
+			{
+				ReleaseCapture();
+			}
+
+			cursorClicked = false;
+		}
+	}
+
+	virtual void OnUpdateMouseMotion(const int& x, const int& y)
+	{
+		if (cursorClicked)
+		{
+			SetCapture(WindowManager::windowHandle);
+		}
 	}
 
 	void PrepareRendering() override
@@ -239,6 +280,17 @@ public:
 		attr_col.DisableVertexArray();
 	}
 
+	void Cleanup() override
+	{
+		ShowCursor(TRUE);
+
+		auto capture = GetCapture();
+		if (capture == WindowManager::windowHandle)
+		{
+			SetCapture(NULL);
+		}
+	}
+
 private:
 	void ResetCamera()
 	{
@@ -255,7 +307,7 @@ private:
 
 		cameraMatrix = glm::lookAt(camera_position, camera_lookat, cameraUp);
 	}
-	
+
 	void CameraMove(const float& x, const float& y, const float& z)
 	{
 		cameraMatrix = ogl::Translate(cameraMatrix, { x, y, z });
@@ -275,4 +327,7 @@ private:
 	glm::mat4 perspectiveMatrix;
 	glm::mat4 perspectiveTopMatrix;
 	glm::mat4 orthodoxMatrix;
+
+	bool cursorClicked;
+	struct { int x; int y; } cursorPosition;
 };

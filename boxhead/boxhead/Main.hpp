@@ -1,5 +1,6 @@
 #pragma once
 #include "Framework.hpp"
+#include "WindowManager.hpp"
 #include "Constants.hpp"
 
 GLvoid Render(GLvoid);
@@ -11,3 +12,6 @@ GLvoid UpdateMouseMotion(const int x, const int y);
 GLvoid UpdateFrames(const int delta_time);
 
 Framework* Framework::Instance = nullptr;
+HWND WindowManager::windowHandle = nullptr;
+HDC WindowManager::deviceContext = nullptr;
+HGLRC WindowManager::renderingContext = nullptr;

@@ -5,6 +5,9 @@
 
 Framework MySystem{};
 
+constexpr std::string_view TITLE = "Shooter";
+const std::vector<wchar_t> WTITLE{ TITLE.cbegin(), TITLE.cend() };
+
 std::random_device seed{};
 std::uniform_real_distribution<float> distr_color{ 0.0f, 1.0f };
 std::default_random_engine random_engine{ seed() };
@@ -19,7 +22,7 @@ int main(int argc, char** argv)
 	{
 		ogl::Awake(argc, argv);
 
-		ogl::Ready("Shooter", constants::CLIENT_W, constants::CLIENT_H, 30, 30);
+		ogl::Ready(TITLE, constants::CLIENT_W, constants::CLIENT_H, 30, 30);
 	}
 	catch (std::runtime_error& e)
 	{
@@ -58,6 +61,8 @@ int main(int argc, char** argv)
 		std::cout << e.what() << '\n';
 		return EXIT_FAILURE;
 	}
+
+	WindowManager::Awake(TITLE.data());
 
 	ogl::Start();
 }

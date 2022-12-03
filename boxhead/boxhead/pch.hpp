@@ -11,6 +11,8 @@
 #include "Constants.hpp"
 #include "Transform.hpp"
 
+class Framework;
+class WindowManager;
 class Scene;
 class GameObject;
 class Entity;
