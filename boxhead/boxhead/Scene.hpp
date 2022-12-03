@@ -4,6 +4,8 @@
 class Scene
 {
 public:
+	using InstanceIter = std::vector<Entity*>::iterator;
+
 	constexpr Scene(const size_t& id)
 		: myID(id)
 		, myName()
@@ -73,41 +75,41 @@ public:
 		}
 	}
 
-	Scene& SetName(std::string_view name)
+	constexpr Scene& SetName(std::string_view name)
 	{
 		myName = name;
 
 		return *this;
 	}
 
-	void End()
-	{
-		isEnded = true;
-	}
-
-	std::string_view GetName() const
+	constexpr std::string_view GetName() const
 	{
 		return myName;
 	}
 
-	size_t GetID() const
+	constexpr size_t GetID() const
 	{
 		return myID;
 	}
 
-	bool IsAwaken() const
+	constexpr bool IsAwaken() const
 	{
 		return isAwaken;
 	}
 
-	bool IsStarted() const
+	constexpr bool IsStarted() const
 	{
 		return isStarted;
 	}
 
-	bool IsEnded() const
+	constexpr bool IsEnded() const
 	{
 		return isEnded;
+	}
+
+	constexpr void End()
+	{
+		isEnded = true;
 	}
 
 	template<typename Ty, typename ...ArgTy>
@@ -128,24 +130,24 @@ public:
 		return obj;
 	}
 
-	void AddEntity(Entity* instance)
+	constexpr void AddEntity(Entity* instance)
 	{
 		myInstances.push_back(instance);
 	}
 
-	std::vector<Entity*>::iterator FindEntity(Entity* const instance)
+	constexpr InstanceIter FindEntity(Entity* const instance)
 	{
 		return std::ranges::find(myInstances, instance);
 	}
 
-	std::vector<Entity*>::iterator FindEntity(std::string_view name)
+	constexpr InstanceIter FindEntity(std::string_view name)
 	{
 		return std::ranges::find_if(myInstances, [&](const Entity* instance) -> bool {
 			return (instance->myName == name);
 		});
 	}
 
-	std::vector<Entity*>::iterator RemoveEntity(Entity* const instance)
+	constexpr InstanceIter RemoveEntity(Entity* const instance)
 	{
 		auto it = FindEntity(instance);
 		if (it != myInstances.end())
@@ -156,22 +158,22 @@ public:
 		return it;
 	}
 
-	std::vector<Entity*>::iterator RemoveEntity(std::vector<Entity*>::iterator& it)
+	constexpr InstanceIter RemoveEntity(InstanceIter& it)
 	{
 		return myInstances.erase(it);
 	}
 
-	bool IsEntityExists(const Entity* instance) const
+	constexpr bool IsEntityExists(const Entity* instance) const
 	{
 		return myInstances.end() != std::ranges::find(myInstances, instance);
 	}
 
-	bool IsEntityExists(const std::vector<Entity*>::iterator& it) const
+	constexpr bool IsEntityExists(const InstanceIter& it) const
 	{
 		return myInstances.end() != it;
 	}
 
-	size_t GetInstanceCount() const
+	constexpr size_t GetInstanceCount() const
 	{
 		return myInstances.size();
 	}
