@@ -37,8 +37,10 @@ public:
 		}
 	}
 
-	virtual void Update(const float& delta_time)
+	virtual void Update()
 	{
+		const float& delta_time = Timer::GetDeltaTime();
+
 		for (auto& instance : myInstances)
 		{
 			instance->Update(delta_time);

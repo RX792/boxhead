@@ -8,6 +8,7 @@
 #include <Pipeline.hpp>
 #include <Uniform.hpp>
 
+#include "Timer.hpp"
 #include "Constants.hpp"
 #include "Transform.hpp"
 

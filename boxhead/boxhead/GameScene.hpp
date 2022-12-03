@@ -182,9 +182,9 @@ public:
 		myRenderer.Start();
 	}
 
-	void Update(const float& delta_time) override
+	void Update() override
 	{
-		Scene::Update(delta_time);
+		Scene::Update();
 
 		ShowCursor(FALSE);
 

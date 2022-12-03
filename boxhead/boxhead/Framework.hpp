@@ -36,7 +36,7 @@ public:
 		}
 	}
 
-	void Update(const float& delta_time)
+	void Update()
 	{
 		if (reservatedScene && sceneProcessFinished)
 		{
@@ -64,7 +64,7 @@ public:
 				return;
 			}
 
-			currentScene->Update(delta_time);
+			currentScene->Update();
 		}
 	}
 

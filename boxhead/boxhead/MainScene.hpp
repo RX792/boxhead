@@ -14,6 +14,12 @@ public:
 	{
 		switch (key)
 		{
+			case 'r':
+			case 'R':
+			{
+			}
+			break;
+
 			case 13: // Enter
 			{
 				End();
@@ -63,7 +69,7 @@ public:
 			break;
 		}
 	}
-	
+
 	void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y) override
 	{
 		if (ogl::IsMouseClicked(state))

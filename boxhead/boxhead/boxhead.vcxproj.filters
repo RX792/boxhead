@@ -105,8 +105,11 @@
     <ClCompile Include="MainScene.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
     <ClCompile Include="WindowsManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +216,9 @@
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>

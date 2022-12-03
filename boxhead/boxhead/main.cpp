@@ -12,10 +12,6 @@ std::random_device seed{};
 std::uniform_real_distribution<float> distr_color{ 0.0f, 1.0f };
 std::default_random_engine random_engine{ seed() };
 
-constexpr std::chrono::system_clock performance_clock{};
-std::chrono::system_clock::time_point elapsed_timer{};
-float elapsed_time{};
-
 int main(int argc, char** argv)
 {
 	try
@@ -42,7 +38,6 @@ int main(int argc, char** argv)
 	ogl::TurnOnOption(GL_CULL_FACE);
 
 	ogl::background_color = { 1.0f, 1.0f, 1.0f, 1.0f };
-	elapsed_timer = performance_clock.now();
 
 	// 게임 초기화 부분
 	// 나머지 게임 진행은 모두 Scene 클래스에서 수행
@@ -69,18 +64,14 @@ int main(int argc, char** argv)
 
 GLvoid UpdateFrames(int value)
 {
-	using namespace std::chrono;
-	const auto time_now = performance_clock.now();
-	const auto time_between = time_now - elapsed_timer;
-	const auto mill = duration_cast<milliseconds>(time_between);
-	elapsed_time = static_cast<float>(mill.count()) / 1000.0f;
+	const auto inspect_timing = Timer::BeginInspection();
 
-	MySystem.Update(elapsed_time);
+	MySystem.Update();
 
 	ogl::Refresh();
 	ogl::SetTimer(10);
 
-	elapsed_timer = time_now;
+	Timer::EndInspection(inspect_timing);
 }
 
 GLvoid UpdateView(const int w, const int h)
@@ -136,78 +127,6 @@ GLvoid UpdateView(const int w, const int h)
 GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y)
 {
 	MySystem.OnUpdateKeyboard(key, x, y);
-
-	//const auto movement = 10.0f * elapsed_time;
-	const auto camera_movement = 20.0f * elapsed_time;
-
-	switch (key)
-	{
-		case 'x':
-		case 'X':
-		{
-		}
-		break;
-
-		case 'y':
-		case 'Y':
-		{
-		}
-		break;
-
-		case 'a':
-		case 'A':
-		{
-		}
-		break;
-
-		case 'd':
-		case 'D':
-		{
-		}
-		break;
-
-		case 'w':
-		case 'W':
-		{
-		}
-		break;
-
-		case 's':
-		case 'S':
-		{
-		}
-		break;
-
-		case 'q':
-		case 'Q':
-		{
-		}
-		break;
-
-		case 'e':
-		case 'E':
-		{
-		}
-		break;
-
-		case 'c':
-		case 'C':
-		{
-		}
-		break;
-
-		case 'r':
-		case 'R':
-		{
-		}
-		break;
-
-		case 'h':
-		case 'H':
-		{
-		}
-		break;
-	}
 
 	ogl::Refresh();
 }
