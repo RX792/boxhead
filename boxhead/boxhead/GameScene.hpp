@@ -9,6 +9,7 @@
 
 #include "WindowManager.hpp"
 #include "Scene.hpp"
+#include "Player.hpp"
 
 class GameScene : public Scene
 {
@@ -20,6 +21,7 @@ public:
 		, cameraRight(), cameraUp(), cameraLook()
 		, perspectiveMatrix(), orthodoxMatrix()
 		, cursorClicked(false), cursorPosition()
+		, playerCharacter(nullptr)
 	{
 		SetName("GameScene");
 	}
@@ -249,7 +251,7 @@ public:
 		{
 			myRenderer.ReadBuffer(attr_pos, 3);
 			myRenderer.ReadBuffer(attr_col, 4);
-			ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 4);
+			ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 6);
 			myRenderer.ResetSeekBuffer();
 		}
 
@@ -287,7 +289,7 @@ public:
 		auto capture = GetCapture();
 		if (capture == WindowManager::windowHandle)
 		{
-			SetCapture(NULL);
+			ReleaseCapture();
 		}
 	}
 
@@ -330,4 +332,6 @@ private:
 
 	bool cursorClicked;
 	struct { int x; int y; } cursorPosition;
+
+	Player* playerCharacter;
 };

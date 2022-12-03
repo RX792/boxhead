@@ -95,17 +95,17 @@ namespace ogl
 			writePtr = 0;
 		}
 
-		void SeekBuffer(const size_t pos)
+		void SeekBuffer(const size_t& pos)
 		{
 			writePtr = reinterpret_cast<GLvoid*>(pos);
 		}
 
-		void ForwardBuffer(const size_t size)
+		void ForwardBuffer(const size_t& size)
 		{
 			writePtr = reinterpret_cast<GLvoid*>(reinterpret_cast<size_t>(writePtr) + size);
 		}
 
-		void ReadBuffer(Attribute& attr, const GLint length)
+		void ReadBuffer(Attribute& attr, const GLint& length)
 		{
 			attr.Assign(attr.writeType, length, attr.writeStride, writePtr);
 
@@ -113,9 +113,17 @@ namespace ogl
 			{
 				ForwardBuffer(sizeof(float) * length);
 			}
-			else
+			else if (GL_INT)
 			{
 				ForwardBuffer(sizeof(int) * length);
+			}
+			else if (GL_UNSIGNED_INT)
+			{
+				ForwardBuffer(sizeof(unsigned int) * length);
+			}
+			else if (GL_DOUBLE)
+			{
+				ForwardBuffer(sizeof(double) * length);
 			}
 		}
 
