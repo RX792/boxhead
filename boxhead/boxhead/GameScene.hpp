@@ -8,6 +8,7 @@
 #include <windows.h>
 
 #include "WindowManager.hpp"
+#include "Transform.hpp"
 #include "Scene.hpp"
 #include "Player.hpp"
 
@@ -17,10 +18,11 @@ public:
 	GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer(), myVertexBuffer(ogl::CreateVertex())
+		, cameraPitch(), cameraYaw()
 		, cameraMatrix()
 		, cameraRight(), cameraUp(), cameraLook()
 		, perspectiveMatrix(), orthodoxMatrix()
-		, cursorClicked(false), cursorPosition()
+		, cursorClicked(false), cursorPosition(), clientRect()
 		, playerCharacter(nullptr)
 	{
 		SetName("GameScene");
@@ -175,7 +177,7 @@ public:
 		auto ee = Scene::CreateEntity<Entity>();
 		ee->MoveTo(5.0f, 0.0f, -3.0f);
 
-		auto capture = GetCapture();
+		FocusCursor();
 
 		myRenderer.Start();
 	}
@@ -185,13 +187,47 @@ public:
 		Scene::Update(delta_time);
 
 		ShowCursor(FALSE);
+
+		const auto capture = GetCapture();
+
+		if (capture == WindowManager::windowHandle)
+		{
+
+		}
+
+		POINT mouse{};
+		GetCursorPos(&mouse);
+
+		const int dx = mouse.x - cursorPosition.x;
+		const int dy = mouse.y - cursorPosition.y;
+
+		if (0 != dx)
+		{
+			cameraYaw += dx * 0.001f;
+		}
+		if (0 != dy)
+		{
+			cameraPitch += dy * 0.001f;
+		}
+
+		CameraRotate(cameraPitch, cameraYaw, 0);
+		const int tx = int(clientRect.right - clientRect.left) / 2;
+		const int ty = int(clientRect.bottom - clientRect.top) / 2;
+
+		SetCursorPos(tx, ty);
+		cursorPosition = { tx, ty };
+	}
+
+	virtual void OnUpdateView(const int& w, const int& h)
+	{
+		FocusCursor();
 	}
 
 	virtual void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
 	{
 		if (ogl::IsMouseClicked(state))
 		{
-			auto capture = GetCapture();
+			const auto capture = GetCapture();
 
 			if (capture != WindowManager::windowHandle)
 			{
@@ -202,7 +238,7 @@ public:
 		}
 		else if (ogl::IsMouseReleased(state))
 		{
-			auto capture = GetCapture();
+			const auto capture = GetCapture();
 
 			if (capture == WindowManager::windowHandle)
 			{
@@ -217,7 +253,7 @@ public:
 	{
 		if (cursorClicked)
 		{
-			SetCapture(WindowManager::windowHandle);
+			//SetCapture(WindowManager::windowHandle);
 		}
 	}
 
@@ -233,7 +269,7 @@ public:
 		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
 
 		uniform_mat_world.AssignMatrix4x4(ogl::identity);
-		uniform_mat_camera.AssignMatrix4x4(cameraMatrix);
+		uniform_mat_camera.AssignMatrix4x4(cameraMatrix.myMatrix);
 		uniform_mat_proj.AssignMatrix4x4(perspectiveMatrix);
 
 		// x, y, z, r, g, b, a
@@ -286,11 +322,13 @@ public:
 	{
 		ShowCursor(TRUE);
 
-		auto capture = GetCapture();
+		const auto capture = GetCapture();
 		if (capture == WindowManager::windowHandle)
 		{
 			ReleaseCapture();
 		}
+
+		ClipCursor(NULL);
 	}
 
 private:
@@ -312,26 +350,51 @@ private:
 
 	void CameraMove(const float& x, const float& y, const float& z)
 	{
-		cameraMatrix = ogl::Translate(cameraMatrix, { x, y, z });
+		cameraMatrix.Translate(x, y, z);
 	}
 
 	void CameraRotate(const float& pitch, const float& yaw, const float& roll)
 	{
-		cameraMatrix = ogl::Rotate(cameraMatrix, pitch, yaw, roll);
+		cameraMatrix.Rotate(pitch, 0, 0);
+		cameraMatrix.Tilt(0, 0, roll);
+		cameraMatrix.Tilt(0, yaw, 0);
 	}
 
 private:
+	void FocusCursor()
+	{
+		GetClientRect(WindowManager::windowHandle, &clientRect);
+
+		POINT pt1{}, pt2{};
+		pt1.x = clientRect.left;
+		pt1.y = clientRect.top;
+		pt2.x = clientRect.right;
+		pt2.y = clientRect.bottom;
+
+		ClientToScreen(WindowManager::windowHandle, &pt1);
+		ClientToScreen(WindowManager::windowHandle, &pt2);
+		clientRect.left = pt1.x;
+		clientRect.top = pt1.y;
+		clientRect.right = pt2.x;
+		clientRect.bottom = pt2.y;
+
+		ClipCursor(&clientRect);
+	}
+
 	ogl::Pipeline myRenderer;
 	ogl::VertexStream myVertexBuffer;
 
-	glm::mat4 cameraMatrix;
+	float cameraPitch, cameraYaw;
+	Transform cameraMatrix;
 	glm::vec3 cameraRight, cameraLook, cameraUp;
+	
 	glm::mat4 perspectiveMatrix;
 	glm::mat4 perspectiveTopMatrix;
 	glm::mat4 orthodoxMatrix;
 
 	bool cursorClicked;
-	struct { int x; int y; } cursorPosition;
+	POINT cursorPosition;
+	RECT clientRect;
 
 	Player* playerCharacter;
 };
