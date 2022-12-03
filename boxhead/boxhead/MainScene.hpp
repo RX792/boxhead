@@ -10,16 +10,28 @@ public:
 		SetName("MainScene");
 	}
 
+	void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y) override
+	{
+		switch (key)
+		{
+			case 13: // Enter
+			{
+				End();
+			}
+			break;
+
+			case 27: // Escape
+			{
+				std::quick_exit(0);
+			}
+			break;
+		}
+	}
+
 	void OnUpdateSpecialKey(const int& key, const int& x, const int& y) override
 	{
 		switch (key)
 		{
-			case GLFW_KEY_ENTER:
-			{
-				
-			}
-			break;
-
 			case GLUT_KEY_LEFT:
 			{
 
@@ -44,7 +56,6 @@ public:
 			}
 			break;
 
-			case GLFW_KEY_ESCAPE:
 			case GLUT_KEY_F4:
 			{
 				std::quick_exit(0);

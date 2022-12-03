@@ -203,11 +203,11 @@
     <ClInclude Include="map.h">
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="MainScene.hpp">
       <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.hpp">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

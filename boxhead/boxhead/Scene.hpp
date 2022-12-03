@@ -9,6 +9,7 @@ public:
 		, myName()
 		, myInstances()
 		, isAwaken(false), isStarted(false)
+		, isEnded(false)
 	{
 		myInstances.reserve(10);
 	}
@@ -64,6 +65,7 @@ public:
 	virtual void Cleanup()
 	{
 		isStarted = false;
+		isEnded = false;
 
 		if (0 < myInstances.size())
 		{
@@ -76,6 +78,11 @@ public:
 		myName = name;
 
 		return *this;
+	}
+
+	void End()
+	{
+		isEnded = true;
 	}
 
 	std::string_view GetName() const
@@ -96,6 +103,11 @@ public:
 	bool IsStarted() const
 	{
 		return isStarted;
+	}
+
+	bool IsEnded() const
+	{
+		return isEnded;
 	}
 
 	template<typename Ty, typename ...ArgTy>
