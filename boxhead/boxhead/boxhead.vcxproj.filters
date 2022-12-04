@@ -111,20 +111,20 @@
     <ClCompile Include="WindowsManager.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="SideCubeModel.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="AxisModel.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CubeModel.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Contents</Filter>
     </ClCompile>
     <ClCompile Include="FloorModel.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="AxisModel.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeModel.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,20 +236,20 @@
     <ClInclude Include="Timer.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Model.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="SideCubeModel.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AxisModel.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeModel.hpp">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
     <ClInclude Include="FloorModel.hpp">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeModel.hpp">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="AxisModel.hpp">
+      <Filter>헤더 파일\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.hpp">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
