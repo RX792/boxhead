@@ -74,14 +74,14 @@ public:
 		// ±Ý»ö
 		constexpr auto spatial_c9 = ogl::Colour{ 1.0f, 0.8f, 0.1f, 1.0f };
 
-		constexpr ogl::Quad pt1 = { -0.8f, +0.5f, -0.7f };
-		constexpr ogl::Quad pt2 = { -0.8f, +0.5f, +0.7f };
-		constexpr ogl::Quad pt3 = { +0.8f, +0.5f, +0.7f };
-		constexpr ogl::Quad pt4 = { +0.8f, +0.5f, -0.7f };
-		constexpr ogl::Quad pt5 = { -0.8f, -0.5f, -0.7f };
-		constexpr ogl::Quad pt6 = { -0.8f, -0.5f, +0.7f };
-		constexpr ogl::Quad pt7 = { +0.8f, -0.5f, +0.7f };
-		constexpr ogl::Quad pt8 = { +0.8f, -0.5f, -0.7f };
+		constexpr ogl::Quad pt1 = { -0.5f, +0.5f, -0.5f };
+		constexpr ogl::Quad pt2 = { -0.5f, +0.5f, +0.5f };
+		constexpr ogl::Quad pt3 = { +0.5f, +0.5f, +0.5f };
+		constexpr ogl::Quad pt4 = { +0.5f, +0.5f, -0.5f };
+		constexpr ogl::Quad pt5 = { -0.5f, -0.5f, -0.5f };
+		constexpr ogl::Quad pt6 = { -0.5f, -0.5f, +0.5f };
+		constexpr ogl::Quad pt7 = { +0.5f, -0.5f, +0.5f };
+		constexpr ogl::Quad pt8 = { +0.5f, -0.5f, -0.5f };
 
 		constexpr ogl::blob::ColoredPlane each_sides[] =
 		{

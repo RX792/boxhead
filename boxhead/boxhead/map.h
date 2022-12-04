@@ -89,7 +89,7 @@ public:
 		{
 			for (int j = 0; j < 40; j++) 
 			{
-				if (board[j][i] == 1)
+				if (board[j][i] == 1 || board[j][i] == 2)
 					blocks.emplace_back(block(j, i));
 			}
 		}
