@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.hpp"
 #include "Model.hpp"
+#include "SideCubeModel.hpp"
 
 class Entity : public GameObject
 {
@@ -15,6 +16,7 @@ public:
 	Entity()
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
+		, myModel(nullptr)
 	{}
 
 	Entity(const glm::vec3& position)
@@ -33,7 +35,9 @@ public:
 	{}
 
 	virtual void Start()
-	{}
+	{
+		myModel = new SideCubeModel{ 1 };
+	}
 
 	virtual void Update(const float& delta_time)
 	{}
@@ -41,6 +45,8 @@ public:
 	virtual void PrepareRendering()
 	{
 		GameObject::PrepareRendering();
+
+		myModel->PrepareRendering();
 	}
 
 	virtual void Render(ogl::Uniform& world_uniform)
@@ -56,16 +62,7 @@ public:
 		}
 
 		world_uniform.AssignMatrix4x4(worldTransform.myMatrix);
-		Draw();
-	}
-
-	virtual void Draw()
-	{
-		//ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 24, 0);
-		for (GLint i = 0; i < 6; i++)
-		{
-			ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
-		}
+		myModel->Render();
 	}
 
 	/// <summary>
@@ -148,6 +145,7 @@ public:
 	std::string myName;
 	float myHealth;
 	float maxHealth;
+	Model* myModel;
 };
 
 template<typename Ty, typename ...ArgTy>

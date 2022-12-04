@@ -179,9 +179,12 @@
     <ClCompile Include="..\IconerLibrary\Uniform.cpp" />
     <ClCompile Include="..\IconerLibrary\Utils.cpp" />
     <ClCompile Include="..\IconerLibrary\VertexStream.cpp" />
+    <ClCompile Include="AxisModel.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="CubeModel.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FloorModel.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -196,6 +199,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SideCubeModel.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -220,9 +224,12 @@
     <ClInclude Include="..\IconerLibrary\Uniform.hpp" />
     <ClInclude Include="..\IconerLibrary\Utils.hpp" />
     <ClInclude Include="..\IconerLibrary\VertexStream.hpp" />
+    <ClInclude Include="AxisModel.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Constants.hpp" />
+    <ClInclude Include="CubeModel.hpp" />
     <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="FloorModel.hpp" />
     <ClInclude Include="Framework.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GameScene.hpp" />
@@ -233,6 +240,7 @@
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="SideCubeModel.hpp" />
     <ClInclude Include="stdafx.hpp" />
     <ClInclude Include="Timer.hpp" />
     <ClInclude Include="Transform.hpp" />

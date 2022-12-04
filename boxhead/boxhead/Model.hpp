@@ -1,28 +1,33 @@
 #pragma once
-#include "Framework.hpp"
+#include <VertexStream.hpp>
 
 class Model
 {
 public:
-	Model(const size_t& id)
-		: myID(id)
-		, modelBuffer(Framework::Instance->myVertexBuffer)
-	{}
-
-	virtual ~Model()
-	{}
-
-	virtual void PrepareRendering()
+	template<typename Ty, typename ...ArgTy>
+		requires ModelType<Ty, ArgTy...>
+	static Ty Get(ArgTy&& ...args)
 	{
-		if (myID == size_t(-1))
-			return;
-
-		auto& buffer = modelBuffer.At(myID);
-		buffer.PrepareRendering();
+		return Ty{ std::forward<ArgTy>(args)... };
 	}
+
+	Model(const size_t& id);
+
+	virtual ~Model();
+	
+	void SetID(const size_t& id);
+
+	static ogl::VertexStream::Buffer& GetRawBuffer(const size_t& id);
+	
+	virtual void PrepareRendering();
 
 	virtual void Render() = 0;
 
-	const size_t myID;
-	ogl::VertexStream& modelBuffer;
+	size_t myID;
 };
+
+template<typename Ty, typename ...ArgTy>
+concept ModelType = std::derived_from<Ty, Model> && std::constructible_from<Ty, ArgTy...>;
+
+template<typename Ty, typename ...ArgTy>
+concept RefModelType = std::derived_from<Ty, Model> && std::constructible_from<Ty, size_t, std::remove_cv_t<ArgTy>...>;
