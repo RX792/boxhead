@@ -172,10 +172,8 @@ public:
 		auto attr_pos = myRenderer.BeginAttribute("a_Position", shade_stride);
 		auto attr_col = myRenderer.BeginAttribute("a_Colour", shade_stride);
 
-		size_t a = 0;
-		
 		// 0: 좌표축 그리기
-		AxisModel model_axis = Model::Get<AxisModel>(a);
+		auto model_axis = Model::GetReference<AxisModel>(0);
 		model_axis.PrepareRendering();
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);
@@ -184,7 +182,7 @@ public:
 		myRenderer.ResetSeekBuffer();
 
 		// 2: 바닥 그리기
-		FloorModel model_floor = Model::Get<FloorModel>(2);
+		auto model_floor = Model::GetReference<FloorModel>(2);
 		model_floor.PrepareRendering();
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);

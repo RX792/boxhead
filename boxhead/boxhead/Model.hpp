@@ -11,6 +11,13 @@ public:
 		return Ty{ std::forward<ArgTy>(args)... };
 	}
 
+	template<typename Ty, typename ...ArgTy>
+		requires RefModelType<Ty, ArgTy...>
+	static Ty GetReference(const size_t& id, ArgTy&& ...args)
+	{
+		return Ty{ id, std::forward<ArgTy>(args)... };
+	}
+
 	Model(const size_t& id);
 
 	virtual ~Model();
