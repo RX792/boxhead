@@ -97,52 +97,6 @@ public:
 		// 1
 		myVertexBuffer.Push(raw_cube);
 
-		constexpr ogl::Quad head_pt1 = { -0.45f, +0.2f, -0.3f };
-		constexpr ogl::Quad head_pt2 = { -0.45f, +0.2f, +0.3f };
-		constexpr ogl::Quad head_pt3 = { +0.45f, +0.2f, +0.3f };
-		constexpr ogl::Quad head_pt4 = { +0.45f, +0.2f, -0.3f };
-		constexpr ogl::Quad head_pt5 = { -0.45f, -0.2f, -0.3f };
-		constexpr ogl::Quad head_pt6 = { -0.45f, -0.2f, +0.3f };
-		constexpr ogl::Quad head_pt7 = { +0.45f, -0.2f, +0.3f };
-		constexpr ogl::Quad head_pt8 = { +0.45f, -0.2f, -0.3f };
-
-		constexpr ogl::blob::ColoredPlane head_sides[] =
-		{
-			ogl::blob::plane::Create(head_pt1, head_pt2, head_pt3, head_pt4, spatial_c7),
-			ogl::blob::plane::Create(head_pt1, head_pt5, head_pt6, head_pt2, spatial_c7),
-			ogl::blob::plane::Create(head_pt2, head_pt6, head_pt7, head_pt3, spatial_c7),
-			ogl::blob::plane::Create(head_pt1, head_pt4, head_pt8, head_pt5, spatial_c8),
-			ogl::blob::plane::Create(head_pt3, head_pt7, head_pt8, head_pt4, spatial_c7),
-			ogl::blob::plane::Create(head_pt5, head_pt8, head_pt7, head_pt6, spatial_c7)
-		};
-		const auto head_cube = ogl::blob::cube::Create(head_sides);
-
-		// 2
-		myVertexBuffer.Push(head_cube);
-
-		constexpr ogl::Quad arm_pt1 = { -0.1f, +0.7f, -0.1f };
-		constexpr ogl::Quad arm_pt2 = { -0.1f, +0.7f, +0.1f };
-		constexpr ogl::Quad arm_pt3 = { +0.1f, +0.7f, +0.1f };
-		constexpr ogl::Quad arm_pt4 = { +0.1f, +0.7f, -0.1f };
-		constexpr ogl::Quad arm_pt5 = { -0.1f, -0.7f, -0.1f };
-		constexpr ogl::Quad arm_pt6 = { -0.1f, -0.7f, +0.1f };
-		constexpr ogl::Quad arm_pt7 = { +0.1f, -0.7f, +0.1f };
-		constexpr ogl::Quad arm_pt8 = { +0.1f, -0.7f, -0.1f };
-
-		constexpr ogl::blob::ColoredPlane arms_sides[] =
-		{
-			ogl::blob::plane::Create(arm_pt1, arm_pt2, arm_pt3, arm_pt4, spatial_c9),
-			ogl::blob::plane::Create(arm_pt1, arm_pt5, arm_pt6, arm_pt2, spatial_c9),
-			ogl::blob::plane::Create(arm_pt2, arm_pt6, arm_pt7, arm_pt3, spatial_c9),
-			ogl::blob::plane::Create(arm_pt1, arm_pt4, arm_pt8, arm_pt5, spatial_c8),
-			ogl::blob::plane::Create(arm_pt3, arm_pt7, arm_pt8, arm_pt4, spatial_c9),
-			ogl::blob::plane::Create(arm_pt5, arm_pt8, arm_pt7, arm_pt6, spatial_c9)
-		};
-		const auto arms_cube = ogl::blob::cube::Create(arms_sides);
-
-		// 3
-		myVertexBuffer.Push(arms_cube);
-
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
 		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };
 		constexpr auto floor_c3 = ogl::Colour{ 0.0f, 0.6f, 0.0f, 1.0f };
@@ -154,14 +108,14 @@ public:
 			{ +10.0f, -2.0f, -10.0f, floor_c2 }
 		);
 
-		// 4
+		// 2
 		myVertexBuffer.Push(floor);
 	}
 
 	void Start() override
 	{
 		Scene::Start();
-
+		
 		auto aa = Scene::CreateEntity<Entity>();
 		aa->MoveTo(1.0f, 0.0f, 1.0f);
 
@@ -192,30 +146,28 @@ public:
 
 		if (capture == WindowManager::windowHandle)
 		{
+			POINT mouse{};
+			GetCursorPos(&mouse);
 
+			const int dx = mouse.x - cursorPosition.x;
+			const int dy = mouse.y - cursorPosition.y;
+
+			if (0 != dx)
+			{
+				cameraYaw += dx * 0.001f;
+			}
+			if (0 != dy)
+			{
+				cameraPitch += dy * 0.001f;
+			}
+
+			CameraRotate(cameraPitch, cameraYaw, 0);
+			const int tx = int(clientRect.right - clientRect.left) / 2;
+			const int ty = int(clientRect.bottom - clientRect.top) / 2;
+
+			SetCursorPos(tx, ty);
+			cursorPosition = { tx, ty };
 		}
-
-		POINT mouse{};
-		GetCursorPos(&mouse);
-
-		const int dx = mouse.x - cursorPosition.x;
-		const int dy = mouse.y - cursorPosition.y;
-
-		if (0 != dx)
-		{
-			cameraYaw += dx * 0.001f;
-		}
-		if (0 != dy)
-		{
-			cameraPitch += dy * 0.001f;
-		}
-
-		CameraRotate(cameraPitch, cameraYaw, 0);
-		const int tx = int(clientRect.right - clientRect.left) / 2;
-		const int ty = int(clientRect.bottom - clientRect.top) / 2;
-
-		SetCursorPos(tx, ty);
-		cursorPosition = { tx, ty };
 	}
 
 	virtual void OnUpdateView(const int& w, const int& h)
@@ -291,8 +243,8 @@ public:
 			myRenderer.ResetSeekBuffer();
 		}
 
-		// 4: ¹Ù´Ú ±×¸®±â
-		auto& buffer_floor = myVertexBuffer.At(4);
+		// 2: ¹Ù´Ú ±×¸®±â
+		auto& buffer_floor = myVertexBuffer.At(2);
 		buffer_floor.PrepareRendering();
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);
@@ -395,6 +347,7 @@ private:
 	bool cursorClicked;
 	POINT cursorPosition;
 	RECT clientRect;
-
+	
 	Player* playerCharacter;
+	Camera* camera;
 };
