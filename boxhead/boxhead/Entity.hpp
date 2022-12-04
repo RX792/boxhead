@@ -137,6 +137,24 @@ public:
 		EnumerateTransform();
 	}
 
+	/// <summary>
+	/// 모든 축으로 비율을 조정합니다.
+	/// </summary>
+	/// <param name="scale"></param>
+	void Scale(const float& scale)
+	{
+		localTransform.Scale(scale);
+	}
+
+	/// <summary>
+	/// 특정한 축으로 비율을 조정합니다.
+	/// </summary>
+	/// <param name="scale"></param>
+	void Scale(const float& xscale, const float& yscale, const float& zscale)
+	{
+		localTransform.Scale(xscale, yscale, zscale);
+	}
+
 	Entity(const Entity& other) = default;
 	Entity(Entity&& other) = default;
 	Entity& operator=(const Entity& other) = default;

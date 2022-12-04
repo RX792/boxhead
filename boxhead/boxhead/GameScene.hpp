@@ -55,12 +55,12 @@ public:
 
 		auto aa = Scene::CreateEntity<Entity>();
 		aa->MoveTo(1.0f, 0.0f, 1.0f);
+		aa->Scale(3.0f);
 
 		auto bb = Scene::CreateEntity<Entity>();
 		bb->MoveTo(0.0f, 0.0f, 10.0f);
 
 		auto cc = Scene::CreateEntity<Entity>(3.0f, 0.0f, -1.0f);
-		cc->MoveTo(3.0f, 0.0f, -1.0f);
 
 		auto dd = Scene::CreateEntity<Entity>();
 		dd->MoveTo(4.0f, 0.0f, -2.0f);
