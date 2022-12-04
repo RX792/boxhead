@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.hpp"
+#include "Model.hpp"
 
 class Entity : public GameObject
 {

@@ -1,7 +1,13 @@
 #pragma once
 #include <OpenGL.hpp>
+#include <Pipeline.hpp>
+#include <VertexStream.hpp>
+#include <Blobs.hpp>
+#include <Utils.hpp>
+#include <BlobUtils.hpp>
 
 #include "Scene.hpp"
+#include "Model.hpp"
 #include "Entity.hpp"
 #include "Camera.hpp"
 
@@ -9,7 +15,8 @@ class Framework
 {
 public:
 	Framework()
-		: myScenes()
+		: myVertexBuffer(10)
+		, myScenes()
 		, currentScene(nullptr), reservatedScene(nullptr)
 		, sceneProcessFinished(false)
 	{
@@ -189,6 +196,9 @@ private:
 	Scene* currentScene;
 	Scene* reservatedScene;
 	bool sceneProcessFinished;
+
+	ogl::VertexStream myVertexBuffer;
+	friend class Model;
 
 	void ChangeSceneNow(Scene* scene)
 	{
