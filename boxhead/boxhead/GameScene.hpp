@@ -41,8 +41,6 @@ public:
 		myRenderer.LoadFragmentShader("..\\Shaders\\PlainP.glsl");
 		myRenderer.Ready();
 
-		ResetCamera();
-
 		constexpr float proj_fov = glm::radians(60.0f);
 		const float proj_ratio = ogl::GetAspectRatio();
 
@@ -70,6 +68,9 @@ public:
 		auto ee = Scene::CreateEntity<Entity>();
 		ee->MoveTo(5.0f, 0.0f, -3.0f);
 
+		UpdateClientRect();
+		ResetCamera();
+		ResetCursorPosNow();
 		FocusCursor();
 
 		myRenderer.Start();
@@ -83,7 +84,7 @@ public:
 
 		if (capture == WindowManager::windowHandle)
 		{
-			ShowCursor(FALSE);
+			HideCursor();
 
 			POINT mouse{};
 			GetCursorPos(&mouse);
@@ -101,8 +102,8 @@ public:
 			}
 
 			CameraRotate(cameraPitch, cameraYaw, 0);
-			const int tx = int(clientRect.right - clientRect.left) / 2;
-			const int ty = int(clientRect.bottom - clientRect.top) / 2;
+			const int tx = clientRect.left + int(clientRect.right - clientRect.left) / 2;
+			const int ty = clientRect.top + int(clientRect.bottom - clientRect.top) / 2;
 
 			SetCursorPos(tx, ty);
 			cursorPosition = { tx, ty };
@@ -111,6 +112,8 @@ public:
 
 	virtual void OnUpdateView(const int& w, const int& h)
 	{
+		UpdateClientRect();
+
 		FocusCursor();
 	}
 
@@ -118,14 +121,19 @@ public:
 	{
 		if (ogl::IsMouseClicked(state))
 		{
+			if (!cursorClicked)
+			{
+				ResetCursorPosNow();
+				
+				cursorClicked = true;
+			}
+
 			const auto capture = GetCapture();
 
 			if (capture != WindowManager::windowHandle)
 			{
 				SetCapture(WindowManager::windowHandle);
 			}
-
-			cursorClicked = true;
 		}
 		else if (ogl::IsMouseReleased(state))
 		{
@@ -208,7 +216,7 @@ public:
 
 	void Cleanup() override
 	{
-		ShowCursor(TRUE);
+		ShowCursor();
 
 		const auto capture = GetCapture();
 		if (capture == WindowManager::windowHandle)
@@ -220,6 +228,11 @@ public:
 	}
 
 private:
+	void UpdateClientRect()
+	{
+		GetClientRect(WindowManager::windowHandle, &clientRect);
+	}
+	
 	void ResetCamera()
 	{
 		ResetCamera({ 0.0f, 15.0f, -8.0f }, {});
@@ -248,9 +261,19 @@ private:
 		cameraMatrix.Tilt(0, yaw, 0);
 	}
 
-private:
+	void ShowCursor()
+	{
+		::ShowCursor(TRUE);
+	}
+
+	void HideCursor()
+	{
+		::ShowCursor(FALSE);
+	}
+
 	void FocusCursor()
 	{
+		RECT temp_rect{};
 		GetClientRect(WindowManager::windowHandle, &clientRect);
 
 		POINT pt1{}, pt2{};
@@ -267,6 +290,14 @@ private:
 		clientRect.bottom = pt2.y;
 
 		ClipCursor(&clientRect);
+	}
+
+	void ResetCursorPosNow()
+	{
+		POINT mouse{};
+		GetCursorPos(&mouse);
+
+		cursorPosition = { mouse.x, mouse.y };
 	}
 
 	ogl::Pipeline myRenderer;
