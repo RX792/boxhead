@@ -79,12 +79,12 @@ public:
 	{
 		Scene::Update();
 
-		ShowCursor(FALSE);
-
 		const auto capture = GetCapture();
 
 		if (capture == WindowManager::windowHandle)
 		{
+			ShowCursor(FALSE);
+
 			POINT mouse{};
 			GetCursorPos(&mouse);
 
