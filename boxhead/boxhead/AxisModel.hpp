@@ -8,7 +8,7 @@ public:
 		: Model(id)
 	{}
 
-	virtual void Render()
+	virtual void Render() override
 	{
 		ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 6);
 	}

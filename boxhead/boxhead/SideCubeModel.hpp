@@ -8,7 +8,7 @@ public:
 		: Model(id)
 	{}
 
-	virtual void Render()
+	virtual void Render() override
 	{
 		for (GLint i = 0; i < 6; i++)
 		{

@@ -19,6 +19,9 @@ ogl::VertexStream::Buffer& Model::GetRawBuffer(const size_t& id)
 	return Framework::Instance->myVertexBuffer.At(id);
 }
 
+void Model::PrepareRendering(ogl::Pipeline& renderer)
+{}
+
 void Model::PrepareRendering()
 {
 	if (myID == size_t(-1))

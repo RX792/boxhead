@@ -1,4 +1,5 @@
 #pragma once
+#include <Pipeline.hpp>
 #include <VertexStream.hpp>
 
 class Model
@@ -6,7 +7,7 @@ class Model
 public:
 	template<typename Ty, typename ...ArgTy>
 		requires ModelType<Ty, ArgTy...>
-	static Ty Get(ArgTy&& ...args)
+	static Ty Make(ArgTy&& ...args)
 	{
 		return Ty{ std::forward<ArgTy>(args)... };
 	}
@@ -26,6 +27,8 @@ public:
 
 	static ogl::VertexStream::Buffer& GetRawBuffer(const size_t& id);
 	
+	virtual void PrepareRendering(ogl::Pipeline& renderer);
+
 	virtual void PrepareRendering();
 
 	virtual void Render() = 0;
