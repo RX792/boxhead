@@ -27,7 +27,8 @@ public:
 		myMatrix = result;
 
 		return *this;
-;	}
+		;
+	}
 
 	Transform& Multiply(const Transform& other)
 	{
@@ -112,7 +113,7 @@ public:
 	Transform& operator*=(const glm::mat4& mat)
 	{
 		myMatrix *= mat;
-		
+
 		return *this;
 	}
 
@@ -215,6 +216,51 @@ public:
 		RotateX(pitch);
 		RotateZ(roll);
 		MoveTo(position);
+	}
+
+	/// <summary>
+	/// X 축으로 비율을 조정합니다.
+	/// </summary>
+	/// <param name="scale"></param>
+	void ScaleX(const float& scale)
+	{
+		myMatrix = glm::scale(myMatrix, glm::vec3{ scale, 1.0f, 1.0f });
+	}
+
+	/// <summary>
+	/// Y 축으로 비율을 조정합니다.
+	/// </summary>
+	/// <param name="scale"></param>
+	void ScaleY(const float& scale)
+	{
+		myMatrix = glm::scale(myMatrix, glm::vec3{ 1.0f, scale, 1.0f });
+	}
+
+	/// <summary>
+	/// Z 축으로 비율을 조정합니다.
+	/// </summary>
+	/// <param name="scale"></param>
+	void ScaleZ(const float& scale)
+	{
+		myMatrix = glm::scale(myMatrix, glm::vec3{ 1.0f, 1.0f, scale });
+	}
+
+	/// <summary>
+	/// 모든 축으로 비율을 조정합니다.
+	/// </summary>
+	/// <param name="scale"></param>
+	void Scale(const float& scale)
+	{
+		myMatrix = glm::scale(myMatrix, glm::vec3{ scale });
+	}
+
+	/// <summary>
+	/// 모든 축으로 비율을 조정합니다.
+	/// </summary>
+	/// <param name="scale"></param>
+	void Scale(const float& xscale, const float& yscale, const float& zscale)
+	{
+		myMatrix = glm::scale(myMatrix, glm::vec3{ xscale, yscale, zscale });
 	}
 
 	glm::mat4 myMatrix;

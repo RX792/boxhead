@@ -90,7 +90,7 @@ public:
 
 		// 2: ¹Ù´Ú
 		myVertexBuffer.Push(floor);
-		
+
 		if (0 < myScenes.size())
 		{
 			auto first_scene = myScenes.at(0);
