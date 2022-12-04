@@ -11,6 +11,7 @@
 #include "Transform.hpp"
 #include "Scene.hpp"
 #include "Player.hpp"
+#include "map.h"
 
 class GameScene : public Scene
 {
@@ -158,24 +159,18 @@ public:
 		myVertexBuffer.Push(floor);
 	}
 
+	GameScene* getThis() {
+		return this;
+	}
+
 	void Start() override
 	{
 		Scene::Start();
+		map_manager = new Map_manager;
+		map_manager->create_box(getThis());
+		
 
-		auto aa = Scene::CreateEntity<Entity>();
-		aa->MoveTo(1.0f, 0.0f, 1.0f);
-
-		auto bb = Scene::CreateEntity<Entity>();
-		bb->MoveTo(0.0f, 0.0f, 10.0f);
-
-		auto cc = Scene::CreateEntity<Entity>(3.0f, 0.0f, -1.0f);
-		cc->MoveTo(3.0f, 0.0f, -1.0f);
-
-		auto dd = Scene::CreateEntity<Entity>();
-		dd->MoveTo(4.0f, 0.0f, -2.0f);
-
-		auto ee = Scene::CreateEntity<Entity>();
-		ee->MoveTo(5.0f, 0.0f, -3.0f);
+		
 
 		FocusCursor();
 
@@ -397,4 +392,5 @@ private:
 	RECT clientRect;
 
 	Player* playerCharacter;
+	Map_manager* map_manager;
 };

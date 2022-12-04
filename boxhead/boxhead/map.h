@@ -1,6 +1,8 @@
 #pragma once
 #include "pch.hpp"
-#include "box.h"
+#include "Entity.hpp"
+#include "GameScene.hpp"
+#include "Scene.hpp"
 
 using namespace std;
 
@@ -9,7 +11,6 @@ class block
 public:
 	float height;
 	int x, y;
-	Box* box;
 
 	block(int _x, int _y) 
 	{
@@ -17,9 +18,7 @@ public:
 		x = _x;
 		y = _y;
 		height = 1;
-		box = new Box(x,y,0);
-		box->set_size(1, 1, height);
-		box->set_random_color();
+		
 
 	}
 
@@ -28,7 +27,7 @@ public:
 	}
 };
 
-class map_manager 
+class Map_manager : public Entity
 {
 public:
 	vector<block> blocks;
@@ -47,7 +46,9 @@ public:
 		{1,1,1,1,1,1,1,1,1,1}
 	};
 
-	map_manager() 
+	
+
+	Map_manager() :  Entity()
 	{
 
 		for (int i = 0; i < 10; i++) 
@@ -60,5 +61,18 @@ public:
 		}
 	}
 
+	virtual ~Map_manager()
+	{}
+
+	void create_box(Scene* s) {
+
+		for (auto& p : blocks) {
+			auto a = s->Scene::CreateEntity<Entity>();
+			a->MoveTo(p.x, 0.0f, p.y);
+		}
+		
+
+
+	}
 
 };
