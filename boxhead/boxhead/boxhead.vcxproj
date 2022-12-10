@@ -180,6 +180,7 @@
     <ClCompile Include="..\IconerLibrary\Utils.cpp" />
     <ClCompile Include="..\IconerLibrary\VertexStream.cpp" />
     <ClCompile Include="AxisModel.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Constants.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="..\IconerLibrary\Utils.hpp" />
     <ClInclude Include="..\IconerLibrary\VertexStream.hpp" />
     <ClInclude Include="AxisModel.hpp" />
+    <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Constants.hpp" />

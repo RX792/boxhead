@@ -145,7 +145,10 @@
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Contents\World</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +236,6 @@
     <ClInclude Include="Transform.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Map.hpp">
-      <Filter>헤더 파일\Contents</Filter>
-    </ClInclude>
     <ClInclude Include="MainScene.hpp">
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
@@ -277,6 +277,12 @@
     </ClInclude>
     <ClInclude Include="Collider.hpp">
       <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.hpp">
+      <Filter>헤더 파일\Contents\World</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.hpp">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
