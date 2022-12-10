@@ -1,4 +1,6 @@
 #pragma once
+#include <limits>
+
 #include "Transform.hpp"
 #include "Collider.hpp"
 
@@ -44,6 +46,7 @@ public:
 	virtual void Render(ogl::Uniform& world_uniform)
 	{}
 
+#pragma region 계층 구조
 	/// <summary>
 	/// 자식을 추가합니다.
 	/// </summary>
@@ -125,7 +128,80 @@ public:
 			nextSibling = nullptr;
 		}
 	}
+#pragma endregion
 
+#pragma region 충돌
+	/// <summary>
+	/// 충돌체를 설정합니다.
+	/// </summary>
+	/// <param name="collider">충돌체</param>
+	constexpr void SetCollider(Collider* const collider)
+	{
+		if (!collider) return;
+
+		myCollider = collider;
+	}
+
+	/// <summary>
+	/// 충돌체를 해제합니다.
+	/// </summary>
+	constexpr void DetachCollider()
+	{
+		if (myCollider)
+		{
+			myCollider = nullptr;
+		}
+	}
+
+	/// <summary>
+	/// 충돌체를 반환합니다.
+	/// </summary>
+	/// <returns></returns>
+	constexpr Collider* GetCollider()
+	{
+		return myCollider;
+	}
+
+	/// <summary>
+	/// 충돌체를 반환합니다.
+	/// </summary>
+	/// <returns></returns>
+	constexpr const Collider* GetCollider() const
+	{
+		return myCollider;
+	}
+
+	/// <summary>
+	/// 충돌 검사를 수행합니다.
+	/// </summary>
+	/// <param name="other"></param>
+	/// <returns></returns>
+	bool IsCollideWith(const Collider* const other) const
+	{
+		const auto place = WhereCollideWith(other);
+
+		if (wrongCollisionCoord == place)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	/// <summary>
+	/// 충돌한 위치를 반환합니다.
+	/// </summary>
+	/// <param name="other">다른 충돌체</param>
+	/// <returns>로컬 좌표계의 충돌 지점</returns>
+	glm::vec3 WhereCollideWith(const Collider* const other) const
+	{
+		return wrongCollisionCoord;
+	}
+#pragma endregion
+
+#pragma region 변환
 	/// <summary>
 	/// 좌표를 지정합니다.
 	/// </summary>
@@ -233,6 +309,7 @@ public:
 	{
 		return localTransform.GetRotation();
 	}
+#pragma endregion
 
 	Transform localTransform;
 	Transform worldTransform;
@@ -274,6 +351,8 @@ protected:
 	GameObject* myChild;
 
 	Collider* myCollider;
+
+	static inline constexpr glm::vec3 wrongCollisionCoord = glm::vec3{ std::numeric_limits<float>::min() };
 };
 
 template<typename Ty, typename ...ArgTy>
