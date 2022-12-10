@@ -1,28 +1,30 @@
 #pragma once
 #include "pch.hpp"
-#include "Entity.hpp"
-#include "GameScene.hpp"
 #include "Scene.hpp"
+#include "GameScene.hpp"
+#include "Entity.hpp"
+#include "Model.hpp"
 
 using namespace std;
 
-class block 
+class block
 {
 public:
 	float height;
 	int x, y;
 
-	block(int _x, int _y) 
+	block(int _x, int _y)
 	{
 
 		x = _x;
 		y = _y;
 		height = 1;
-		
+
 
 	}
 
-	void draw() {
+	void draw()
+	{
 
 	}
 };
@@ -32,7 +34,7 @@ class Map_manager : public Entity
 public:
 	vector<block> blocks;
 
-	int board[40][40] = 
+	int board[40][40] =
 	{
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -80,14 +82,14 @@ public:
 
 	};
 
-	
-
-	Map_manager() :  Entity()
+	Map_manager()
+		: Entity()
+		, test_model(nullptr)
 	{
 
-		for (int i = 0; i < 40; i++) 
+		for (int i = 0; i < 40; i++)
 		{
-			for (int j = 0; j < 40; j++) 
+			for (int j = 0; j < 40; j++)
 			{
 				if (board[j][i] == 1 || board[j][i] == 2)
 					blocks.emplace_back(block(j, i));
@@ -98,15 +100,16 @@ public:
 	virtual ~Map_manager()
 	{}
 
-	void create_box(Scene* s) {
+	void create_box(Scene* s)
+	{
+		test_model = new SideCubeModel{ 1 };
 
-		for (auto& p : blocks) {
-			auto a = s->Scene::CreateEntity<Entity>();
+		for (auto& p : blocks)
+		{
+			auto a = s->Scene::CreateEntity<Entity>(test_model);
 			a->MoveTo(p.x, 0.0f, p.y);
 		}
-		
-
-
 	}
 
+	Model* test_model;
 };
