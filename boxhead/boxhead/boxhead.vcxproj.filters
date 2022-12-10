@@ -37,6 +37,12 @@
     <Filter Include="소스 파일\Contents\World">
       <UniqueIdentifier>{590b2a34-7e2b-4ca3-8926-462bbf8db2ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Contents\Models">
+      <UniqueIdentifier>{ee9a224b-f590-4325-89af-b0e554fae750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Contents\Entities">
+      <UniqueIdentifier>{c113f0d1-6088-440b-a72a-d8c13d30b721}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -215,14 +221,8 @@
     <ClInclude Include="Framework.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Player.hpp">
-      <Filter>헤더 파일\Contents</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.hpp">
       <Filter>헤더 파일\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="zombie.h">
-      <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.hpp">
       <Filter>헤더 파일\Contents</Filter>
@@ -245,29 +245,35 @@
     <ClInclude Include="Timer.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="SideCubeModel.hpp">
-      <Filter>헤더 파일\Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorModel.hpp">
-      <Filter>헤더 파일\Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeModel.hpp">
-      <Filter>헤더 파일\Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="AxisModel.hpp">
-      <Filter>헤더 파일\Contents</Filter>
-    </ClInclude>
     <ClInclude Include="Model.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Wall.hpp">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="CubeModel.hpp">
+      <Filter>헤더 파일\Contents\Models</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.hpp">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="AxisModel.hpp">
+      <Filter>헤더 파일\Contents\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorModel.hpp">
+      <Filter>헤더 파일\Contents\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="SideCubeModel.hpp">
+      <Filter>헤더 파일\Contents\Models</Filter>
     </ClInclude>
     <ClInclude Include="Entity.hpp">
-      <Filter>헤더 파일\Contents</Filter>
+      <Filter>헤더 파일\Contents\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>헤더 파일\Contents\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="zombie.h">
+      <Filter>헤더 파일\Contents\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.hpp">
+      <Filter>헤더 파일\Contents\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.hpp">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
