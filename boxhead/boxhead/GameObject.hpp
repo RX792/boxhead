@@ -214,6 +214,24 @@ public:
 		localTransform.Scale(xscale, yscale, zscale);
 	}
 
+	/// <summary>
+	/// 현재 위치를 반환합니다.
+	/// </summary>
+	/// <returns>위치 벡터 x, y, z</returns>
+	glm::vec3 GetPosition() const
+	{
+		return localTransform.GetPosition();
+	}
+
+	/// <summary>
+	/// 현재 회전을 반환합니다.
+	/// </summary>
+	/// <returns>사원수 회전</returns>
+	glm::quat GetRotation() const
+	{
+		return localTransform.GetRotation();
+	}
+
 	Transform localTransform;
 	Transform worldTransform;
 
@@ -223,7 +241,7 @@ public:
 	GameObject* myChild;
 
 protected:
-	void EnumerateTransform()
+	virtual void EnumerateTransform()
 	{
 		worldTransform.Set(localTransform);
 

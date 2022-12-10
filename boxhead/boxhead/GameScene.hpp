@@ -1,4 +1,5 @@
 #pragma once
+#define NOMINMAX
 #include <OpenGL.hpp>
 #include <Pipeline.hpp>
 #include <VertexStream.hpp>
@@ -14,6 +15,7 @@
 #include "AxisModel.hpp"
 #include "FloorModel.hpp"
 #include "SideCubeModel.hpp"
+#include "Camera.hpp"
 #include "Player.hpp"
 #include "map.h"
 
@@ -23,11 +25,9 @@ public:
 	GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer()
-		, cameraPitch(), cameraYaw()
-		, cameraMatrix()
-		, cameraRight(), cameraUp(), cameraLook()
 		, perspectiveMatrix(), orthodoxMatrix()
 		, cursorClicked(false), cursorPosition(), clientRect()
+		, mainCamera(nullptr), cameraYaw(), cameraPitch()
 		, playerCharacter(nullptr)
 	{
 		SetName("GameScene");
@@ -49,9 +49,13 @@ public:
 
 		orthodoxMatrix = glm::ortho(-400.0f, 400.0f, -300.0f, 300.0f);
 
+		mainCamera = new Camera(ogl::up);
+		mainCamera->Awake({ 0.0f, 15.0f, -8.0f });
+
 		map_manager = new Map_manager;
 		map_manager->Awake(this);
 	}
+
 	void Start() override
 	{
 		Scene::Start();
@@ -66,6 +70,8 @@ public:
 
 	void Update() override
 	{
+		const auto delta_time = Timer::GetDeltaTime();
+
 		Scene::Update();
 
 		const auto capture = GetCapture();
@@ -82,14 +88,20 @@ public:
 
 			if (0 != dx)
 			{
-				cameraYaw += dx * 0.001f;
-			}
-			if (0 != dy)
-			{
-				cameraPitch += dy * 0.001f;
+				const float addition = dx * 0.3f * delta_time;
+				cameraYaw += addition;
+				//mainCamera->Tilt(0.0f, addition, 0.0f);
 			}
 
-			CameraRotate(cameraPitch, cameraYaw, 0);
+			if (0 != dy)
+			{
+				const float addition = dy * 0.3f * delta_time;
+				cameraPitch += addition;
+				//mainCamera->Tilt(addition, 0.0f, 0.0f);
+			}
+
+			mainCamera->Rotate(cameraPitch, cameraYaw, 0.0f);
+
 			const int tx = clientRect.left + int(clientRect.right - clientRect.left) / 2;
 			const int ty = clientRect.top + int(clientRect.bottom - clientRect.top) / 2;
 
@@ -156,7 +168,7 @@ public:
 		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
 
 		uniform_mat_world.AssignMatrix4x4(ogl::identity);
-		uniform_mat_camera.AssignMatrix4x4(cameraMatrix.myMatrix);
+		uniform_mat_camera.AssignMatrix4x4(mainCamera->GetMatrix());
 		uniform_mat_proj.AssignMatrix4x4(perspectiveMatrix);
 
 		// x, y, z, r, g, b, a
@@ -233,25 +245,11 @@ private:
 
 	void ResetCamera(const glm::vec3& camera_position, const glm::vec3& camera_lookat)
 	{
-		constexpr glm::vec3 world_up = { 0.0f, 1.0f, 0.0f };
+		mainCamera->MoveTo({ 0.0f, 15.0f, -8.0f });
+		mainCamera->Rotate(0.0f, 0.0f, 0.0f);
 
-		cameraLook = glm::normalize(camera_lookat - camera_position);
-		cameraRight = glm::normalize(glm::cross(world_up, cameraLook));
-		cameraUp = glm::normalize(glm::cross(cameraLook, cameraRight));
-
-		cameraMatrix = glm::lookAt(camera_position, camera_lookat, cameraUp);
-	}
-
-	void CameraMove(const float& x, const float& y, const float& z)
-	{
-		cameraMatrix.Translate(x, y, z);
-	}
-
-	void CameraRotate(const float& pitch, const float& yaw, const float& roll)
-	{
-		cameraMatrix.Rotate(pitch, 0, 0);
-		cameraMatrix.Tilt(0, 0, roll);
-		cameraMatrix.Tilt(0, yaw, 0);
+		cameraYaw = 0.0f;
+		cameraPitch = 0.0f;
 	}
 
 	void ShowCursor()
@@ -295,21 +293,18 @@ private:
 
 	ogl::Pipeline myRenderer;
 
-	float cameraPitch, cameraYaw;
-	Transform cameraMatrix;
-	glm::vec3 cameraRight, cameraLook, cameraUp;
-
 	glm::mat4 perspectiveMatrix;
 	glm::mat4 perspectiveTopMatrix;
 	glm::mat4 orthodoxMatrix;
+
+	float cameraPitch, cameraYaw;
 
 	bool cursorClicked;
 	POINT cursorPosition;
 	RECT clientRect;
 
+	Camera* mainCamera;
 	Player* playerCharacter;
-
-	Camera* camera;
 	Map_manager* map_manager;
 
 };
