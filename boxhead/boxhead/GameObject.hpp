@@ -1,5 +1,6 @@
 #pragma once
 #include "Transform.hpp"
+#include "Collider.hpp"
 
 class GameObject
 {
@@ -15,6 +16,7 @@ public:
 		: localTransform(), worldTransform()
 		, prevSibling(nullptr), nextSibling(nullptr)
 		, myParent(nullptr), myChild(nullptr)
+		, myCollider(nullptr)
 	{}
 
 	virtual ~GameObject()
@@ -235,11 +237,6 @@ public:
 	Transform localTransform;
 	Transform worldTransform;
 
-	GameObject* prevSibling;
-	GameObject* nextSibling;
-	GameObject* myParent;
-	GameObject* myChild;
-
 protected:
 	virtual void EnumerateTransform()
 	{
@@ -270,6 +267,13 @@ protected:
 			myChild->UpdateTransform(worldTransform);
 		}
 	}
+
+	GameObject* prevSibling;
+	GameObject* nextSibling;
+	GameObject* myParent;
+	GameObject* myChild;
+
+	Collider* myCollider;
 };
 
 template<typename Ty, typename ...ArgTy>

@@ -26,4 +26,16 @@ public:
 
 
 	}
+
+	Entity* Raycast(GameObject obj_list[], const size_t& count, const float& distance, const glm::vec3& direction) const
+	{
+
+	}
+
+	GameObject* Raycast(const GameObject& target, const float& distance, const glm::vec3& direction) const
+	{
+
+
+		return nullptr;
+	}
 };

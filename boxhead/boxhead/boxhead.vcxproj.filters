@@ -135,6 +135,9 @@
     <ClCompile Include="Wall.cpp">
       <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -261,6 +264,9 @@
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="Wall.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
