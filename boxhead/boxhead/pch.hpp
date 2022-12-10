@@ -13,11 +13,18 @@
 #include "Transform.hpp"
 
 class Framework;
+class Timer;
 class WindowManager;
 class Scene;
+class MainScene;
+class GameScene;
+class MapManager;
+class Transform;
 class GameObject;
 class Entity;
 class Camera;
+class Player;
+class Zombie;
 
 float RandomizeColour();
 

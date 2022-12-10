@@ -5,15 +5,16 @@
 #include "Model.hpp"
 #include "Wall.hpp"
 
-using namespace std;
-
-class Map_manager
+class MapManager
 {
 private:
+	using TerrainItem = int;
+
+public:
 	class Block
 	{
 	public:
-		constexpr Block(int ix, int iy, const float& height = 1.0f)
+		constexpr Block(size_t ix, size_t iy, const float& height = 1.0f)
 			: x(ix), y(iy), myHeight(height)
 		{}
 
@@ -29,21 +30,18 @@ private:
 			return myHeight;
 		}
 
-		int x, y;
+		size_t x, y;
 		float myHeight;
 	};
 
-	using TerrainItem = int;
-
-public:
-	constexpr Map_manager()
+	constexpr MapManager()
 		: heightMap()
 		, test_model(nullptr)
 	{
 		heightMap.reserve(boardSizeW * boardSizeH + 1);
 	}
 
-	virtual ~Map_manager()
+	virtual ~MapManager()
 	{}
 
 	void Awake(Scene* scene)
@@ -118,7 +116,7 @@ private:
 	static inline constexpr float boardScaleW = 1.0f;
 	static inline constexpr float boardScaleH = 1.0f;
 
-	vector<Block> heightMap;
+	std::vector<Block> heightMap;
 
 	using TerrainRow = std::array<int, boardSizeH>;
 	using Terrain = std::array<TerrainRow, boardSizeW>;
