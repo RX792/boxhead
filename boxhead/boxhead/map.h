@@ -66,12 +66,12 @@ public:
 
 		test_model = new SideCubeModel{ 1 };
 
-		for (auto& wall : heightMap)
+		for (auto& height_block : heightMap)
 		{
-			const float cx = boardScaleW * static_cast<float>(wall.x);
-			const float cz = boardScaleH * static_cast<float>(wall.y);
+			const float cx = boardScaleW * static_cast<float>(height_block.x);
+			const float cz = boardScaleH * static_cast<float>(height_block.y);
 
-			Entity* inst = scene->CreateEntity<Entity>(test_model, cx, 0.5f, cz);
+			Entity* wall = scene->CreateEntity<Entity>(test_model, cx, 0.5f, cz);
 		}
 	}
 
