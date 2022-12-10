@@ -49,13 +49,13 @@ public:
 
 		orthodoxMatrix = glm::ortho(-400.0f, 400.0f, -300.0f, 300.0f);
 
-		mainCamera = new Camera(ogl::up);
+		mainCamera = new Camera{ ogl::up };
 		mainCamera->MoveTo({ 0.0f, 15.0f, -8.0f });
 		mainCamera->SetLookDirection(ogl::forward);
 
-		playerCharacter = new Player();
+		playerCharacter = new Player{};
 
-		map_manager = new Map_manager;
+		map_manager = new MapManager{};
 		map_manager->Awake(this);
 	}
 
@@ -308,5 +308,5 @@ private:
 
 	Camera* mainCamera;
 	Player* playerCharacter;
-	Map_manager* map_manager;
+	MapManager* map_manager;
 };
