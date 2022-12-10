@@ -21,9 +21,27 @@ public:
 		, cameraRight(), cameraUp(), cameraLook()
 	{}
 
-	void Awake(const glm::vec3& position)
+	constexpr void SetLookAt(const glm::vec3& local_position)
 	{
-		MoveTo(position);
+		SetOption(CameraLookOption::POSITION);
+		lookPosition = local_position;
+	}
+
+	constexpr void SetLockViewAt(const glm::vec3& world_position)
+	{
+		SetOption(CameraLookOption::LOCKED_POSITION);
+		lookPosition = world_position;
+	}
+
+	constexpr void SetLookDirection(const glm::vec3& direction)
+	{
+		SetOption(CameraLookOption::DIRECTION);
+		lookDirection = direction;
+	}
+
+	constexpr void SetOption(const CameraLookOption& option)
+	{
+		lookOption = option;
 	}
 
 	/// <summary>
@@ -80,7 +98,7 @@ public:
 	/// <param name="roll">Z 각도</param>
 	void Tilt(const float& pitch, const float& yaw, const float& roll)
 	{
-		worldTransform.Tilt(pitch, yaw, roll);
+		worldTransform.Tilt(pitch, -yaw, roll);
 
 		UpdateCamera();
 	}
@@ -93,7 +111,7 @@ public:
 	/// <param name="roll">Z 각도</param>
 	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
-		worldTransform.Rotate(pitch, yaw, roll);
+		worldTransform.Rotate(pitch, -yaw, roll);
 
 		UpdateCamera();
 	}
@@ -132,11 +150,19 @@ public:
 		viewMatrix = glm::lookAt(camera_position, camera_lookat, cameraUp);
 	}
 
+	/// <summary>
+	/// 카메라 변환 행렬을 반환합니다.
+	/// </summary>
+	/// <returns></returns>
 	glm::mat4& GetMatrix()
 	{
 		return viewMatrix;
 	}
 
+	/// <summary>
+	/// 카메라 변환 행렬을 반환합니다.
+	/// </summary>
+	/// <returns></returns>
 	const glm::mat4& GetMatrix() const
 	{
 		return viewMatrix;
