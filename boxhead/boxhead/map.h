@@ -4,39 +4,129 @@
 #include "GameScene.hpp"
 #include "Entity.hpp"
 #include "Model.hpp"
+#include "Wall.hpp"
 
 using namespace std;
 
-class block
+class Block
 {
 public:
-	float height;
+	constexpr Block(int ix, int iy, const float& height = 1.0f)
+		: x(ix), y(iy), myHeight(height)
+	{}
+
+	constexpr Block& operator=(const float& height)
+	{
+		myHeight = height;
+
+		return *this;
+	}
+
+	explicit operator float() const
+	{
+		return myHeight;
+	}
+
 	int x, y;
-
-	block(int _x, int _y)
-	{
-
-		x = _x;
-		y = _y;
-		height = 1;
-
-
-	}
-
-	void draw()
-	{
-
-	}
+	float myHeight;
 };
 
-class Map_manager : public Entity
+class Map_manager
 {
-public:
-	vector<block> blocks;
+private:
+	using TerrainItem = int;
 
-	int board[40][40] =
+public:
+	constexpr Map_manager()
+		: heightMap()
+		, test_model(nullptr)
 	{
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		heightMap.reserve(boardSizeW * boardSizeH + 1);
+	}
+
+	virtual ~Map_manager()
+	{}
+
+	void Awake(Scene* scene)
+	{
+		for (size_t i = 0; i < boardSizeW; i++)
+		{
+			for (size_t j = 0; j < boardSizeH; j++)
+			{
+				// 열 우선으로 삽입
+				auto& terrain_cell = GetTerrainAt(i, j);
+
+				if (terrain_cell == 1 || terrain_cell == 2)
+				{
+					float cell_height = 1.0f;
+					heightMap.emplace_back(j, i, cell_height);
+				}
+			}
+		}
+
+		test_model = new SideCubeModel{ 1 };
+
+		for (auto& wall : heightMap)
+		{
+			const float cx = boardScaleW * static_cast<float>(wall.x);
+			const float cz = boardScaleH * static_cast<float>(wall.y);
+
+			Entity* inst = scene->CreateEntity<Entity>(test_model, cx, 0.5f, cz);
+		}
+	}
+
+	void Start(Scene* scene)
+	{}
+
+	constexpr Block& CellAt(const size_t& x, const size_t& y)
+	{
+		const auto pos = x * boardSizeH + y;
+
+		return heightMap.at(pos);
+	}
+
+	constexpr const Block& CellAt(const size_t& x, const size_t& y) const
+	{
+		const auto pos = x * boardSizeH + y;
+
+		return heightMap.at(pos);
+	}
+
+	constexpr TerrainItem& SetTerrainAt(const size_t& x, const size_t& y, const int& value)
+	{
+		auto& cell = GetTerrainAt(x, y);
+		cell = value;
+
+		return cell;
+	}
+
+	constexpr TerrainItem& GetTerrainAt(const size_t& x, const size_t& y)
+	{
+		return terrainMap.at(y).at(x);
+	}
+
+	constexpr const TerrainItem& GetTerrainAt(const size_t& x, const size_t& y) const
+	{
+		return terrainMap.at(y).at(x);
+	}
+
+	Model* test_model;
+
+	static inline constexpr size_t boardSizeW = 40;
+	static inline constexpr size_t boardSizeH = 40;
+
+private:
+	static inline constexpr float boardScaleW = 1.0f;
+	static inline constexpr float boardScaleH = 1.0f;
+
+	vector<Block> heightMap;
+
+	using TerrainRow = std::array<int, boardSizeH>;
+	using Terrain = std::array<TerrainRow, boardSizeW>;
+	Terrain terrainMap =
+	{
+		TerrainRow
+{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -79,37 +169,5 @@ public:
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-
 	};
-
-	Map_manager()
-		: Entity()
-		, test_model(nullptr)
-	{
-
-		for (int i = 0; i < 40; i++)
-		{
-			for (int j = 0; j < 40; j++)
-			{
-				if (board[j][i] == 1 || board[j][i] == 2)
-					blocks.emplace_back(block(j, i));
-			}
-		}
-	}
-
-	virtual ~Map_manager()
-	{}
-
-	void create_box(Scene* s)
-	{
-		test_model = new SideCubeModel{ 1 };
-
-		for (auto& p : blocks)
-		{
-			auto a = s->Scene::CreateEntity<Entity>(test_model);
-			a->MoveTo(p.x, 0.0f, p.y);
-		}
-	}
-
-	Model* test_model;
 };

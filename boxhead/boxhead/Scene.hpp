@@ -116,14 +116,12 @@ public:
 
 	template<typename Ty, typename ...ArgTy>
 		requires EntityType<Ty, ArgTy...>
-	Ty* CreateEntity(ArgTy&& ...args)
+	decltype(auto) CreateEntity(ArgTy&& ...args)
 	{
 		Ty* obj = Entity::Instantiate<Ty>(std::forward<ArgTy>(args)...);
 		if (!obj)
 		{
 			throw std::bad_alloc{};
-
-			return nullptr;
 		}
 
 		obj->Start();

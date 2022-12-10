@@ -8,7 +8,7 @@ class Entity : public GameObject
 public:
 	template<typename Ty, typename ...ArgTy>
 		requires EntityType<Ty, ArgTy...>
-	static Ty* Instantiate(ArgTy&& ...args)
+	static decltype(auto) Instantiate(ArgTy&& ...args)
 	{
 		return new Ty{ std::forward<ArgTy>(args)... };
 	}

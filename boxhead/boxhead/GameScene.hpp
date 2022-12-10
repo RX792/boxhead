@@ -50,14 +50,8 @@ public:
 		orthodoxMatrix = glm::ortho(-400.0f, 400.0f, -300.0f, 300.0f);
 
 		map_manager = new Map_manager;
-		map_manager->create_box(getThis());
+		map_manager->Awake(this);
 	}
-
-	GameScene* getThis()
-	{
-		return this;
-	}
-
 	void Start() override
 	{
 		Scene::Start();
@@ -219,6 +213,11 @@ public:
 		}
 
 		ClipCursor(NULL);
+	}
+
+	GameScene* getThis()
+	{
+		return this;
 	}
 
 private:
