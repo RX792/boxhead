@@ -23,6 +23,9 @@ class Transform;
 class GameObject;
 class Entity;
 class Camera;
+class Collider;
+class BoxCollider;
+class OrientedBoxCollider;
 class Player;
 class Zombie;
 

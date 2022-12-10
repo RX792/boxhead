@@ -5,9 +5,7 @@ class Collider
 {
 public:
 	constexpr Collider() = default;
-
-	bool Check(const ColliderType auto& other) const = 0;
-
+	
 	constexpr virtual ~Collider() = default;
 
 	Transform worldTransform;

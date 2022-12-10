@@ -19,6 +19,13 @@
 #include "Player.hpp"
 #include "Map.hpp"
 
+class MapManagers
+{
+public:
+	void Awake(Scene* scene)
+	{}
+};
+
 class GameScene : public Scene
 {
 public:

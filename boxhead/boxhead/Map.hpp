@@ -46,6 +46,7 @@ public:
 
 	void Awake(Scene* scene)
 	{
+		// 딱 한번만 높이 맵 생성
 		for (size_t i = 0; i < boardSizeW; i++)
 		{
 			for (size_t j = 0; j < boardSizeH; j++)
@@ -56,13 +57,14 @@ public:
 				if (terrain_cell == 1 || terrain_cell == 2)
 				{
 					float cell_height = 1.0f;
-					heightMap.emplace_back(j, i, cell_height);
+					heightMap.emplace_back(i, j, cell_height);
 				}
 			}
 		}
 
 		test_model = new SideCubeModel{ 1 };
 
+		// 높이 맵의 내용대로 벽 생성
 		for (auto& height_block : heightMap)
 		{
 			const float cx = boardScaleW * static_cast<float>(height_block.x);

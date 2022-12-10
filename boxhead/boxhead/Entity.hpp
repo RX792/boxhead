@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.hpp"
-#include "Model.hpp"
 #include "SideCubeModel.hpp"
+#include "BoxCollider.hpp"
 
 class Entity : public GameObject
 {
@@ -17,6 +17,7 @@ public:
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
 		, myModel(model_view)
+		, myCollider(nullptr)
 	{}
 
 	Entity(Model* const model_view, const glm::vec3& position)
@@ -75,6 +76,77 @@ public:
 		myModel->Render();
 	}
 
+#pragma region 충돌
+	/// <summary>
+	/// 충돌체를 설정합니다.
+	/// </summary>
+	/// <param name="collider">충돌체</param>
+	constexpr void SetCollider(BoxCollider* const collider)
+	{
+		if (!collider) return;
+
+		myCollider = collider;
+	}
+
+	/// <summary>
+	/// 충돌체를 해제합니다.
+	/// </summary>
+	constexpr void DetachCollider()
+	{
+		if (myCollider)
+		{
+			myCollider = nullptr;
+		}
+	}
+
+	/// <summary>
+	/// 충돌체를 반환합니다.
+	/// </summary>
+	/// <returns></returns>
+	constexpr BoxCollider* GetCollider()
+	{
+		return myCollider;
+	}
+
+	/// <summary>
+	/// 충돌체를 반환합니다.
+	/// </summary>
+	/// <returns></returns>
+	constexpr const BoxCollider* GetCollider() const
+	{
+		return myCollider;
+	}
+
+	/// <summary>
+	/// 충돌 검사를 수행합니다.
+	/// </summary>
+	/// <param name="other"></param>
+	/// <returns></returns>
+	bool IsCollideWith(const Collider* const other) const
+	{
+		const auto place = WhereCollideWith(other);
+
+		if (wrongCollisionCoord == place)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	/// <summary>
+	/// 충돌한 위치를 반환합니다.
+	/// </summary>
+	/// <param name="other">다른 충돌체</param>
+	/// <returns>로컬 좌표계의 충돌 지점</returns>
+	glm::vec3 WhereCollideWith(const Collider* const other) const
+	{
+		return wrongCollisionCoord;
+	}
+#pragma endregion
+
 	Entity(const Entity& other) = default;
 	Entity(Entity&& other) = default;
 	Entity& operator=(const Entity& other) = default;
@@ -84,6 +156,8 @@ public:
 	float myHealth;
 	float maxHealth;
 	Model* myModel;
+
+	BoxCollider* myCollider;
 };
 
 template<typename Ty, typename ...ArgTy>

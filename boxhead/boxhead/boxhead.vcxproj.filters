@@ -150,6 +150,9 @@
     <ClCompile Include="BoxCollider.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
+    <ClCompile Include="MapManagers.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -282,6 +285,9 @@
       <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.hpp">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManagers.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

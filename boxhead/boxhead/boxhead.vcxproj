@@ -193,6 +193,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapManagers.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -242,6 +243,7 @@
     <ClInclude Include="Main.hpp" />
     <ClInclude Include="MainScene.hpp" />
     <ClInclude Include="Map.hpp" />
+    <ClInclude Include="MapManagers.h" />
     <ClInclude Include="Model.hpp" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="Player.hpp" />

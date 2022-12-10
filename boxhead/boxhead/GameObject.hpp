@@ -2,7 +2,6 @@
 #include <limits>
 
 #include "Transform.hpp"
-#include "Collider.hpp"
 
 class GameObject
 {
@@ -18,7 +17,6 @@ public:
 		: localTransform(), worldTransform()
 		, prevSibling(nullptr), nextSibling(nullptr)
 		, myParent(nullptr), myChild(nullptr)
-		, myCollider(nullptr)
 	{}
 
 	virtual ~GameObject()
@@ -127,77 +125,6 @@ public:
 			delete nextSibling;
 			nextSibling = nullptr;
 		}
-	}
-#pragma endregion
-
-#pragma region 충돌
-	/// <summary>
-	/// 충돌체를 설정합니다.
-	/// </summary>
-	/// <param name="collider">충돌체</param>
-	constexpr void SetCollider(Collider* const collider)
-	{
-		if (!collider) return;
-
-		myCollider = collider;
-	}
-
-	/// <summary>
-	/// 충돌체를 해제합니다.
-	/// </summary>
-	constexpr void DetachCollider()
-	{
-		if (myCollider)
-		{
-			myCollider = nullptr;
-		}
-	}
-
-	/// <summary>
-	/// 충돌체를 반환합니다.
-	/// </summary>
-	/// <returns></returns>
-	constexpr Collider* GetCollider()
-	{
-		return myCollider;
-	}
-
-	/// <summary>
-	/// 충돌체를 반환합니다.
-	/// </summary>
-	/// <returns></returns>
-	constexpr const Collider* GetCollider() const
-	{
-		return myCollider;
-	}
-
-	/// <summary>
-	/// 충돌 검사를 수행합니다.
-	/// </summary>
-	/// <param name="other"></param>
-	/// <returns></returns>
-	bool IsCollideWith(const Collider* const other) const
-	{
-		const auto place = WhereCollideWith(other);
-
-		if (wrongCollisionCoord == place)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-
-	/// <summary>
-	/// 충돌한 위치를 반환합니다.
-	/// </summary>
-	/// <param name="other">다른 충돌체</param>
-	/// <returns>로컬 좌표계의 충돌 지점</returns>
-	glm::vec3 WhereCollideWith(const Collider* const other) const
-	{
-		return wrongCollisionCoord;
 	}
 #pragma endregion
 
@@ -349,9 +276,7 @@ protected:
 	GameObject* nextSibling;
 	GameObject* myParent;
 	GameObject* myChild;
-
-	Collider* myCollider;
-
+	
 	static inline constexpr glm::vec3 wrongCollisionCoord = glm::vec3{ std::numeric_limits<float>::min() };
 };
 
