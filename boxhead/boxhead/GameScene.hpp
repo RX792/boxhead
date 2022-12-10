@@ -17,7 +17,7 @@
 #include "SideCubeModel.hpp"
 #include "Camera.hpp"
 #include "Player.hpp"
-#include "map.h"
+#include "Map.hpp"
 
 class GameScene : public Scene
 {
@@ -248,7 +248,7 @@ private:
 
 	void ResetCamera(const glm::vec3& camera_position, const glm::vec3& camera_lookat)
 	{
-		mainCamera->MoveTo({ 0.0f, 15.0f, -8.0f });
+		mainCamera->MoveTo(camera_position);
 		mainCamera->Rotate(0.0f, 0.0f, 0.0f);
 
 		cameraYaw = 0.0f;

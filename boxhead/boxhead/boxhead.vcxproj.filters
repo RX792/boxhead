@@ -144,6 +144,9 @@
     <ClCompile Include="Collider.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -230,7 +233,7 @@
     <ClInclude Include="Transform.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="map.h">
+    <ClInclude Include="Map.hpp">
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
     <ClInclude Include="MainScene.hpp">

@@ -191,6 +191,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -238,7 +239,7 @@
     <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="Main.hpp" />
     <ClInclude Include="MainScene.hpp" />
-    <ClInclude Include="map.h" />
+    <ClInclude Include="Map.hpp" />
     <ClInclude Include="Model.hpp" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="Player.hpp" />

@@ -1,5 +1,4 @@
 #pragma once
-#include "pch.hpp"
 #include "Scene.hpp"
 #include "GameScene.hpp"
 #include "Entity.hpp"
