@@ -8,32 +8,32 @@
 
 using namespace std;
 
-class Block
-{
-public:
-	constexpr Block(int ix, int iy, const float& height = 1.0f)
-		: x(ix), y(iy), myHeight(height)
-	{}
-
-	constexpr Block& operator=(const float& height)
-	{
-		myHeight = height;
-
-		return *this;
-	}
-
-	explicit operator float() const
-	{
-		return myHeight;
-	}
-
-	int x, y;
-	float myHeight;
-};
-
 class Map_manager
 {
 private:
+	class Block
+	{
+	public:
+		constexpr Block(int ix, int iy, const float& height = 1.0f)
+			: x(ix), y(iy), myHeight(height)
+		{}
+
+		constexpr Block& operator=(const float& height)
+		{
+			myHeight = height;
+
+			return *this;
+		}
+
+		explicit operator float() const
+		{
+			return myHeight;
+		}
+
+		int x, y;
+		float myHeight;
+	};
+
 	using TerrainItem = int;
 
 public:
