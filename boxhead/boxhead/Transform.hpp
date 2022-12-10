@@ -130,7 +130,7 @@ public:
 	/// <param name="x"></param>
 	/// <param name="y"></param>
 	/// <param name="z"></param>
-	void MoveTo(const float& x, const float& y, const float& z)
+	constexpr void MoveTo(const float& x, const float& y, const float& z)
 	{
 		myMatrix[3][0] = x;
 		myMatrix[3][1] = y;
@@ -143,7 +143,7 @@ public:
 	/// <param name="x"></param>
 	/// <param name="y"></param>
 	/// <param name="z"></param>
-	void MoveTo(const glm::vec3& position)
+	constexpr void MoveTo(const glm::vec3& position)
 	{
 		MoveTo(position.x, position.y, position.z);
 	}
@@ -154,7 +154,7 @@ public:
 	/// <param name="ax"></param>
 	/// <param name="ay"></param>
 	/// <param name="az"></param>
-	void Translate(const float& ax, const float& ay, const float& az)
+	constexpr void Translate(const float& ax, const float& ay, const float& az)
 	{
 		myMatrix[3][0] += ax;
 		myMatrix[3][1] += ay;
@@ -165,7 +165,7 @@ public:
 	/// 좌표를 더합니다.
 	/// </summary>
 	/// <param name="vector"></param>
-	void Translate(const glm::vec3& vector)
+	constexpr void Translate(const glm::vec3& vector)
 	{
 		myMatrix[3] += glm::vec4{ vector, 0.0f };
 	}
