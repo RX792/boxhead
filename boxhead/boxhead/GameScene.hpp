@@ -22,7 +22,7 @@
 class GameScene : public Scene
 {
 public:
-	GameScene(const size_t& id)
+	constexpr GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer()
 		, perspectiveMatrix(), orthodoxMatrix()
