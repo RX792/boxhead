@@ -47,9 +47,7 @@ public:
 	{}
 
 	virtual void Start()
-	{
-		myModel = new SideCubeModel{ 1 };
-	}
+	{}
 
 	virtual void Update(const float& delta_time)
 	{}
