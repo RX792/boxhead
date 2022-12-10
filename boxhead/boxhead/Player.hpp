@@ -4,12 +4,26 @@
 class Player : public Entity
 {
 public:
-	Player()
+	constexpr Player()
 		: Entity()
 	{}
 
 	virtual ~Player()
 	{}
 
-	
+	void Awake()
+	{
+
+	}
+
+	void Start() override
+	{
+
+	}
+
+	void Update(const float& delta_time) override
+	{
+
+
+	}
 };
