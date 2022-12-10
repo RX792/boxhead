@@ -203,6 +203,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WindowsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +245,7 @@
     <ClInclude Include="stdafx.hpp" />
     <ClInclude Include="Timer.hpp" />
     <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="Wall.hpp" />
     <ClInclude Include="WindowManager.hpp" />
     <ClInclude Include="zombie.h" />
     <ClInclude Include="input.h" />

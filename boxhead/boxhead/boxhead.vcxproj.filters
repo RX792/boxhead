@@ -31,6 +31,12 @@
     <Filter Include="소스 파일\Contents">
       <UniqueIdentifier>{1fcd0d38-5d73-4306-a47b-b5cd404cff97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Contents\World">
+      <UniqueIdentifier>{97be7a8e-c551-46b1-ace9-380dce8e4d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Contents\World">
+      <UniqueIdentifier>{590b2a34-7e2b-4ca3-8926-462bbf8db2ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -125,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="Model.hpp">
       <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.hpp">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
