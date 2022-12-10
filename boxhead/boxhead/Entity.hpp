@@ -87,4 +87,4 @@ public:
 };
 
 template<typename Ty, typename ...ArgTy>
-concept EntityType = std::derived_from<Ty, Entity> && std::constructible_from<Ty, ArgTy...>;
+concept EntityType = std::derived_from<std::decay_t<Ty>, Entity> && std::constructible_from<std::decay_t<Ty>, ArgTy...>;

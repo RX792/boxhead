@@ -190,4 +190,4 @@ private:
 };
 
 template<typename Ty, typename ...ArgTy>
-concept SceneType = std::derived_from<Ty, Scene> && std::constructible_from<Ty, ArgTy...>;
+concept SceneType = std::derived_from<std::decay_t<Ty>, Scene> && std::constructible_from<std::decay_t<Ty>, ArgTy...>;
