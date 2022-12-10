@@ -68,14 +68,14 @@ public:
 		return Transform{ myMatrix * other.myMatrix };
 	}
 
-	Transform& operator=(const glm::mat4& mat)
+	constexpr Transform& operator=(const glm::mat4& mat)
 	{
 		myMatrix = mat;
 
 		return *this;
 	}
 
-	Transform& operator=(const Transform& other)
+	constexpr Transform& operator=(const Transform& other)
 	{
 		myMatrix = other.myMatrix;
 

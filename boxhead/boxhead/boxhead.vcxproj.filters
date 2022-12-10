@@ -90,9 +90,6 @@
     <ClCompile Include="Constants.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Framework.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
@@ -135,8 +132,11 @@
     <ClCompile Include="Wall.cpp">
       <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +212,6 @@
     <ClInclude Include="Constants.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>헤더 파일\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Framework.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
@@ -268,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="Collider.hpp">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
