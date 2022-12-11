@@ -193,7 +193,6 @@ public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer()
-		, perspectiveMatrix(), orthodoxMatrix()
 		, cursorClicked(false), cursorPosition(), clientRect()
 		, mainCamera(nullptr), cameraYaw(), cameraPitch()
 		, playerCharacter(nullptr)
@@ -210,14 +209,15 @@ public:
 		myRenderer.LoadFragmentShader("..\\Shaders\\PlainP.glsl");
 		myRenderer.Ready();
 
-		constexpr float proj_fov = glm::radians(60.0f);
-		const float proj_ratio = ogl::GetAspectRatio();
-
-		perspectiveMatrix = glm::perspective(proj_fov, proj_ratio, 0.1f, 10000.0f);
-
-		orthodoxMatrix = glm::ortho(-400.0f, 400.0f, -300.0f, 300.0f);
-
 		mainCamera = new Camera{ ogl::up };
+
+		auto pr_setting = camera::PerspectiveCameraSetting{ 40.0f, 16.0f / 9.0f, 0.1f, 1000.0f };
+		mainCamera->Setup(pr_setting);
+
+		auto ox_setting = camera::OrthodoxCameraSetting{ -400.0f, 400.0f, -300.0f, 300.0f };
+		mainCamera->Setup(ox_setting);
+
+		mainCamera->Awake();
 		mainCamera->MoveTo({ 0.0f, 15.0f, -8.0f });
 		mainCamera->SetLookDirection(ogl::forward);
 
@@ -339,8 +339,8 @@ public:
 		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
 
 		uniform_mat_world.AssignMatrix4x4(ogl::identity);
-		uniform_mat_camera.AssignMatrix4x4(mainCamera->GetMatrix());
-		uniform_mat_proj.AssignMatrix4x4(perspectiveMatrix);
+		uniform_mat_camera.AssignMatrix4x4(mainCamera->GetCameraMatrix());
+		uniform_mat_proj.AssignMatrix4x4(mainCamera->GetPerspectiveViewMatrix());
 
 		// x, y, z, r, g, b, a
 		constexpr GLsizei shade_stride = sizeof(float) * 7;
@@ -463,10 +463,6 @@ private:
 	}
 
 	ogl::Pipeline myRenderer;
-
-	glm::mat4 perspectiveMatrix;
-	glm::mat4 perspectiveTopMatrix;
-	glm::mat4 orthodoxMatrix;
 
 	float cameraPitch, cameraYaw;
 

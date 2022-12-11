@@ -9,6 +9,22 @@ namespace camera
 		DIRECTION,
 	};
 
+	struct PerspectiveCameraSetting
+	{
+		float projectionFieldOfView;
+		float projectionRatio;
+		float projectionNear;
+		float projectionFar;
+	};
+
+	struct OrthodoxCameraSetting
+	{
+		float projectionLeft;
+		float projectionRight;
+		float projectionBottom;
+		float projectionTop;
+	};
+
 	class Camera
 	{
 	public:
@@ -16,9 +32,30 @@ namespace camera
 			: lookOption(CameraLookOption::DIRECTION)
 			, lookPosition(), lookDirection(ogl::forward)
 			, viewMatrix()
+			, perspectiveMatrix(), orthodoxMatrix()
 			, worldUp(up), worldTransform(ogl::identity)
 			, cameraRight(), cameraUp(), cameraLook()
 		{}
+
+		void Setup(PerspectiveCameraSetting setting)
+		{
+			perspectiveSetting = setting;
+		}
+
+		void Setup(OrthodoxCameraSetting setting)
+		{
+			orthodoxSetting = setting;
+		}
+
+		void Awake()
+		{
+			float proj_fov = glm::radians(perspectiveSetting.projectionFieldOfView);
+			float proj_ratio = perspectiveSetting.projectionRatio;
+
+			perspectiveMatrix = glm::perspective(proj_fov, proj_ratio, perspectiveSetting.projectionNear, perspectiveSetting.projectionFar);
+
+			orthodoxMatrix = glm::ortho(orthodoxSetting.projectionLeft, orthodoxSetting.projectionRight, orthodoxSetting.projectionBottom, orthodoxSetting.projectionTop);
+		}
 
 		constexpr void SetLookAt(const glm::vec3& local_position)
 		{
@@ -153,7 +190,7 @@ namespace camera
 		/// 카메라 변환 행렬을 반환합니다.
 		/// </summary>
 		/// <returns></returns>
-		constexpr glm::mat4& GetMatrix()
+		constexpr glm::mat4& GetCameraMatrix()
 		{
 			return viewMatrix;
 		}
@@ -162,9 +199,27 @@ namespace camera
 		/// 카메라 변환 행렬을 반환합니다.
 		/// </summary>
 		/// <returns></returns>
-		constexpr const glm::mat4& GetMatrix() const
+		constexpr const glm::mat4& GetCameraMatrix() const
 		{
 			return viewMatrix;
+		}
+
+		/// <summary>
+		/// 원근 투영 변환 행렬을 반환합니다.
+		/// </summary>
+		/// <returns></returns>
+		constexpr const glm::mat4& GetPerspectiveViewMatrix() const
+		{
+			return perspectiveMatrix;
+		}
+
+		/// <summary>
+		/// 직교 투영 변환 행렬을 반환합니다.
+		/// </summary>
+		/// <returns></returns>
+		constexpr const glm::mat4& GetOrthodoxViewMatrix() const
+		{
+			return orthodoxMatrix;
 		}
 
 		/// <summary>
@@ -195,5 +250,11 @@ namespace camera
 
 		glm::vec3 cameraRight, cameraLook, cameraUp;
 		glm::mat4 viewMatrix;
+
+		glm::mat4 perspectiveMatrix;
+		glm::mat4 orthodoxMatrix;
+
+		PerspectiveCameraSetting perspectiveSetting;
+		OrthodoxCameraSetting orthodoxSetting;
 	};
 }
