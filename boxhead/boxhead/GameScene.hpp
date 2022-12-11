@@ -142,7 +142,7 @@ public:
 		: Scene(id)
 		, myRenderer()
 		, worldManager()
-		, cursorClicked(false), cursorPosition(), clientRect()
+		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
 		, mainCamera(nullptr), cameraYaw(), cameraPitch()
 		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
 	{
@@ -185,6 +185,7 @@ public:
 		ResetCursorPosNow();
 		FocusCursor();
 
+		windowFocused = true;
 		myRenderer.Start();
 	}
 
@@ -197,37 +198,51 @@ public:
 		mainCamera->MoveTo(playerCharacter->GetPosition());
 
 		const auto focus = GetFocus();
+		const auto capture = GetCapture();
 
 		if (focus == WindowManager::windowHandle)
 		{
-			HideCursor();
-
-			POINT mouse{};
-			GetCursorPos(&mouse);
-
-			const int dx = mouse.x - cursorPosition.x;
-			const int dy = mouse.y - cursorPosition.y;
-
-			if (0 != dx)
+			if (windowFocused)
 			{
-				const float addition = dx * 10.0f * delta_time;
-				cameraYaw += addition;
-			}
+				HideCursor();
 
-			if (0 != dy)
+				POINT mouse{};
+				GetCursorPos(&mouse);
+
+				const int dx = mouse.x - cursorPosition.x;
+				const int dy = mouse.y - cursorPosition.y;
+
+				if (0 != dx)
+				{
+					const float addition = dx * 10.0f * delta_time;
+					cameraYaw += addition;
+				}
+
+				if (0 != dy)
+				{
+					const float addition = dy * 6.0f * delta_time;
+
+					cameraPitch = std::max(std::min(cameraPitch + addition, 89.0f), -89.0f);
+				}
+
+				mainCamera->Rotate(cameraPitch, cameraYaw, 0.0f);
+
+				const int tx = clientRect.left + int(clientRect.right - clientRect.left) / 2;
+				const int ty = clientRect.top + int(clientRect.bottom - clientRect.top) / 2;
+
+				SetCursorPos(tx, ty);
+				cursorPosition = { tx, ty };
+			}
+		}
+		else
+		{
+			const auto capture = GetCapture();
+
+			if (capture == WindowManager::windowHandle)
 			{
-				const float addition = dy * 6.0f * delta_time;
-
-				cameraPitch = std::max(std::min(cameraPitch + addition, 89.0f), -89.0f);
+				windowFocused = false;
+				ReleaseCapture();
 			}
-
-			mainCamera->Rotate(cameraPitch, cameraYaw, 0.0f);
-
-			const int tx = clientRect.left + int(clientRect.right - clientRect.left) / 2;
-			const int ty = clientRect.top + int(clientRect.bottom - clientRect.top) / 2;
-
-			SetCursorPos(tx, ty);
-			cursorPosition = { tx, ty };
 		}
 	}
 
@@ -258,24 +273,18 @@ public:
 
 				cursorClicked = true;
 			}
+		}
+		else if (ogl::IsMouseReleased(state))
+		{
+			cursorClicked = false;
 
 			const auto capture = GetCapture();
 
 			if (capture != WindowManager::windowHandle)
 			{
+				windowFocused = true;
 				SetCapture(WindowManager::windowHandle);
 			}
-		}
-		else if (ogl::IsMouseReleased(state))
-		{
-			const auto capture = GetCapture();
-
-			if (capture == WindowManager::windowHandle)
-			{
-				ReleaseCapture();
-			}
-
-			cursorClicked = false;
 		}
 
 		playerCharacter->OnMouse(button, state, x, y);
@@ -426,13 +435,13 @@ private:
 
 	ogl::Pipeline myRenderer;
 
-	float cameraPitch, cameraYaw;
-
+	bool windowFocused;
 	bool cursorClicked;
 	POINT cursorPosition;
 	RECT clientRect;
 
 	Camera* mainCamera;
+	float cameraPitch, cameraYaw;
 
 	Player* playerCharacter;
 	const glm::vec3 playerSpawnPosition;
