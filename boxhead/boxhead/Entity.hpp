@@ -13,20 +13,27 @@ public:
 		return new Ty{ std::forward<ArgTy>(args)... };
 	}
 
-	constexpr Entity(ModelView* const model_view = nullptr)
+	constexpr Entity()
+		: GameObject()
+		, myName(), myHealth(), maxHealth()
+		, myModel(-1)
+		, myCollider(nullptr)
+	{}
+	
+	constexpr Entity(const ModelView& model_view)
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
 		, myModel(model_view)
 		, myCollider(nullptr)
 	{}
 
-	Entity(ModelView* const model_view, const glm::vec3& position)
+	Entity(const ModelView& model_view, const glm::vec3& position)
 		: Entity(model_view)
 	{
 		MoveTo(position);
 	}
 
-	Entity(ModelView* const model_view, const float& x, const float& y, const float& z)
+	Entity(const ModelView& model_view, const float& x, const float& y, const float& z)
 		: Entity(model_view)
 	{
 		MoveTo(x, y, z);
@@ -57,7 +64,10 @@ public:
 	{
 		GameObject::PrepareRendering();
 
-		myModel->PrepareRendering();
+		if (myModel.IsAvailable())
+		{
+			myModel.PrepareRendering();
+		}
 	}
 
 	virtual void Render(ogl::Uniform& world_uniform)
@@ -73,7 +83,10 @@ public:
 		}
 
 		world_uniform.AssignMatrix4x4(worldTransform.myMatrix);
-		myModel->Render();
+		if (myModel.IsAvailable())
+		{
+			myModel.Render();
+		}
 	}
 
 #pragma region Ãæµ¹
@@ -155,7 +168,7 @@ public:
 	std::string myName;
 	float myHealth;
 	float maxHealth;
-	ModelView* myModel;
+	ModelView myModel;
 
 	BoxCollider* myCollider;
 };

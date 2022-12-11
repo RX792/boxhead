@@ -165,6 +165,9 @@
     <ClCompile Include="WorldManager.cpp">
       <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="WorldManager.hpp">
       <Filter>헤더 파일\Contents\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.hpp">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

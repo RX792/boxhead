@@ -6,11 +6,7 @@ public:
 	constexpr SideCubeModelView()
 		: ModelView(ReferenceIndex)
 	{}
-
-	constexpr SideCubeModelView(const size_t& id)
-		: ModelView(id)
-	{}
-
+	
 	virtual void Render() override
 	{
 		for (GLint i = 0; i < 6; i++)

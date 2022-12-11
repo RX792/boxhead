@@ -19,8 +19,11 @@ public:
 		, myScenes()
 		, currentScene(nullptr), reservatedScene(nullptr)
 		, sceneProcessFinished(false)
+		, gameModels(), gameModelIDs()
 	{
 		myScenes.reserve(10);
+		gameModels.reserve(20);
+		gameModelIDs.reserve(20);
 
 		Instance = this;
 	}
@@ -90,6 +93,11 @@ public:
 
 		// 2: ¹Ù´Ú
 		myVertexBuffer.Push(floor);
+
+		// ¸ðµ¨ ÁØºñ
+		AddModel("Cube", myVertexBuffer.At(0));
+		AddModel("Axis", myVertexBuffer.At(1));
+		AddModel("Floor", myVertexBuffer.At(2));
 
 		if (0 < myScenes.size())
 		{
@@ -253,6 +261,49 @@ public:
 		}
 	}
 
+	Model* AddModel(std::string_view name, ogl::VertexStream::Buffer& buffer)
+	{
+		AddModelID(gameModels.size(), name);
+
+		return gameModels.emplace_back(buffer);
+	}
+
+	Model* const GetModel(const size_t& id)
+	{
+		return gameModels.at(id);
+	}
+
+	const Model* const GetModel(const size_t& id) const
+	{
+		return gameModels.at(id);
+	}
+
+	Model* const FindModel(std::string_view name)
+	{
+		return gameModels.at(FindModelID(name));
+	}
+
+	const Model* const FindModel(std::string_view name) const
+	{
+		return gameModels.at(FindModelID(name));
+	}
+
+	void AddModelID(const size_t& id, std::string_view name)
+	{
+		gameModelIDs.emplace(id, name);
+	}
+
+	size_t FindModelID(std::string_view name) const
+	{
+		auto it = gameModelIDs.find(std::string{ name });
+		if (gameModelIDs.cend() != it)
+		{
+			return size_t(-1);
+		}
+
+		return it->second;
+	}
+
 	static Framework* Instance;
 
 private:
@@ -262,7 +313,10 @@ private:
 	bool sceneProcessFinished;
 
 	ogl::VertexStream myVertexBuffer;
+	std::vector<Model*> gameModels;
+	std::unordered_map<std::string, size_t> gameModelIDs;
 
+	friend class Model;
 	friend class ModelView;
 
 	void ChangeSceneNow(Scene* scene)

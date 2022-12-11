@@ -17,6 +17,7 @@
 #include "Collider.hpp"
 #include "GameObject.hpp"
 #include "Entity.hpp"
+#include "Model.hpp"
 #include "ModelView.hpp"
 
 float RandomizeColour();

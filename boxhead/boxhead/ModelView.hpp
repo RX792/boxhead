@@ -18,31 +18,26 @@ public:
 		return Ty{};
 	}
 
-	constexpr ModelView(const size_t& id);
+	ModelView(const size_t& id);
 
-	constexpr virtual ~ModelView();
-	
-	constexpr void SetID(const size_t& id);
+	ModelView(std::string_view name);
 
-	static ogl::VertexStream::Buffer& GetRawBuffer(const size_t& id);
+	constexpr virtual ~ModelView() = default;
+
+	constexpr bool IsAvailable() const noexcept;
 	
 	virtual void PrepareRendering(ogl::Pipeline& renderer);
 
 	virtual void PrepareRendering();
 
-	virtual void Render() = 0;
+	virtual void Render();
 
-	size_t myID;
+	static ogl::VertexStream::Buffer& GetRawBuffer(const size_t& id);
+
+	Model* myModel;
 };
 
-constexpr ModelView::ModelView(const size_t& id)
-	: myID(id)
-{}
-
-constexpr ModelView::~ModelView()
-{}
-
-constexpr void ModelView::SetID(const size_t& id)
+inline constexpr bool ModelView::IsAvailable() const noexcept
 {
-	myID = id;
+	return nullptr != myModel;
 }

@@ -7,10 +7,6 @@ public:
 		: ModelView(ReferenceIndex)
 	{}
 
-	constexpr AxisModelView(const size_t& id)
-		: ModelView(id)
-	{}
-
 	virtual void Render() override
 	{
 		ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 6);

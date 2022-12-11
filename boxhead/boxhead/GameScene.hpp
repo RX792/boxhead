@@ -46,7 +46,7 @@ public:
 
 	constexpr MapManager()
 		: heightMap()
-		, test_model(nullptr)
+		, cube_model()
 	{
 		heightMap.reserve(boardSizeW * boardSizeH + 1);
 	}
@@ -72,15 +72,13 @@ public:
 			}
 		}
 
-		test_model = new SideCubeModelView{ 0 };
-
 		// 높이 맵의 내용대로 벽 생성
 		for (auto& height_block : heightMap)
 		{
 			const float cx = boardScaleW * static_cast<float>(height_block.x);
 			const float cz = boardScaleH * static_cast<float>(height_block.y);
 
-			Entity* wall = scene->CreateEntity<Entity>(test_model, cx, 0.5f, cz);
+			Entity* wall = scene->CreateEntity<Entity>(cube_model, cx, 0.5f, cz);
 		}
 	}
 
@@ -121,7 +119,7 @@ public:
 		return terrainMap[y][x];
 	}
 
-	ModelView* test_model;
+	SideCubeModelView cube_model;
 
 	static inline constexpr size_t boardSizeW = 40;
 	static inline constexpr size_t boardSizeH = 40;
@@ -362,7 +360,7 @@ public:
 		auto attr_pos = myRenderer.BeginAttribute("a_Position", shade_stride);
 		auto attr_col = myRenderer.BeginAttribute("a_Colour", shade_stride);
 
-		// 0: 좌표축 그리기
+		// 1: 좌표축
 		auto model_axis = ModelView::GetReference<AxisModelView>();
 		model_axis.PrepareRendering();
 		myRenderer.ReadBuffer(attr_pos, 3);
@@ -371,7 +369,7 @@ public:
 		model_axis.Render();
 		myRenderer.ResetSeekBuffer();
 
-		// 2: 바닥 그리기
+		// 2: 바닥
 		auto model_floor = ModelView::GetReference<FloorModelView>();
 		model_floor.PrepareRendering();
 		myRenderer.ReadBuffer(attr_pos, 3);
@@ -382,7 +380,7 @@ public:
 
 		for (auto& instance : myInstances)
 		{
-			// 1: 큐브
+			//  0: 큐브
 			instance->PrepareRendering();
 
 			myRenderer.ReadBuffer(attr_pos, 3);

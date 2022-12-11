@@ -6,10 +6,6 @@ public:
 	constexpr CubeModelView()
 		: ModelView(ReferenceIndex)
 	{}
-	
-	constexpr CubeModelView(const size_t& id)
-		: ModelView(id)
-	{}
 
 	virtual void Render() override
 	{
