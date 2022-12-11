@@ -1,11 +1,18 @@
 #pragma once
-#include "Entity.hpp"
 
 class Player : public Entity
 {
 public:
 	constexpr Player()
 		: Entity()
+	{}
+
+	Player(const glm::vec3& position)
+		: Entity(position)
+	{}
+
+	Player(const float& x, const float& y, const float& z)
+		: Entity(x, y, z)
 	{}
 
 	virtual ~Player()

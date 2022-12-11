@@ -12,7 +12,12 @@ public:
 	}
 
 	constexpr GameObject()
-		: localTransform(), worldTransform()
+		: GameObject("GameObject")
+	{}
+
+	constexpr GameObject(std::string_view name)
+		: myName(name)
+		, localTransform(), worldTransform()
 		, prevSibling(nullptr), nextSibling(nullptr)
 		, myParent(nullptr), myChild(nullptr)
 	{}
@@ -83,6 +88,37 @@ public:
 		{
 			nextSibling->AddSibling(other);
 		}
+	}
+
+	GameObject* FindChild(std::string_view name) const
+	{
+		if (myChild)
+		{
+			if (myChild->myName == name)
+				return myChild;
+
+			if (GameObject* sibling = myChild->FindSibling(name))
+				return sibling;
+
+			if (GameObject* child = myChild->FindChild(name))
+				return child;
+		}
+
+		return nullptr;
+	}
+
+	GameObject* FindSibling(std::string_view name) const
+	{
+		if (nextSibling)
+		{
+			if (nextSibling->myName == name)
+				return nextSibling;
+
+			if (GameObject* sibling = nextSibling->FindSibling(name))
+				return sibling;
+		}
+
+		return nullptr;
 	}
 
 	/// <summary>
@@ -272,6 +308,7 @@ protected:
 		}
 	}
 
+	std::string myName;
 	GameObject* prevSibling;
 	GameObject* nextSibling;
 	GameObject* myParent;

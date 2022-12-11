@@ -195,7 +195,7 @@ public:
 		, myRenderer()
 		, cursorClicked(false), cursorPosition(), clientRect()
 		, mainCamera(nullptr), cameraYaw(), cameraPitch()
-		, playerCharacter(nullptr)
+		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
 	{
 		SetName("GameScene");
 	}
@@ -221,7 +221,7 @@ public:
 		mainCamera->MoveTo({ 0.0f, 15.0f, -8.0f });
 		mainCamera->SetLookDirection(ogl::forward);
 
-		playerCharacter = new Player{};
+		playerCharacter = new Player{ playerSpawnPosition };
 
 		map_manager = new MapManager{};
 		map_manager->Awake(this);
@@ -261,7 +261,6 @@ public:
 			{
 				const float addition = dx * 10.0f * delta_time;
 				cameraYaw += addition;
-				//mainCamera->Tilt(0.0f, addition, 0.0f);
 			}
 
 			if (0 != dy)
@@ -269,7 +268,6 @@ public:
 				const float addition = dy * 6.0f * delta_time;
 				
 				cameraPitch = std::max(std::min(cameraPitch + addition, 89.0f), -89.0f);
-				//mainCamera->Tilt(addition, 0.0f, 0.0f);
 			}
 
 			mainCamera->Rotate(cameraPitch, cameraYaw, 0.0f);
@@ -484,6 +482,9 @@ private:
 	RECT clientRect;
 
 	Camera* mainCamera;
+
 	Player* playerCharacter;
+	const glm::vec3 playerSpawnPosition;
+
 	MapManager* map_manager;
 };
