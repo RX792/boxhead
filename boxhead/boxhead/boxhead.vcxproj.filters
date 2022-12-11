@@ -46,6 +46,15 @@
     <Filter Include="헤더 파일\Application">
       <UniqueIdentifier>{b0e2f9f3-2c6c-40b7-b28b-8de2b6d84527}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Textures">
+      <UniqueIdentifier>{20d91d55-0f60-46ae-8225-e0a9b499ca8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Shaders">
+      <UniqueIdentifier>{97fc9bcb-c0a9-49fc-9caa-c00bc8f8163b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Models">
+      <UniqueIdentifier>{f315cda2-85fa-4eb1-8224-b24461e52df9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -157,16 +166,16 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="fragment.glsl">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="vertex.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Shaders</Filter>
     </None>
     <None Include="..\Shaders\PlainP.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Shaders</Filter>
     </None>
     <None Include="..\Shaders\PlainV.glsl">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="vertex.glsl">
+      <Filter>리소스 파일\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -290,7 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Models</Filter>
     </Text>
   </ItemGroup>
 </Project>
