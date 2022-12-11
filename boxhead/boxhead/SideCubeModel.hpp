@@ -1,5 +1,4 @@
 #pragma once
-#include "ModelView.hpp"
 
 class SideCubeModelView : public ModelView
 {

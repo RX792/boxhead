@@ -1,7 +1,5 @@
 #pragma once
-#include "Scene.hpp"
 #include "GameScene.hpp"
-#include "Entity.hpp"
 #include "ModelView.hpp"
 #include "Wall.hpp"
 /*

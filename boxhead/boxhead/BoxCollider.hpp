@@ -24,6 +24,8 @@ constexpr DirectX::XMVECTORF32 g_RayNegEpsilon = { { { -1e-20f, -1e-20f, -1e-20f
 constexpr DirectX::XMVECTORF32 g_FltMin = { { { -FLT_MAX, -FLT_MAX, -FLT_MAX, -FLT_MAX } } };
 constexpr DirectX::XMVECTORF32 g_FltMax = { { { FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX } } };
 
+class OrientedBoxCollider;
+
 class BoxCollider : public Collider
 {
 public:

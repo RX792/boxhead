@@ -1,5 +1,6 @@
 #pragma once
-#include "SideCubeModel.hpp"
+#include "GameObject.hpp"
+#include "ModelView.hpp"
 #include "BoxCollider.hpp"
 
 class Entity : public GameObject
