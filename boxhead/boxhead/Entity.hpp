@@ -13,20 +13,20 @@ public:
 		return new Ty{ std::forward<ArgTy>(args)... };
 	}
 
-	constexpr Entity(Model* const model_view = nullptr)
+	constexpr Entity(ModelView* const model_view = nullptr)
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
 		, myModel(model_view)
 		, myCollider(nullptr)
 	{}
 
-	Entity(Model* const model_view, const glm::vec3& position)
+	Entity(ModelView* const model_view, const glm::vec3& position)
 		: Entity(model_view)
 	{
 		MoveTo(position);
 	}
 
-	Entity(Model* const model_view, const float& x, const float& y, const float& z)
+	Entity(ModelView* const model_view, const float& x, const float& y, const float& z)
 		: Entity(model_view)
 	{
 		MoveTo(x, y, z);
@@ -155,7 +155,7 @@ public:
 	std::string myName;
 	float myHealth;
 	float maxHealth;
-	Model* myModel;
+	ModelView* myModel;
 
 	BoxCollider* myCollider;
 };

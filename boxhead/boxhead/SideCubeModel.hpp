@@ -1,11 +1,11 @@
 #pragma once
 #include "Model.hpp"
 
-class SideCubeModel : public Model
+class SideCubeModelView : public ModelView
 {
 public:
-	SideCubeModel(const size_t& id)
-		: Model(id)
+	SideCubeModelView(const size_t& id)
+		: ModelView(id)
 	{}
 
 	virtual void Render() override

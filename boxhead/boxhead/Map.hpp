@@ -62,7 +62,7 @@ public:
 			}
 		}
 
-		test_model = new SideCubeModel{ 1 };
+		test_model = new SideCubeModelView{ 1 };
 
 		// 높이 맵의 내용대로 벽 생성
 		for (auto& height_block : heightMap)
@@ -109,7 +109,7 @@ public:
 		return terrainMap.at(y).at(x);
 	}
 
-	Model* test_model;
+	ModelView* test_model;
 
 	static inline constexpr size_t boardSizeW = 40;
 	static inline constexpr size_t boardSizeH = 40;

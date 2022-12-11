@@ -263,7 +263,7 @@ private:
 
 	ogl::VertexStream myVertexBuffer;
 
-	friend class Model;
+	friend class ModelView;
 
 	void ChangeSceneNow(Scene* scene)
 	{

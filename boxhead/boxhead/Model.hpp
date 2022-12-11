@@ -2,7 +2,7 @@
 #include <Pipeline.hpp>
 #include <VertexStream.hpp>
 
-class Model
+class ModelView
 {
 public:
 	template<typename Ty, typename ...ArgTy>
@@ -19,9 +19,9 @@ public:
 		return Ty{ id, std::forward<ArgTy>(args)... };
 	}
 
-	Model(const size_t& id);
+	ModelView(const size_t& id);
 
-	virtual ~Model();
+	virtual ~ModelView();
 	
 	void SetID(const size_t& id);
 
@@ -37,7 +37,7 @@ public:
 };
 
 template<typename Ty, typename ...ArgTy>
-concept ModelType = std::derived_from<Ty, Model> && std::constructible_from<Ty, ArgTy...>;
+concept ModelType = std::derived_from<Ty, ModelView> && std::constructible_from<Ty, ArgTy...>;
 
 template<typename Ty, typename ...ArgTy>
-concept RefModelType = std::derived_from<Ty, Model> && std::constructible_from<Ty, size_t, std::remove_cv_t<ArgTy>...>;
+concept RefModelType = std::derived_from<Ty, ModelView> && std::constructible_from<Ty, size_t, std::remove_cv_t<ArgTy>...>;

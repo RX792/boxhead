@@ -1,11 +1,11 @@
 #pragma once
 #include "Model.hpp"
 
-class FloorModel : public Model
+class FloorModelView : public ModelView
 {
 public:
-	FloorModel(const size_t& id)
-		: Model(id)
+	FloorModelView(const size_t& id)
+		: ModelView(id)
 	{}
 
 	virtual void Render() override

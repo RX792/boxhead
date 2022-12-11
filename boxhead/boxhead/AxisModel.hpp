@@ -1,11 +1,11 @@
 #pragma once
 #include "Model.hpp"
 
-class AxisModel : public Model
+class AxisModelView : public ModelView
 {
 public:
-	AxisModel(const size_t& id)
-		: Model(id)
+	AxisModelView(const size_t& id)
+		: ModelView(id)
 	{}
 
 	virtual void Render() override

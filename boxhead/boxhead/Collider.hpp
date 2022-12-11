@@ -4,9 +4,46 @@
 class Collider
 {
 public:
-	constexpr Collider() = default;
+	explicit constexpr Collider() noexcept
+		: worldTransform(ogl::identity), colliderExtent()
+	{}
+
+	explicit constexpr Collider(const glm::vec3& extents) noexcept
+		: worldTransform(ogl::identity), colliderExtent(extents)
+	{}
+
+	explicit constexpr Collider(const glm::mat4& world_matrix) noexcept
+		: worldTransform(world_matrix), colliderExtent()
+	{}
 	
+	explicit constexpr Collider(const glm::mat4& world_matrix, const glm::vec3& extents) noexcept
+		: worldTransform(world_matrix), colliderExtent(extents)
+	{}
+
+	constexpr Collider(const Transform& transform, const glm::vec3& extents) noexcept
+		: worldTransform(transform), colliderExtent(extents)
+	{}
+
+	constexpr Collider(Transform&& transform, const glm::vec3& extents) noexcept
+		: worldTransform(std::move(transform)), colliderExtent(extents)
+	{}
+
 	constexpr virtual ~Collider() = default;
+
+	constexpr void SetCenter(const glm::vec3& centre)
+	{
+		worldTransform.MoveTo(centre);
+	}
+
+	constexpr void SetCenter(const float& x, const float& y, const float& z)
+	{
+		worldTransform.MoveTo(x, y, z);
+	}
+
+	constexpr void SetExtent(const glm::vec3& extents)
+	{
+		colliderExtent = extents;
+	}
 
 	Transform worldTransform;
 	glm::vec3 colliderExtent;
