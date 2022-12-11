@@ -6,16 +6,16 @@
 #include <Utils.hpp>
 #include <BlobUtils.hpp>
 
-#include "Scene.hpp"
-#include "ModelView.hpp"
-#include "Entity.hpp"
-#include "Camera.hpp"
+#include "SideCubeModel.hpp"
+#include "CubeModel.hpp"
+#include "AxisModel.hpp"
+#include "FloorModel.hpp"
 
 class Framework
 {
 public:
 	Framework()
-		: myVertexBuffer(10)
+		: myVertexBuffer()
 		, myScenes()
 		, currentScene(nullptr), reservatedScene(nullptr)
 		, sceneProcessFinished(false)
@@ -30,6 +30,8 @@ public:
 
 	void Awake()
 	{
+		myVertexBuffer.Reserve(10);
+
 		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c2 = ogl::Colour{ 1.0f, 0.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c3 = ogl::Colour{ 1.0f, 1.0f, 0.0f, 1.0f };
@@ -64,7 +66,7 @@ public:
 		const auto raw_cube = ogl::blob::cube::Create(each_sides);
 
 		// 0: Å¥ºê
-		myVertexBuffer.Push(raw_cube);
+		auto& cube_buffer = myVertexBuffer.Push(raw_cube);
 
 		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
 		const ogl::Vertex axis_lines[] =
@@ -78,7 +80,7 @@ public:
 		};
 
 		// 1: ÁÂÇ¥Ãà
-		myVertexBuffer.PushRaw(axis_lines);
+		auto& axis_buffer = myVertexBuffer.PushRaw(axis_lines);
 
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
 		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };
@@ -92,12 +94,12 @@ public:
 		);
 
 		// 2: ¹Ù´Ú
-		myVertexBuffer.Push(floor);
+		auto& floor_buffer = myVertexBuffer.Push(floor);
 
 		// ¸ðµ¨ ÁØºñ
-		AddModel("Cube", myVertexBuffer.At(0));
-		AddModel("Axis", myVertexBuffer.At(1));
-		AddModel("Floor", myVertexBuffer.At(2));
+		AddModel<SideCubeModel>("Cube", cube_buffer);
+		AddModel<AxisModel>("Axis", axis_buffer);
+		AddModel<FloorModel>("Floor", floor_buffer);
 
 		if (0 < myScenes.size())
 		{
@@ -261,11 +263,15 @@ public:
 		}
 	}
 
-	Model* AddModel(std::string_view name, ogl::VertexStream::Buffer& buffer)
+	template<ModelType Ty>
+	Ty* AddModel(std::string_view name, ogl::VertexStream::Buffer& buffer)
 	{
-		AddModelID(gameModels.size(), name);
+		AddModelID(name, gameModels.size());
 
-		return gameModels.emplace_back(buffer);
+		Ty* model = new Ty{ name, buffer };
+		gameModels.push_back(model);
+
+		return model;
 	}
 
 	Model* const GetModel(const size_t& id)
@@ -278,21 +284,21 @@ public:
 		return gameModels.at(id);
 	}
 
-	Model* const FindModel(std::string_view name)
+	Model* const GetModel(std::string_view name)
 	{
 		return gameModels.at(FindModelID(name));
 	}
 
-	const Model* const FindModel(std::string_view name) const
+	const Model* const GetModel(std::string_view name) const
 	{
 		return gameModels.at(FindModelID(name));
 	}
 
-	void AddModelID(const size_t& id, std::string_view name)
+	void AddModelID(std::string_view name, const size_t& id)
 	{
-		gameModelIDs.emplace(id, name);
+		gameModelIDs.insert({ std::string{ name }, id });
 	}
-
+	
 	size_t FindModelID(std::string_view name) const
 	{
 		auto it = gameModelIDs.find(std::string{ name });
@@ -307,18 +313,6 @@ public:
 	static Framework* Instance;
 
 private:
-	std::vector<Scene*> myScenes;
-	Scene* currentScene;
-	Scene* reservatedScene;
-	bool sceneProcessFinished;
-
-	ogl::VertexStream myVertexBuffer;
-	std::vector<Model*> gameModels;
-	std::unordered_map<std::string, size_t> gameModelIDs;
-
-	friend class Model;
-	friend class ModelView;
-
 	void ChangeSceneNow(Scene* scene)
 	{
 		if (currentScene)
@@ -339,4 +333,21 @@ private:
 			currentScene->Start();
 		}
 	}
+
+	ogl::VertexStream::Buffer& GetVertexBuffer(const size_t& index)
+	{
+		return myVertexBuffer.At(index);
+	}
+
+	std::vector<Scene*> myScenes;
+	Scene* currentScene;
+	Scene* reservatedScene;
+	bool sceneProcessFinished;
+
+	ogl::VertexStream myVertexBuffer;
+	std::vector<Model*> gameModels;
+	std::unordered_map<std::string, size_t> gameModelIDs;
+
+	friend class Model;
+	friend class ModelView;
 };

@@ -306,7 +306,7 @@
       <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
     <ClInclude Include="Model.hpp">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

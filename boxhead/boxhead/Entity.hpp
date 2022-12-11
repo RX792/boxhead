@@ -16,7 +16,7 @@ public:
 	constexpr Entity()
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
-		, myModel(-1)
+		, myModel()
 		, myCollider(nullptr)
 	{}
 	
@@ -63,11 +63,6 @@ public:
 	virtual void PrepareRendering()
 	{
 		GameObject::PrepareRendering();
-
-		if (myModel.IsAvailable())
-		{
-			myModel.PrepareRendering();
-		}
 	}
 
 	virtual void Render(ogl::Uniform& world_uniform)
@@ -83,8 +78,10 @@ public:
 		}
 
 		world_uniform.AssignMatrix4x4(worldTransform.myMatrix);
+
 		if (myModel.IsAvailable())
 		{
+			myModel.PrepareRendering();
 			myModel.Render();
 		}
 	}

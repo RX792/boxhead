@@ -1,43 +1,59 @@
 #pragma once
-#include <Pipeline.hpp>
-#include <VertexStream.hpp>
+#include "Model.hpp"
 
 class ModelView
 {
 public:
-	template<typename Ty, typename ...ArgTy>
-		requires std::derived_from<Ty, ModelView>&& std::constructible_from<Ty, ArgTy...>
-	static inline constexpr Ty CreateView(ArgTy&& ...args)
+	template<typename Ty> requires std::derived_from<std::decay_t<Ty>, Model>
+	static inline ModelView GetReference()
 	{
-		return Ty{ std::forward<ArgTy>(args)... };
+		return ModelView{ Ty::GetID() };
 	}
 
-	template<typename Ty> requires std::derived_from<std::decay_t<Ty>, ModelView>
-	static inline constexpr Ty GetReference()
+	static inline ModelView GetReference(const size_t& id)
 	{
-		return Ty{};
+		return ModelView{ id };
 	}
+
+	static inline ModelView GetReference(std::string_view name)
+	{
+		return ModelView{ name };
+	}
+	
+	constexpr ModelView()
+		: myModel(nullptr)
+	{}
+
+	constexpr ModelView(Model* const model)
+		: myModel(model)
+	{}
 
 	ModelView(const size_t& id);
 
 	ModelView(std::string_view name);
 
-	constexpr virtual ~ModelView() = default;
+	constexpr ~ModelView() = default;
 
-	constexpr bool IsAvailable() const noexcept;
+	constexpr bool IsAvailable() const noexcept
+	{
+		return nullptr != myModel;
+	}
 	
-	virtual void PrepareRendering(ogl::Pipeline& renderer);
+	void PrepareRendering() const
+	{
+		if (myModel)
+		{
+			myModel->PrepareRendering();
+		}
+	}
 
-	virtual void PrepareRendering();
-
-	virtual void Render();
-
-	static ogl::VertexStream::Buffer& GetRawBuffer(const size_t& id);
+	void Render() const
+	{
+		if (myModel)
+		{
+			myModel->Render();
+		}
+	}
 
 	Model* myModel;
 };
-
-inline constexpr bool ModelView::IsAvailable() const noexcept
-{
-	return nullptr != myModel;
-}

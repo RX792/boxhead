@@ -1,22 +1,36 @@
 #pragma once
+#include <VertexStream.hpp>
 
 class Model
 {
 protected:
-	Model(ogl::VertexStream::Buffer&);
+	constexpr Model(std::string_view name, ogl::VertexStream::Buffer& buffer)
+		: myName(name)
+		, bufferHandle(buffer)
+	{}
 
 public:
-	Model(const size_t& id);
+	Model(std::string_view name, const size_t& id);
 
-	Model(std::string_view name);
+	virtual ~Model() = default;
 
-	void PrepareRendering(ogl::Pipeline& renderer);
+	void PrepareRendering() const
+	{
+		bufferHandle.PrepareRendering();
+	}
 
-	void PrepareRendering();
+	virtual void Render() const = 0;
 
-	void Render();
+	static constexpr size_t GetID()
+	{
+		return -1;
+	}
 
+	std::string myName;
 	ogl::VertexStream::Buffer& bufferHandle;
 
 	friend class Framework;
 };
+
+template<typename Ty>
+concept ModelType = std::derived_from<std::decay_t<Ty>, Model>;

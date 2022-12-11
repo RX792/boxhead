@@ -60,7 +60,7 @@ public:
 			}
 		}
 
-		test_model = new SideCubeModelView{ 1 };
+		test_model = new SideCubeModel{ 1 };
 
 		// 높이 맵의 내용대로 벽 생성
 		for (auto& height_block : heightMap)

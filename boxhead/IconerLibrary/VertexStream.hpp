@@ -36,7 +36,7 @@ namespace ogl
 				Bind(blob.data(), sizeof(Ty) * Size, usage);
 			}
 
-			inline void PrepareRendering()
+			inline void PrepareRendering() const
 			{
 				glBindBuffer(myType, myID);
 			}
@@ -72,6 +72,11 @@ namespace ogl
 
 		~VertexStream()
 		{}
+
+		constexpr void Reserve(const size_t& size)
+		{
+			myBuffers.reserve(size);
+		}
 
 		inline VertexStream& operator<<(Buffer&& buffer)
 		{
