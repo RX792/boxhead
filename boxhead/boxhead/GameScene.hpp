@@ -245,9 +245,9 @@ public:
 
 		Scene::Update();
 
-		const auto capture = GetCapture();
+		const auto focus = GetFocus();
 
-		if (capture == WindowManager::windowHandle)
+		if (focus == WindowManager::windowHandle)
 		{
 			HideCursor();
 
@@ -259,15 +259,16 @@ public:
 
 			if (0 != dx)
 			{
-				const float addition = dx * 0.3f * delta_time;
+				const float addition = dx * 10.0f * delta_time;
 				cameraYaw += addition;
 				//mainCamera->Tilt(0.0f, addition, 0.0f);
 			}
 
 			if (0 != dy)
 			{
-				const float addition = dy * 0.3f * delta_time;
-				cameraPitch += addition;
+				const float addition = dy * 6.0f * delta_time;
+				
+				cameraPitch = std::max(std::min(cameraPitch + addition, 89.0f), -89.0f);
 				//mainCamera->Tilt(addition, 0.0f, 0.0f);
 			}
 
@@ -286,6 +287,16 @@ public:
 		UpdateClientRect();
 
 		FocusCursor();
+	}
+
+	virtual void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y)
+	{
+		playerCharacter->OnKeyboard(key, x, y);
+	}
+
+	virtual void OnUpdateSpecialKey(const int& key, const int& x, const int& y)
+	{
+		playerCharacter->OnSpecialKey(key, x, y);
 	}
 
 	virtual void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
@@ -317,6 +328,8 @@ public:
 
 			cursorClicked = false;
 		}
+
+		playerCharacter->OnMouse(button, state, x, y);
 	}
 
 	virtual void OnUpdateMouseMotion(const int& x, const int& y)
