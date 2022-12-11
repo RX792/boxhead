@@ -162,6 +162,9 @@
     <ClCompile Include="MapManager.cpp">
       <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
+    <ClCompile Include="WorldManager.cpp">
+      <Filter>소스 파일\Contents\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -294,6 +297,9 @@
       <Filter>헤더 파일\Application</Filter>
     </ClInclude>
     <ClInclude Include="MapManager.hpp">
+      <Filter>헤더 파일\Contents\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldManager.hpp">
       <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
   </ItemGroup>

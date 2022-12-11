@@ -208,6 +208,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WindowsManager.cpp" />
+    <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\PlainP.glsl" />
@@ -252,6 +253,7 @@
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="Wall.hpp" />
     <ClInclude Include="WindowManager.hpp" />
+    <ClInclude Include="WorldManager.hpp" />
     <ClInclude Include="zombie.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="line.h" />
