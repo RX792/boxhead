@@ -1,160 +1,14 @@
 #pragma once
 #define NOMINMAX
-#include <OpenGL.hpp>
-#include <Pipeline.hpp>
-#include <VertexStream.hpp>
-#include <Blobs.hpp>
-#include <Utils.hpp>
-#include <BlobUtils.hpp>
 #include <windows.h>
 
+#include "Player.hpp"
+#include "Map.hpp"
 #include "AxisModel.hpp"
 #include "FloorModel.hpp"
 #include "SideCubeModel.hpp"
-#include "Player.hpp"
-#include "Map"
 
 using namespace camera;
-
-class MapManager
-{
-private:
-	using TerrainItem = int;
-
-public:
-	class Block
-	{
-	public:
-		constexpr Block(size_t ix, size_t iy, const float& height = 1.0f)
-			: x(ix), y(iy), myHeight(height)
-		{}
-
-		constexpr Block& operator=(const float& height)
-		{
-			myHeight = height;
-
-			return *this;
-		}
-
-		explicit operator float() const
-		{
-			return myHeight;
-		}
-
-		size_t x, y;
-		float myHeight;
-	};
-
-	constexpr MapManager()
-		: heightMap()
-	{
-		heightMap.reserve(boardSizeW * boardSizeH + 1);
-	}
-
-	virtual ~MapManager() = default;
-
-	void Awake(Scene* scene);
-
-	void Start(Scene* scene);
-
-	constexpr Block& CellAt(const size_t& x, const size_t& y)
-	{
-		const auto pos = x * boardSizeH + y;
-
-		return heightMap.at(pos);
-	}
-
-	constexpr const Block& CellAt(const size_t& x, const size_t& y) const
-	{
-		const auto pos = x * boardSizeH + y;
-
-		return heightMap.at(pos);
-	}
-
-	constexpr TerrainItem& SetTerrainAt(const size_t& x, const size_t& y, const int& value)
-	{
-		auto& cell = GetTerrainAt(x, y);
-		cell = value;
-
-		return cell;
-	}
-
-	constexpr TerrainItem& GetTerrainAt(const size_t& x, const size_t& y)
-	{
-		//return terrainMap.at(y).at(x);
-		return terrainMap[y][x];
-	}
-
-	constexpr const TerrainItem& GetTerrainAt(const size_t& x, const size_t& y) const
-	{
-		//return terrainMap.at(y).at(x);
-		return terrainMap[y][x];
-	}
-
-	static inline constexpr size_t boardSizeW = 40;
-	static inline constexpr size_t boardSizeH = 40;
-
-private:
-	static inline constexpr float boardScaleW = 1.0f;
-	static inline constexpr float boardScaleH = 1.0f;
-
-	std::vector<Block> heightMap;
-
-	TerrainItem terrainMap[boardSizeH][boardSizeW] =
-	{
-		// 이쪽이 시작점!
-		{2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-
-		{1,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,2,0,0,0,2,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,2,0,0,0,0,0,2,1,2,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,2,0,0,0,0,0,2,1,2,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,2,0,0,0,0,0,2,1,2,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,1,2,0,0,0,0,0,2,1,2,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,2,0,0,0,2,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,1},
-
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-	};
-};
-
-class WorldManagers
-{
-public:
-	void Awake(Scene* scene)
-	{}
-};
 
 class GameScene : public Scene
 {
@@ -162,7 +16,7 @@ public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer()
-		, map_manager()
+		//, map_manager()
 		, cursorClicked(false), cursorPosition(), clientRect()
 		, mainCamera(nullptr), cameraYaw(), cameraPitch()
 		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
@@ -193,8 +47,8 @@ public:
 
 		playerCharacter = new Player{ playerSpawnPosition };
 
-		map_manager = new MapManager{};
-		map_manager->Awake(this);
+		//map_manager = new MapManager{};
+		//map_manager->Awake(this);
 	}
 
 	void Start() override
@@ -456,5 +310,5 @@ private:
 	Player* playerCharacter;
 	const glm::vec3 playerSpawnPosition;
 
-	MapManager* map_manager;
+	//MapManager* map_manager;
 };

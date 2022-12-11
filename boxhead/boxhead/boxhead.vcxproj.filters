@@ -159,14 +159,17 @@
     <ClCompile Include="BoxCollider.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MapManager.cpp">
-      <Filter>소스 파일\Contents\World</Filter>
-    </ClCompile>
     <ClCompile Include="WorldManager.cpp">
       <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,14 +302,17 @@
     <ClInclude Include="Timer.hpp">
       <Filter>헤더 파일\Application</Filter>
     </ClInclude>
-    <ClInclude Include="MapManager.hpp">
-      <Filter>헤더 파일\Contents\World</Filter>
-    </ClInclude>
     <ClInclude Include="WorldManager.hpp">
       <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
     <ClInclude Include="Model.hpp">
       <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.hpp">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@
 #include "Entity.hpp"
 #include "Model.hpp"
 #include "ModelView.hpp"
+#include "Map.hpp"
 
 float RandomizeColour();
 

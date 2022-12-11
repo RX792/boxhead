@@ -35,6 +35,7 @@ namespace camera
 			, perspectiveMatrix(), orthodoxMatrix()
 			, worldUp(up), worldTransform(ogl::identity)
 			, cameraRight(), cameraUp(), cameraLook()
+			, perspectiveSetting(), orthodoxSetting()
 		{}
 
 		void Setup(PerspectiveCameraSetting setting)

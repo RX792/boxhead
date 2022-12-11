@@ -1,7 +1,8 @@
 #pragma once
 
-class WorldManager
+class WorldManagers
 {
 public:
-	
+	void Awake(Scene* scene)
+	{}
 };
