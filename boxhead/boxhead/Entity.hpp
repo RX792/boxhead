@@ -1,5 +1,4 @@
 #pragma once
-#include "GameObject.hpp"
 #include "SideCubeModel.hpp"
 #include "BoxCollider.hpp"
 

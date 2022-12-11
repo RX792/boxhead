@@ -1,5 +1,4 @@
 #pragma once
-#include "GameObject.hpp"
 
 namespace camera
 {
@@ -154,7 +153,7 @@ namespace camera
 		/// 카메라 변환 행렬을 반환합니다.
 		/// </summary>
 		/// <returns></returns>
-		glm::mat4& GetMatrix()
+		constexpr glm::mat4& GetMatrix()
 		{
 			return viewMatrix;
 		}
@@ -163,7 +162,7 @@ namespace camera
 		/// 카메라 변환 행렬을 반환합니다.
 		/// </summary>
 		/// <returns></returns>
-		const glm::mat4& GetMatrix() const
+		constexpr const glm::mat4& GetMatrix() const
 		{
 			return viewMatrix;
 		}
@@ -172,7 +171,7 @@ namespace camera
 		/// 현재 위치를 반환합니다.
 		/// </summary>
 		/// <returns>위치 벡터 x, y, z</returns>
-		glm::vec3 GetPosition() const
+		constexpr glm::vec3 GetPosition() const
 		{
 			return worldTransform.GetPosition();
 		}
