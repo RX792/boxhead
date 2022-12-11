@@ -8,26 +8,38 @@
 #include <Pipeline.hpp>
 #include <Uniform.hpp>
 
-#include "Timer.hpp"
-#include "Constants.hpp"
-#include "Transform.hpp"
-
 class Framework;
-class Timer;
 class WindowManager;
-class Scene;
-class WorldManager;
-class MainScene;
-class GameScene;
+class Timer;
 class Transform;
+class Model;
+namespace camera
+{
+	class Camera;
+}
+class Scene;
 class GameObject;
 class Entity;
-class Camera;
+class ModelView;
 class Collider;
 class BoxCollider;
 class OrientedBoxCollider;
+class MainScene;
+class GameScene;
+class WorldManager;
 class Player;
 class Zombie;
+
+#include "WindowManager.hpp"
+#include "Timer.hpp"
+#include "Constants.hpp"
+#include "Transform.hpp"
+#include "Camera.hpp"
+#include "Scene.hpp"
+#include "Collider.hpp"
+#include "GameObject.hpp"
+#include "Entity.hpp"
+#include "ModelView.hpp"
 
 float RandomizeColour();
 

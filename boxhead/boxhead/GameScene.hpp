@@ -8,16 +8,12 @@
 #include <BlobUtils.hpp>
 #include <windows.h>
 
-#include "WindowManager.hpp"
-#include "Transform.hpp"
-#include "Scene.hpp"
-#include "ModelView.hpp"
 #include "AxisModel.hpp"
 #include "FloorModel.hpp"
 #include "SideCubeModel.hpp"
-#include "Camera.hpp"
 #include "Player.hpp"
-//#include "MapManager.hpp"
+
+using namespace camera;
 
 class MapManager
 {
