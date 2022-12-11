@@ -43,6 +43,9 @@
     <Filter Include="헤더 파일\Contents\Entities">
       <UniqueIdentifier>{c113f0d1-6088-440b-a72a-d8c13d30b721}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Application">
+      <UniqueIdentifier>{b0e2f9f3-2c6c-40b7-b28b-8de2b6d84527}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -185,9 +188,6 @@
     <ClInclude Include="pch.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Main.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\IconerLibrary\Attribute.hpp">
       <Filter>헤더 파일\Lib</Filter>
     </ClInclude>
@@ -245,12 +245,6 @@
     <ClInclude Include="GameObject.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="WindowManager.hpp">
-      <Filter>헤더 파일\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.hpp">
-      <Filter>헤더 파일\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Model.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
@@ -289,6 +283,15 @@
     </ClInclude>
     <ClInclude Include="MapManagers.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowManager.hpp">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.hpp">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.hpp">
+      <Filter>헤더 파일\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
