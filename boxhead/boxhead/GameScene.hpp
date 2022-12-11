@@ -43,7 +43,7 @@ public:
 		heightMap.reserve(boardSizeW * boardSizeH + 1);
 	}
 
-	virtual ~WorldManager()
+	~WorldManager()
 	{}
 
 	void Awake()
@@ -214,6 +214,8 @@ public:
 		const auto delta_time = Timer::GetDeltaTime();
 
 		Scene::Update();
+
+		mainCamera->MoveTo(playerCharacter->GetPosition());
 
 		const auto focus = GetFocus();
 
