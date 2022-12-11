@@ -172,17 +172,17 @@ public:
 
 	void RotateX(const float& pitch)
 	{
-		myMatrix = glm::rotate(myMatrix, pitch, ogl::right);
+		myMatrix = glm::rotate(myMatrix, glm::radians(pitch), ogl::right);
 	}
 
 	void RotateY(const float& yaw)
 	{
-		myMatrix = glm::rotate(myMatrix, yaw, ogl::up);
+		myMatrix = glm::rotate(myMatrix, glm::radians(yaw), ogl::up);
 	}
 
 	void RotateZ(const float& roll)
 	{
-		myMatrix = glm::rotate(myMatrix, roll, ogl::forward);
+		myMatrix = glm::rotate(myMatrix, glm::radians(roll), ogl::forward);
 	}
 
 	/// <summary>
