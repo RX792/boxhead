@@ -165,11 +165,8 @@
     <ClCompile Include="Model.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MapManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,16 +305,19 @@
     <ClInclude Include="Model.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MapManager.hpp">
+    <ClInclude Include="Map.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Map.hpp">
+    <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt">
       <Filter>리소스 파일\Models</Filter>
+    </Text>
+    <Text Include="Stage.txt">
+      <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>
 </Project>

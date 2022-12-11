@@ -10,13 +10,159 @@
 
 using namespace camera;
 
+class WorldManager
+{
+public:
+	class Block
+	{
+	public:
+		constexpr Block(size_t ix, size_t iy, const float& height = 1.0f)
+			: x(ix), y(iy), myHeight(height)
+		{}
+
+		constexpr Block& operator=(const float& height)
+		{
+			myHeight = height;
+
+			return *this;
+		}
+
+		explicit operator float() const
+		{
+			return myHeight;
+		}
+
+		size_t x, y;
+		float myHeight;
+	};
+
+	constexpr WorldManager()
+		: heightMap()
+		, stageFilepath("Stage.txt")
+	{
+		heightMap.reserve(boardSizeW * boardSizeH + 1);
+	}
+
+	virtual ~WorldManager()
+	{}
+
+	void Awake()
+	{
+		// 딱 한번만 높이 맵 생성
+		std::fstream stage_file{ stageFilepath, std::ios::in };
+
+		if (stage_file)
+		{
+			terrainMap = new int* [boardSizeH];
+			for (size_t y = 0; y < boardSizeW; y++)
+			{
+				terrainMap[y] = new int[boardSizeW];
+			}
+
+			char piece{};
+			size_t x = 0, y = 0;
+
+			while (stage_file >> piece)
+			{
+				if (' ' == piece) continue;
+
+				SetTerrainAt(x, y, int(piece - '0'));
+
+				x++;
+				if (boardSizeW <= x)
+				{
+					x = 0;
+					y++;
+				}
+			}
+
+			for (size_t i = 0; i < boardSizeW; i++)
+			{
+				for (size_t j = 0; j < boardSizeH; j++)
+				{
+					// 열 우선으로 삽입
+					auto& terrain_cell = GetTerrainAt(i, j);
+
+					if (terrain_cell == 1 || terrain_cell == 2)
+					{
+						float cell_height = 1.0f;
+						heightMap.emplace_back(i, j, cell_height);
+					}
+				}
+			}
+		}
+	}
+
+	void Start(Scene* scene)
+	{
+		// 모델 가져오기
+		auto wall_model_view = ModelView::GetReference<SideCubeModel>();
+
+		// 높이 맵의 내용대로 벽 생성
+		for (auto& height_block : heightMap)
+		{
+			const float cx = boardScaleW * static_cast<float>(height_block.x);
+			const float cz = boardScaleH * static_cast<float>(height_block.y);
+
+			Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, 0.5f, cz);
+		}
+	}
+
+	constexpr Block& CellAt(const size_t& x, const size_t& y)
+	{
+		const auto pos = x * boardSizeH + y;
+
+		return heightMap.at(pos);
+	}
+
+	constexpr const Block& CellAt(const size_t& x, const size_t& y) const
+	{
+		const auto pos = x * boardSizeH + y;
+
+		return heightMap.at(pos);
+	}
+
+	constexpr int& SetTerrainAt(const size_t& x, const size_t& y, const int& value)
+	{
+		auto& cell = GetTerrainAt(x, y);
+		cell = value;
+
+		return cell;
+	}
+
+	constexpr int& GetTerrainAt(const size_t& x, const size_t& y)
+	{
+		//return terrainMap.at(y).at(x);
+		return terrainMap[y][x];
+	}
+
+	constexpr const int& GetTerrainAt(const size_t& x, const size_t& y) const
+	{
+		//return terrainMap.at(y).at(x);
+		return terrainMap[y][x];
+	}
+
+	static inline constexpr size_t boardSizeW = 40;
+	static inline constexpr size_t boardSizeH = 40;
+
+private:
+	static inline constexpr float boardScaleW = 1.0f;
+	static inline constexpr float boardScaleH = 1.0f;
+
+	std::vector<Block> heightMap;
+	std::string stageFilepath;
+
+	//int terrainMap[boardSizeH][boardSizeW];
+	int** terrainMap;
+};
+
 class GameScene : public Scene
 {
 public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer()
-		//, map_manager()
+		, worldManager()
 		, cursorClicked(false), cursorPosition(), clientRect()
 		, mainCamera(nullptr), cameraYaw(), cameraPitch()
 		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
@@ -47,8 +193,8 @@ public:
 
 		playerCharacter = new Player{ playerSpawnPosition };
 
-		//map_manager = new MapManager{};
-		//map_manager->Awake(this);
+		worldManager.Awake();
+		worldManager.Start(this);
 	}
 
 	void Start() override
@@ -90,7 +236,7 @@ public:
 			if (0 != dy)
 			{
 				const float addition = dy * 6.0f * delta_time;
-				
+
 				cameraPitch = std::max(std::min(cameraPitch + addition, 89.0f), -89.0f);
 			}
 
@@ -310,5 +456,5 @@ private:
 	Player* playerCharacter;
 	const glm::vec3 playerSpawnPosition;
 
-	//MapManager* map_manager;
+	WorldManager worldManager;
 };

@@ -193,7 +193,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelView.cpp" />
     <ClCompile Include="pch.cpp">
@@ -254,11 +253,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </ClInclude>
-    <ClInclude Include="MapManager.hpp" />
     <ClInclude Include="Model.hpp" />
     <ClInclude Include="ModelView.hpp" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SideCubeModel.hpp" />
     <ClInclude Include="stdafx.hpp" />
@@ -274,6 +273,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt" />
+    <Text Include="Stage.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

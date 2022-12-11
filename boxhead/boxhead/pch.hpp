@@ -21,6 +21,11 @@
 #include "ModelView.hpp"
 #include "Map.hpp"
 
+namespace map
+{
+	class WorldManager;
+}
+
 float RandomizeColour();
 
 #endif
