@@ -30,6 +30,7 @@ public:
 		}
 	}
 
+#pragma region 파이프라인
 	virtual void Start()
 	{}
 
@@ -43,6 +44,7 @@ public:
 
 	virtual void Render(ogl::Uniform& world_uniform)
 	{}
+#pragma endregion
 
 #pragma region 계층 구조
 	/// <summary>

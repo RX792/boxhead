@@ -2,9 +2,9 @@
 #include "Scene.hpp"
 #include "GameScene.hpp"
 #include "Entity.hpp"
-#include "Model.hpp"
+#include "ModelView.hpp"
 #include "Wall.hpp"
-
+/*
 class MapManager
 {
 private:
@@ -101,12 +101,14 @@ public:
 
 	constexpr TerrainItem& GetTerrainAt(const size_t& x, const size_t& y)
 	{
-		return terrainMap.at(y).at(x);
+		//return terrainMap.at(y).at(x);
+		return terrainMap[y][x];
 	}
 
 	constexpr const TerrainItem& GetTerrainAt(const size_t& x, const size_t& y) const
 	{
-		return terrainMap.at(y).at(x);
+		//return terrainMap.at(y).at(x);
+		return terrainMap[y][x];
 	}
 
 	ModelView* test_model;
@@ -120,12 +122,9 @@ private:
 
 	std::vector<Block> heightMap;
 
-	using TerrainRow = std::array<int, boardSizeH>;
-	using Terrain = std::array<TerrainRow, boardSizeW>;
-	Terrain terrainMap =
+	TerrainItem terrainMap[boardSizeH][boardSizeW] =
 	{
-		TerrainRow
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -170,3 +169,4 @@ private:
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
 };
+*/

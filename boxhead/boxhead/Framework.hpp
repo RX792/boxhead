@@ -7,7 +7,7 @@
 #include <BlobUtils.hpp>
 
 #include "Scene.hpp"
-#include "Model.hpp"
+#include "ModelView.hpp"
 #include "Entity.hpp"
 #include "Camera.hpp"
 
@@ -27,20 +27,6 @@ public:
 
 	void Awake()
 	{
-		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
-		const ogl::Vertex axis_lines[] =
-		{
-			{ +400.0f, 0.0f, 0.0f, axis_color },
-			{ -400.0f, 0.0f, 0.0f, axis_color },
-			{ 0.0f, +300.0f, 0.0f, axis_color },
-			{ 0.0f, -300.0f, 0.0f, axis_color },
-			{ 0.0f, 0.0f, -400.0f, axis_color },
-			{ 0.0f, 0.0f, -400.0f, axis_color }
-		};
-
-		// 0: ÁÂÇ¥Ãà
-		myVertexBuffer.PushRaw(axis_lines);
-
 		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c2 = ogl::Colour{ 1.0f, 0.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c3 = ogl::Colour{ 1.0f, 1.0f, 0.0f, 1.0f };
@@ -74,8 +60,22 @@ public:
 		};
 		const auto raw_cube = ogl::blob::cube::Create(each_sides);
 
-		// 1: Å¥ºê
+		// 0: Å¥ºê
 		myVertexBuffer.Push(raw_cube);
+
+		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
+		const ogl::Vertex axis_lines[] =
+		{
+			{ +400.0f, 0.0f, 0.0f, axis_color },
+			{ -400.0f, 0.0f, 0.0f, axis_color },
+			{ 0.0f, +300.0f, 0.0f, axis_color },
+			{ 0.0f, -300.0f, 0.0f, axis_color },
+			{ 0.0f, 0.0f, -400.0f, axis_color },
+			{ 0.0f, 0.0f, -400.0f, axis_color }
+		};
+
+		// 1: ÁÂÇ¥Ãà
+		myVertexBuffer.PushRaw(axis_lines);
 
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
 		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };

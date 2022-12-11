@@ -1,10 +1,14 @@
 #pragma once
-#include "Model.hpp"
+#include "ModelView.hpp"
 
 class AxisModelView : public ModelView
 {
 public:
-	AxisModelView(const size_t& id)
+	constexpr AxisModelView()
+		: ModelView(ReferenceIndex)
+	{}
+
+	constexpr AxisModelView(const size_t& id)
 		: ModelView(id)
 	{}
 
@@ -12,5 +16,7 @@ public:
 	{
 		ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 6);
 	}
+
+	constinit inline static size_t ReferenceIndex = 1;
 };
 

@@ -1,10 +1,14 @@
 #pragma once
-#include "Model.hpp"
+#include "ModelView.hpp"
 
 class SideCubeModelView : public ModelView
 {
 public:
-	SideCubeModelView(const size_t& id)
+	constexpr SideCubeModelView()
+		: ModelView(ReferenceIndex)
+	{}
+
+	constexpr SideCubeModelView(const size_t& id)
 		: ModelView(id)
 	{}
 
@@ -15,4 +19,6 @@ public:
 			ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);
 		}
 	}
+
+	constinit inline static size_t ReferenceIndex = 0;
 };

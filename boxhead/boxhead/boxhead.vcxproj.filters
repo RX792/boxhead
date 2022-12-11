@@ -135,7 +135,7 @@
     <ClCompile Include="CubeModel.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
+    <ClCompile Include="ModelView.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
@@ -147,14 +147,11 @@
     <ClCompile Include="Collider.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>소스 파일\Contents\World</Filter>
-    </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MapManagers.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +242,7 @@
     <ClInclude Include="GameObject.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Model.hpp">
+    <ClInclude Include="ModelView.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="CubeModel.hpp">
@@ -275,14 +272,8 @@
     <ClInclude Include="Collider.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Map.hpp">
-      <Filter>헤더 파일\Contents\World</Filter>
-    </ClInclude>
     <ClInclude Include="BoxCollider.hpp">
       <Filter>헤더 파일\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MapManagers.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.hpp">
       <Filter>헤더 파일\Application</Filter>
@@ -292,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="Timer.hpp">
       <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.hpp">
+      <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
