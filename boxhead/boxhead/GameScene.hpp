@@ -3,7 +3,7 @@
 #include <windows.h>
 
 #include "Player.hpp"
-#include "Map.hpp"
+#include "WorldManager.hpp"
 #include "AxisModel.hpp"
 #include "FloorModel.hpp"
 #include "SideCubeModel.hpp"
@@ -13,29 +13,6 @@ using namespace camera;
 class WorldManager
 {
 public:
-	class Block
-	{
-	public:
-		constexpr Block(size_t ix, size_t iy, const float& height = 1.0f)
-			: x(ix), y(iy), myHeight(height)
-		{}
-
-		constexpr Block& operator=(const float& height)
-		{
-			myHeight = height;
-
-			return *this;
-		}
-
-		explicit operator float() const
-		{
-			return myHeight;
-		}
-
-		size_t x, y;
-		float myHeight;
-	};
-
 	constexpr WorldManager()
 		: heightMap()
 		, stageFilepath("Stage.txt")
@@ -83,9 +60,9 @@ public:
 					// 열 우선으로 삽입
 					auto& terrain_cell = GetTerrainAt(i, j);
 
-					if (terrain_cell == 1 || terrain_cell == 2)
+					if (0 < terrain_cell)
 					{
-						float cell_height = 1.0f;
+						float cell_height = 1.0f * float(terrain_cell);
 						heightMap.emplace_back(i, j, cell_height);
 					}
 				}
@@ -102,9 +79,11 @@ public:
 		for (auto& height_block : heightMap)
 		{
 			const float cx = boardScaleW * static_cast<float>(height_block.x);
-			const float cz = boardScaleH * static_cast<float>(height_block.y);
+			const float cy = -(1 - height_block.myHeight) * 0.5f;
+			const float cz = boardScaleD * static_cast<float>(height_block.y);
 
-			Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, 0.5f, cz);
+			Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, cy, cz);
+			wall->Scale(boardScaleW, height_block.myHeight, boardScaleD);
 		}
 	}
 
@@ -147,7 +126,7 @@ public:
 
 private:
 	static inline constexpr float boardScaleW = 1.0f;
-	static inline constexpr float boardScaleH = 1.0f;
+	static inline constexpr float boardScaleD = 1.0f;
 
 	std::vector<Block> heightMap;
 	std::string stageFilepath;
