@@ -179,6 +179,36 @@ public:
 	}
 
 	/// <summary>
+	/// z축을 따라 이동합니다.
+	/// </summary>
+	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="distance">이동 거리</param>
+	inline void MoveForward(const glm::quat& quaternion, const float& distance)
+	{
+		MoveTo(ogl::forward, quaternion, distance);
+	}
+
+	/// <summary>
+	/// y축을 따라 이동합니다.
+	/// </summary>
+	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="distance">이동 거리</param>
+	inline void MoveUp(const glm::quat& quaternion, const float& distance)
+	{
+		MoveTo(ogl::up, quaternion, distance);
+	}
+
+	/// <summary>
+	/// x축을 따라 이동합니다.
+	/// </summary>
+	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="distance"></param>
+	inline void MoveStrife(const glm::quat& quaternion, const float& distance)
+	{
+		MoveTo(ogl::right, quaternion, distance);
+	}
+
+	/// <summary>
 	/// 특정한 축을 따라 거리만큼 이동합니다.
 	/// </summary>
 	/// <param name="axis">이동 축</param>

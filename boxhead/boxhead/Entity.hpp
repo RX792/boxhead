@@ -165,8 +165,10 @@ public:
 	std::string myName;
 	float myHealth;
 	float maxHealth;
-	ModelView myModel;
+	float mySpeed;
+	glm::vec3 myDirection;
 
+	ModelView myModel;
 	BoxCollider* myCollider;
 };
 
