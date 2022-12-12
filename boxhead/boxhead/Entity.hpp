@@ -58,7 +58,12 @@ public:
 	{}
 
 	virtual void Update(const float& delta_time)
-	{}
+	{
+		if (0 != mySpeed)
+		{
+			MoveTo(myDirection, ogl::identity, mySpeed * delta_time);
+		}
+	}
 
 	virtual void PrepareRendering()
 	{
@@ -85,6 +90,23 @@ public:
 			myModel.Render();
 		}
 	}
+#pragma region 물리
+	void SetSpeed(const float& speed)
+	{
+		mySpeed = speed;
+	}
+
+	void SetDirection(const glm::vec3& direction)
+	{
+		myDirection = glm::normalize(direction);
+	}
+
+	void SetVelocity(const glm::vec3& vector)
+	{
+		mySpeed = glm::length(vector);
+		myDirection = glm::normalize(vector);
+	}
+#pragma endregion
 
 #pragma region 충돌
 	/// <summary>
@@ -167,6 +189,11 @@ public:
 	float maxHealth;
 	float mySpeed;
 	glm::vec3 myDirection;
+
+	bool isAttacking;
+	float attackDelay;
+	float attackCooltime;
+	float attackPreDelay;
 
 	ModelView myModel;
 	BoxCollider* myCollider;

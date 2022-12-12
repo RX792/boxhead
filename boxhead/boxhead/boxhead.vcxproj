@@ -185,6 +185,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="CubeModel.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FloorModel.cpp" />
     <ClCompile Include="Framework.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="CubeModel.hpp" />
+    <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="FloorModel.hpp" />
     <ClInclude Include="Framework.hpp" />

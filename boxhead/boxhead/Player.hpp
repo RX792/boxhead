@@ -18,6 +18,11 @@ public:
 	virtual ~Player()
 	{}
 
+	Entity* Shot()
+	{
+		return nullptr;
+	}
+
 	void Awake()
 	{
 

@@ -132,11 +132,16 @@ public:
 	/// <param name="distance">이동 거리</param>
 	inline void MoveTo(const glm::vec3& axis, const glm::mat4& rotation, const float& distance)
 	{
+		const auto vector = glm::vec4{ axis * distance, 1.0f };
+		//const auto my_mat = ogl::Rotate(ogl::identity, myPitch, myYaw, myRoll);
+		const auto direction = GetRotation();
+
+		Translate(direction * vector);
 		//auto toward = myMatrix * glm::vec4{ axis, 1.0f };
 		//auto toward = glm::mat4{ quaternion } * glm::vec4{ axis, 1.0f };
-		auto toward = rotation * glm::vec4{ axis, 0.0f };
+		//auto toward = rotation * glm::vec4{ axis, 0.0f };
 
-		Translate(glm::normalize(toward) * distance);
+		//Translate(glm::normalize(toward) * distance);
 		//Translate(glm::normalize(quaternion * distance * axis));
 	}
 
@@ -147,9 +152,7 @@ public:
 	/// <param name="distance">이동 거리</param>
 	inline void MoveTo(const glm::vec3& axis, const float& distance)
 	{
-		const auto rotation = GetRotation();
-
-		MoveTo(axis, rotation, distance);
+		MoveTo(axis, GetRotation(), distance);
 	}
 
 	/// <summary>
@@ -333,7 +336,10 @@ public:
 	/// <returns></returns>
 	glm::mat4 GetRotation() const
 	{
-		return glm::mat4{ glm::mat3{ myMatrix } };
+		glm::mat4 result = myMatrix;
+		result[3] = glm::vec4{ 0.0f, 0.0f, 0.0f, 1.0f };
+
+		return result;
 	}
 
 	/// <summary>
