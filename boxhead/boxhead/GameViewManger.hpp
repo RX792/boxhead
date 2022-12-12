@@ -65,6 +65,20 @@ public:
 					break;
 				}
 			}
+
+			if (followSmooth)
+			{
+				glm::mat4 target = mainCamera.GetCameraMatrix();
+
+				if (target != followTransform)
+				{
+
+				}
+			}
+			else
+			{
+				followTransform = mainCamera.GetCameraMatrix();
+			}
 		}
 	}
 
@@ -154,7 +168,14 @@ public:
 
 	constexpr const glm::mat4& GetCameraMatrix() const
 	{
-		return mainCamera.GetCameraMatrix();
+		if (isFollow)
+		{
+			return followTransform.myMatrix;
+		}
+		else
+		{
+			return mainCamera.GetCameraMatrix();
+		}
 	}
 
 	constexpr const glm::mat4& GetPerspectiveViewMatrix() const
