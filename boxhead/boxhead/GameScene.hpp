@@ -227,6 +227,7 @@ public:
 				}
 
 				mainCamera->SetRotation(cameraPitch, cameraYaw, 0.0f);
+				playerCharacter->SetRotation(0.0f, cameraYaw, 0.0f);
 
 				const int tx = clientRect.left + int(clientRect.right - clientRect.left) / 2;
 				const int ty = clientRect.top + int(clientRect.bottom - clientRect.top) / 2;

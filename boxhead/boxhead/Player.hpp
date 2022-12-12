@@ -41,7 +41,7 @@ public:
 	virtual void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{
 		const float delta_time = Timer::GetDeltaTime();
-		const auto camera_angle = ;
+		const auto camera_angle = myCamera->GetRotation();
 
 		switch (key)
 		{
@@ -49,7 +49,7 @@ public:
 			case 'W':
 			{
 				const float move_distance_forward = delta_time * 10.0f;
-				MoveForward(move_distance_forward);
+				MoveForward(camera_angle, move_distance_forward);
 			}
 			break;
 
@@ -57,7 +57,7 @@ public:
 			case 'D':
 			{
 				const float move_distance_right = delta_time * 10.0f;
-				MoveStrife(-move_distance_right);
+				MoveStrife(camera_angle, -move_distance_right);
 			}
 			break;
 
@@ -65,7 +65,7 @@ public:
 			case 'A':
 			{
 				const float move_distance_left = delta_time * 10.0f;
-				MoveStrife(move_distance_left);
+				MoveStrife(camera_angle, move_distance_left);
 			}
 			break;
 
