@@ -11,132 +11,19 @@ public:
 		: myMatrix(mat)
 	{}
 
-	constexpr void Set(const glm::mat4& mat)
-	{
-		myMatrix = mat;
-	}
-
-	constexpr void Set(const Transform& other)
-	{
-		myMatrix = other.myMatrix;
-	}
-
-	Transform& Multiply(const glm::mat4& mat)
-	{
-		const auto result = mat * myMatrix;
-		myMatrix = result;
-
-		return *this;
-		;
-	}
-
-	Transform& Multiply(const Transform& other)
-	{
-		const auto result = other.myMatrix * myMatrix;
-		myMatrix = result;
-
-		return *this;
-	}
-
-	Transform operator+(const glm::mat4& mat) const
-	{
-		return Transform{ myMatrix + mat };
-	}
-
-	Transform operator+(const Transform& other) const
-	{
-		return Transform{ myMatrix + other.myMatrix };
-	}
-
-	Transform operator-(const glm::mat4& mat) const
-	{
-		return Transform{ myMatrix - mat };
-	}
-
-	Transform operator-(const Transform& other) const
-	{
-		return Transform{ myMatrix - other.myMatrix };
-	}
-
-	Transform operator*(const glm::mat4& mat) const
-	{
-		return Transform{ myMatrix * mat };
-	}
-
-	Transform operator*(const Transform& other) const
-	{
-		return Transform{ myMatrix * other.myMatrix };
-	}
-
-	constexpr Transform& operator=(const glm::mat4& mat)
-	{
-		myMatrix = mat;
-
-		return *this;
-	}
-
-	constexpr Transform& operator=(const Transform& other)
-	{
-		myMatrix = other.myMatrix;
-
-		return *this;
-	}
-
-	Transform& operator+=(const glm::mat4& mat)
-	{
-		myMatrix += mat;
-
-		return *this;
-	}
-
-	Transform& operator+=(const Transform& other)
-	{
-		myMatrix += other.myMatrix;
-
-		return *this;
-	}
-
-	Transform& operator-=(const glm::mat4& mat)
-	{
-		myMatrix -= mat;
-
-		return *this;
-	}
-
-	Transform& operator-=(const Transform& other)
-	{
-		myMatrix -= other.myMatrix;
-
-		return *this;
-	}
-
-	Transform& operator*=(const glm::mat4& mat)
-	{
-		myMatrix *= mat;
-
-		return *this;
-	}
-
-	Transform& operator*=(const Transform& other)
-	{
-		myMatrix *= other.myMatrix;
-
-		return *this;
-	}
-
 	/// <summary>
 	/// 특정한 회전 축을 따라 거리만큼 이동합니다.
 	/// </summary>
 	/// <param name="axis">이동 축</param>
-	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="rotation">회전</param>
 	/// <param name="distance">이동 거리</param>
 	inline void MoveTo(const glm::vec3& axis, const glm::mat4& rotation, const float& distance)
 	{
 		const auto vector = glm::vec4{ axis * distance, 1.0f };
-		//const auto my_mat = ogl::Rotate(ogl::identity, myPitch, myYaw, myRoll);
-		const auto direction = GetRotation();
 
-		Translate(direction * vector);
+		//const auto my_mat = ogl::Rotate(ogl::identity, myPitch, myYaw, myRoll);
+
+		Translate(rotation * vector);
 		//auto toward = myMatrix * glm::vec4{ axis, 1.0f };
 		//auto toward = glm::mat4{ quaternion } * glm::vec4{ axis, 1.0f };
 		//auto toward = rotation * glm::vec4{ axis, 0.0f };
@@ -349,6 +236,119 @@ public:
 	glm::quat GetQuaternion() const
 	{
 		return glm::quat_cast(myMatrix);
+	}
+
+	constexpr void Set(const glm::mat4& mat)
+	{
+		myMatrix = mat;
+	}
+
+	constexpr void Set(const Transform& other)
+	{
+		myMatrix = other.myMatrix;
+	}
+
+	Transform& Multiply(const glm::mat4& mat)
+	{
+		const auto result = mat * myMatrix;
+		myMatrix = result;
+
+		return *this;
+		;
+	}
+
+	Transform& Multiply(const Transform& other)
+	{
+		const auto result = other.myMatrix * myMatrix;
+		myMatrix = result;
+
+		return *this;
+	}
+
+	Transform operator+(const glm::mat4& mat) const
+	{
+		return Transform{ myMatrix + mat };
+	}
+
+	Transform operator+(const Transform& other) const
+	{
+		return Transform{ myMatrix + other.myMatrix };
+	}
+
+	Transform operator-(const glm::mat4& mat) const
+	{
+		return Transform{ myMatrix - mat };
+	}
+
+	Transform operator-(const Transform& other) const
+	{
+		return Transform{ myMatrix - other.myMatrix };
+	}
+
+	Transform operator*(const glm::mat4& mat) const
+	{
+		return Transform{ myMatrix * mat };
+	}
+
+	Transform operator*(const Transform& other) const
+	{
+		return Transform{ myMatrix * other.myMatrix };
+	}
+
+	constexpr Transform& operator=(const glm::mat4& mat)
+	{
+		myMatrix = mat;
+
+		return *this;
+	}
+
+	constexpr Transform& operator=(const Transform& other)
+	{
+		myMatrix = other.myMatrix;
+
+		return *this;
+	}
+
+	Transform& operator+=(const glm::mat4& mat)
+	{
+		myMatrix += mat;
+
+		return *this;
+	}
+
+	Transform& operator+=(const Transform& other)
+	{
+		myMatrix += other.myMatrix;
+
+		return *this;
+	}
+
+	Transform& operator-=(const glm::mat4& mat)
+	{
+		myMatrix -= mat;
+
+		return *this;
+	}
+
+	Transform& operator-=(const Transform& other)
+	{
+		myMatrix -= other.myMatrix;
+
+		return *this;
+	}
+
+	Transform& operator*=(const glm::mat4& mat)
+	{
+		myMatrix *= mat;
+
+		return *this;
+	}
+
+	Transform& operator*=(const Transform& other)
+	{
+		myMatrix *= other.myMatrix;
+
+		return *this;
 	}
 
 	glm::mat4 myMatrix;
