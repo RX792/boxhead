@@ -5,7 +5,7 @@ class Collider
 {
 public:
 	explicit constexpr Collider() noexcept
-		: worldTransform(ogl::identity), colliderExtent()
+		: worldTransform(ogl::identity), colliderExtent(1, 1, 1)
 	{}
 
 	explicit constexpr Collider(const glm::vec3& extents) noexcept
@@ -13,9 +13,9 @@ public:
 	{}
 
 	explicit constexpr Collider(const glm::mat4& world_matrix) noexcept
-		: worldTransform(world_matrix), colliderExtent()
+		: worldTransform(world_matrix), colliderExtent(1, 1, 1)
 	{}
-	
+
 	explicit constexpr Collider(const glm::mat4& world_matrix, const glm::vec3& extents) noexcept
 		: worldTransform(world_matrix), colliderExtent(extents)
 	{}
@@ -75,7 +75,7 @@ public:
 
 		// other.position - position
 		XMVECTOR offset = DirectX::XMVectorSubtract(bCenter, aCenter);
-		
+
 		// 육면체 모서리 꼭지점 수만큼, 8번 반복
 		for (size_t i = 0; i < mybox.CORNER_COUNT; ++i)
 		{
@@ -102,7 +102,7 @@ public:
 
 			// C * (this.rotation)(-1)
 			C = DirectX::XMVector3InverseRotate(C, aOrientation);
-			
+
 			return
 			(
 				!(
