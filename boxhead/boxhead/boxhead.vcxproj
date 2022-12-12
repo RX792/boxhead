@@ -266,7 +266,6 @@
     <ClInclude Include="Wall.hpp" />
     <ClInclude Include="WindowManager.hpp" />
     <ClInclude Include="WorldManager.hpp" />
-    <ClInclude Include="zombie.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="misc.h" />

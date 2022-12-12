@@ -278,9 +278,6 @@
     <ClInclude Include="Player.hpp">
       <Filter>헤더 파일\Contents\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="zombie.h">
-      <Filter>헤더 파일\Contents\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Wall.hpp">
       <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
