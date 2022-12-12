@@ -19,7 +19,7 @@ public:
 		, myModel()
 		, myCollider(nullptr)
 	{}
-	
+
 	constexpr Entity(const ModelView& model_view)
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
@@ -30,25 +30,25 @@ public:
 	Entity(const ModelView& model_view, const glm::vec3& position)
 		: Entity(model_view)
 	{
-		MoveTo(position);
+		SetPosition(position);
 	}
 
 	Entity(const ModelView& model_view, const float& x, const float& y, const float& z)
 		: Entity(model_view)
 	{
-		MoveTo(x, y, z);
+		SetPosition(x, y, z);
 	}
 
 	Entity(const glm::vec3& position)
 		: Entity()
 	{
-		MoveTo(position);
+		SetPosition(position);
 	}
 
 	Entity(const float& x, const float& y, const float& z)
 		: Entity()
 	{
-		MoveTo(x, y, z);
+		SetPosition(x, y, z);
 	}
 
 	virtual ~Entity()

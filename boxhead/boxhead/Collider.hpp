@@ -32,12 +32,12 @@ public:
 
 	constexpr void SetCenter(const glm::vec3& centre)
 	{
-		worldTransform.MoveTo(centre);
+		worldTransform.SetPosition(centre);
 	}
 
 	constexpr void SetCenter(const float& x, const float& y, const float& z)
 	{
-		worldTransform.MoveTo(x, y, z);
+		worldTransform.SetPosition(x, y, z);
 	}
 
 	constexpr void SetExtent(const glm::vec3& extents)

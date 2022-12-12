@@ -130,7 +130,7 @@ public:
 	/// <param name="x"></param>
 	/// <param name="y"></param>
 	/// <param name="z"></param>
-	constexpr void MoveTo(const float& x, const float& y, const float& z)
+	constexpr void SetPosition(const float& x, const float& y, const float& z)
 	{
 		myMatrix[3][0] = x;
 		myMatrix[3][1] = y;
@@ -143,9 +143,9 @@ public:
 	/// <param name="x"></param>
 	/// <param name="y"></param>
 	/// <param name="z"></param>
-	constexpr void MoveTo(const glm::vec3& position)
+	constexpr void SetPosition(const glm::vec3& position)
 	{
-		MoveTo(position.x, position.y, position.z);
+		SetPosition(position.x, position.y, position.z);
 	}
 
 	/// <summary>
@@ -191,7 +191,7 @@ public:
 	/// <param name="pitch"></param>
 	/// <param name="yaw"></param>
 	/// <param name="roll"></param>
-	void Tilt(const float& pitch, const float& yaw, const float& roll)
+	void Rotate(const float& pitch, const float& yaw, const float& roll)
 	{
 		RotateY(yaw);
 		RotateX(pitch);
@@ -204,7 +204,7 @@ public:
 	/// <param name="pitch"></param>
 	/// <param name="yaw"></param>
 	/// <param name="roll"></param>
-	void Rotate(const float& pitch, const float& yaw, const float& roll)
+	void SetRotation(const float& pitch, const float& yaw, const float& roll)
 	{
 		const glm::vec4& origin = myMatrix[3];
 		const glm::vec3 position = { origin[0], origin[1], origin[2] };
@@ -215,7 +215,7 @@ public:
 		RotateY(yaw);
 		RotateX(pitch);
 		RotateZ(roll);
-		MoveTo(position);
+		SetPosition(position);
 	}
 
 	/// <summary>

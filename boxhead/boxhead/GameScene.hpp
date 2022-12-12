@@ -167,7 +167,7 @@ public:
 		mainCamera->Setup(ox_setting);
 
 		mainCamera->Awake();
-		mainCamera->MoveTo({ 0.0f, 15.0f, -8.0f });
+		mainCamera->SetPosition({ 0.0f, 15.0f, -8.0f });
 		mainCamera->SetLookDirection(ogl::forward);
 
 		playerCharacter = new Player{ playerSpawnPosition };
@@ -195,7 +195,7 @@ public:
 
 		Scene::Update();
 
-		mainCamera->MoveTo(playerCharacter->GetPosition());
+		mainCamera->SetPosition(playerCharacter->GetPosition());
 
 		const auto focus = GetFocus();
 		const auto capture = GetCapture();
@@ -225,7 +225,7 @@ public:
 					cameraPitch = std::max(std::min(cameraPitch + addition, 89.0f), -89.0f);
 				}
 
-				mainCamera->Rotate(cameraPitch, cameraYaw, 0.0f);
+				mainCamera->SetRotation(cameraPitch, cameraYaw, 0.0f);
 
 				const int tx = clientRect.left + int(clientRect.right - clientRect.left) / 2;
 				const int ty = clientRect.top + int(clientRect.bottom - clientRect.top) / 2;
@@ -387,8 +387,8 @@ private:
 
 	void ResetCamera(const glm::vec3& camera_position, const glm::vec3& camera_lookat)
 	{
-		mainCamera->MoveTo(camera_position);
-		mainCamera->Rotate(0.0f, 0.0f, 0.0f);
+		mainCamera->SetPosition(camera_position);
+		mainCamera->SetRotation(0.0f, 0.0f, 0.0f);
 
 		cameraYaw = 0.0f;
 		cameraPitch = 0.0f;

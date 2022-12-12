@@ -87,9 +87,9 @@ namespace camera
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="z"></param>
-		void MoveTo(const float& x, const float& y, const float& z)
+		void SetPosition(const float& x, const float& y, const float& z)
 		{
-			worldTransform.MoveTo(x, y, z);
+			worldTransform.SetPosition(x, y, z);
 
 			UpdateCamera();
 		}
@@ -98,9 +98,9 @@ namespace camera
 		/// 좌표를 지정합니다.
 		/// </summary>
 		/// <param name="position"></param>
-		void MoveTo(const glm::vec3& position)
+		void SetPosition(const glm::vec3& position)
 		{
-			MoveTo(position.x, position.y, position.z);
+			SetPosition(position.x, position.y, position.z);
 		}
 
 		/// <summary>
@@ -133,9 +133,9 @@ namespace camera
 		/// <param name="pitch">X 각도</param>
 		/// <param name="yaw">Y 각도</param>
 		/// <param name="roll">Z 각도</param>
-		void Tilt(const float& pitch, const float& yaw, const float& roll)
+		void Rotate(const float& pitch, const float& yaw, const float& roll)
 		{
-			worldTransform.Tilt(pitch, -yaw, roll);
+			worldTransform.Rotate(pitch, -yaw, roll);
 
 			UpdateCamera();
 		}
@@ -146,9 +146,9 @@ namespace camera
 		/// <param name="pitch">X 각도</param>
 		/// <param name="yaw">Y 각도</param>
 		/// <param name="roll">Z 각도</param>
-		void Rotate(const float& pitch, const float& yaw, const float& roll)
+		void SetRotation(const float& pitch, const float& yaw, const float& roll)
 		{
-			worldTransform.Rotate(pitch, -yaw, roll);
+			worldTransform.SetRotation(pitch, -yaw, roll);
 
 			UpdateCamera();
 		}
