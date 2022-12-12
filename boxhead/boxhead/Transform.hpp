@@ -125,6 +125,59 @@ public:
 	}
 
 	/// <summary>
+	/// 특정한 회전 축을 따라 거리만큼 이동합니다.
+	/// </summary>
+	/// <param name="axis">이동 축</param>
+	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="distance">이동 거리</param>
+	inline void MoveTo(const glm::vec3& axis, const glm::quat& quaternion, const float& distance)
+	{
+		const auto forward = axis * distance;
+
+		Translate(quaternion * forward);
+	}
+
+	/// <summary>
+	/// 특정한 축을 따라 거리만큼 이동합니다.
+	/// </summary>
+	/// <param name="axis">이동 축</param>
+	/// <param name="distance">이동 거리</param>
+	inline void MoveTo(const glm::vec3& axis, const float& distance)
+	{
+		const auto forward = axis * distance;
+		const auto quaternion = GetRotation();
+
+		Translate(quaternion * forward);
+	}
+
+	/// <summary>
+	/// z축을 따라 이동합니다.
+	/// </summary>
+	/// <param name="distance">이동 거리</param>
+	inline void MoveForward(const float& distance)
+	{
+		MoveTo(ogl::forward, distance);
+	}
+
+	/// <summary>
+	/// y축을 따라 이동합니다.
+	/// </summary>
+	/// <param name="distance">이동 거리</param>
+	inline void MoveUp(const float& distance)
+	{
+		MoveTo(ogl::up, distance);
+	}
+
+	/// <summary>
+	/// x축을 따라 이동합니다.
+	/// </summary>
+	/// <param name="distance"></param>
+	inline void MoveStrife(const float& distance)
+	{
+		MoveTo(ogl::right, distance);
+	}
+
+	/// <summary>
 	/// 좌표를 지정합니다.
 	/// </summary>
 	/// <param name="x"></param>
