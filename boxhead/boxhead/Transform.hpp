@@ -130,11 +130,14 @@ public:
 	/// <param name="axis">이동 축</param>
 	/// <param name="quaternion">사원수 회전</param>
 	/// <param name="distance">이동 거리</param>
-	inline void MoveTo(const glm::vec3& axis, const glm::quat& quaternion, const float& distance)
+	inline void MoveTo(const glm::vec3& axis, const glm::mat4& rotation, const float& distance)
 	{
-		const auto forward = axis * distance;
+		//auto toward = myMatrix * glm::vec4{ axis, 1.0f };
+		//auto toward = glm::mat4{ quaternion } * glm::vec4{ axis, 1.0f };
+		auto toward = rotation * glm::vec4{ axis, 0.0f };
 
-		Translate(quaternion * forward);
+		Translate(glm::normalize(toward) * distance);
+		//Translate(glm::normalize(quaternion * distance * axis));
 	}
 
 	/// <summary>
@@ -144,10 +147,9 @@ public:
 	/// <param name="distance">이동 거리</param>
 	inline void MoveTo(const glm::vec3& axis, const float& distance)
 	{
-		const auto forward = axis * distance;
-		const auto quaternion = GetRotation();
+		const auto rotation = GetRotation();
 
-		Translate(quaternion * forward);
+		MoveTo(axis, rotation, distance);
 	}
 
 	/// <summary>
@@ -328,8 +330,17 @@ public:
 	/// <summary>
 	/// 현재 회전을 반환합니다.
 	/// </summary>
+	/// <returns></returns>
+	glm::mat4 GetRotation() const
+	{
+		return glm::mat4{ glm::mat3{ myMatrix } };
+	}
+
+	/// <summary>
+	/// 현재 사원수 회전각을 반환합니다.
+	/// </summary>
 	/// <returns>사원수 회전</returns>
-	glm::quat GetRotation() const
+	glm::quat GetQuaternion() const
 	{
 		return glm::quat_cast(myMatrix);
 	}

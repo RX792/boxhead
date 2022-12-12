@@ -169,43 +169,43 @@ public:
 	/// 특정한 회전 축을 따라 거리만큼 이동합니다.
 	/// </summary>
 	/// <param name="axis">이동 축</param>
-	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="rotation">회전</param>
 	/// <param name="distance">이동 거리</param>
-	inline void MoveTo(const glm::vec3& axis, const glm::quat& quaternion, const float& distance)
+	inline void MoveTo(const glm::vec3& axis, const glm::mat4& rotation, const float& distance)
 	{
-		const auto forward = axis * distance;
+		localTransform.MoveTo(axis, rotation, distance);
 
-		Translate(quaternion * forward);
+		EnumerateTransform();
 	}
 
 	/// <summary>
 	/// z축을 따라 이동합니다.
 	/// </summary>
-	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="rotation">회전</param>
 	/// <param name="distance">이동 거리</param>
-	inline void MoveForward(const glm::quat& quaternion, const float& distance)
+	inline void MoveForward(const glm::mat4& rotation, const float& distance)
 	{
-		MoveTo(ogl::forward, quaternion, distance);
+		MoveTo(ogl::forward, rotation, distance);
 	}
 
 	/// <summary>
 	/// y축을 따라 이동합니다.
 	/// </summary>
-	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="rotation">회전</param>
 	/// <param name="distance">이동 거리</param>
-	inline void MoveUp(const glm::quat& quaternion, const float& distance)
+	inline void MoveUp(const glm::mat4& rotation, const float& distance)
 	{
-		MoveTo(ogl::up, quaternion, distance);
+		MoveTo(ogl::up, rotation, distance);
 	}
 
 	/// <summary>
 	/// x축을 따라 이동합니다.
 	/// </summary>
-	/// <param name="quaternion">사원수 회전</param>
+	/// <param name="rotation">회전</param>
 	/// <param name="distance"></param>
-	inline void MoveStrife(const glm::quat& quaternion, const float& distance)
+	inline void MoveStrife(const glm::mat4& rotation, const float& distance)
 	{
-		MoveTo(ogl::right, quaternion, distance);
+		MoveTo(ogl::right, rotation, distance);
 	}
 
 	/// <summary>
@@ -215,10 +215,9 @@ public:
 	/// <param name="distance">이동 거리</param>
 	inline void MoveTo(const glm::vec3& axis, const float& distance)
 	{
-		const auto forward = axis * distance;
-		const auto quaternion = GetRotation();
+		localTransform.MoveTo(axis, distance);
 
-		Translate(quaternion * forward);
+		EnumerateTransform();
 	}
 
 	/// <summary>
@@ -351,9 +350,9 @@ public:
 	/// 현재 회전을 반환합니다.
 	/// </summary>
 	/// <returns>사원수 회전</returns>
-	glm::quat GetRotation() const
+	glm::quat GetQuaternion() const
 	{
-		return localTransform.GetRotation();
+		return localTransform.GetQuaternion();
 	}
 #pragma endregion
 
