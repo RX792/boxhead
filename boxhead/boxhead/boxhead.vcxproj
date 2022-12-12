@@ -191,6 +191,7 @@
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameViewManger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="Framework.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GameScene.hpp" />
+    <ClInclude Include="GameViewManger.hpp" />
     <ClInclude Include="Main.hpp" />
     <ClInclude Include="MainScene.hpp" />
     <ClInclude Include="Map.hpp">

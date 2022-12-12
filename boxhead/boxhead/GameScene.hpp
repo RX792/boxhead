@@ -2,6 +2,7 @@
 #define NOMINMAX
 #include <windows.h>
 
+#include "GameViewManger.hpp"
 #include "Player.hpp"
 #include "WorldManager.hpp"
 #include "AxisModel.hpp"
@@ -141,9 +142,8 @@ public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer()
-		, worldManager()
+		, worldManager(), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
-		, mainCamera(nullptr), cameraYaw(), cameraPitch()
 		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
 	{
 		SetName("GameScene");
@@ -158,20 +158,11 @@ public:
 		myRenderer.LoadFragmentShader("..\\Shaders\\PlainP.glsl");
 		myRenderer.Ready();
 
-		mainCamera = new Camera{ ogl::up };
-
-		auto pr_setting = camera::PerspectiveCameraSetting{ 40.0f, 16.0f / 9.0f, 0.1f, 1000.0f };
-		mainCamera->Setup(pr_setting);
-
-		auto ox_setting = camera::OrthodoxCameraSetting{ -400.0f, 400.0f, -300.0f, 300.0f };
-		mainCamera->Setup(ox_setting);
-
-		mainCamera->Awake();
-		mainCamera->SetPosition({ 0.0f, 15.0f, -8.0f });
-		mainCamera->SetLookDirection(ogl::forward);
+		viewManager.Awake();
 
 		playerCharacter = new Player{ playerSpawnPosition };
-		playerCharacter->myCamera = mainCamera;
+		playerCharacter->myCamera = &viewManager.GetCamera();
+		viewManager.SetFollower(playerCharacter);
 
 		worldManager.Awake();
 		worldManager.Start(this);
@@ -180,6 +171,8 @@ public:
 	void Start() override
 	{
 		Scene::Start();
+
+		viewManager.Start();
 
 		UpdateClientRect();
 		ResetCamera();
@@ -196,7 +189,7 @@ public:
 
 		Scene::Update();
 
-		mainCamera->SetPosition(playerCharacter->GetPosition());
+		viewManager.Update(delta_time);
 
 		const auto focus = GetFocus();
 		const auto capture = GetCapture();
@@ -213,21 +206,9 @@ public:
 				const int dx = mouse.x - cursorPosition.x;
 				const int dy = mouse.y - cursorPosition.y;
 
-				if (0 != dx)
-				{
-					const float addition = dx * 10.0f * delta_time;
-					cameraYaw += addition;
-				}
+				viewManager.MouseTrack(dx, dy, delta_time);
 
-				if (0 != dy)
-				{
-					const float addition = dy * 6.0f * delta_time;
-
-					cameraPitch = std::max(std::min(cameraPitch + addition, 89.0f), -89.0f);
-				}
-
-				mainCamera->SetRotation(cameraPitch, cameraYaw, 0.0f);
-				playerCharacter->SetRotation(0.0f, cameraYaw, 0.0f);
+				playerCharacter->SetRotation(0.0f, viewManager.cameraYaw, 0.0f);
 
 				const int tx = clientRect.left + int(clientRect.right - clientRect.left) / 2;
 				const int ty = clientRect.top + int(clientRect.bottom - clientRect.top) / 2;
@@ -312,8 +293,8 @@ public:
 		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
 
 		uniform_mat_world.AssignMatrix4x4(ogl::identity);
-		uniform_mat_camera.AssignMatrix4x4(mainCamera->GetCameraMatrix());
-		uniform_mat_proj.AssignMatrix4x4(mainCamera->GetPerspectiveViewMatrix());
+		uniform_mat_camera.AssignMatrix4x4(viewManager.GetCameraMatrix());
+		uniform_mat_proj.AssignMatrix4x4(viewManager.GetPerspectiveViewMatrix());
 
 		// x, y, z, r, g, b, a
 		constexpr GLsizei shade_stride = sizeof(float) * 7;
@@ -384,16 +365,7 @@ private:
 
 	void ResetCamera()
 	{
-		ResetCamera({ 0.0f, 15.0f, -8.0f }, {});
-	}
-
-	void ResetCamera(const glm::vec3& camera_position, const glm::vec3& camera_lookat)
-	{
-		mainCamera->SetPosition(camera_position);
-		mainCamera->SetRotation(0.0f, 0.0f, 0.0f);
-
-		cameraYaw = 0.0f;
-		cameraPitch = 0.0f;
+		viewManager.Reset();
 	}
 
 	void ShowCursor()
@@ -442,11 +414,16 @@ private:
 	POINT cursorPosition;
 	RECT clientRect;
 
-	Camera* mainCamera;
-	float cameraPitch, cameraYaw;
+	GameViewManger viewManager;
 
 	Player* playerCharacter;
 	const glm::vec3 playerSpawnPosition;
 
 	WorldManager worldManager;
+
+	float gameStartDelay;
+	int waveLevel;
+	float waveTime;
+	float wavePeriod;
+	float waveBetweenDelay;
 };
