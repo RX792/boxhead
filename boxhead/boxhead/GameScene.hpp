@@ -171,6 +171,7 @@ public:
 		mainCamera->SetLookDirection(ogl::forward);
 
 		playerCharacter = new Player{ playerSpawnPosition };
+		playerCharacter->myCamera = mainCamera;
 
 		worldManager.Awake();
 		worldManager.Start(this);
